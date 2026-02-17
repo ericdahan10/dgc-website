@@ -1129,39 +1129,13 @@
             });
         });
 
-        // Form submission handling
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+      
+        
             
-            // Contact Information
-            const YOUR_EMAIL = 'ericdahan10@gmail.com';
+           
+          
             
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
             
-            // Create mailto link with form data
-            const subject = encodeURIComponent(`New Lead: ${data.name} - ${data.service || 'General Inquiry'}`);
-            const body = encodeURIComponent(`
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}
-Company: ${data.company || 'Not provided'}
-Service: ${data.service || 'Not specified'}
-
-Message:
-${data.message}
-            `);
-            
-            // Open default email client
-            window.location.href = `mailto:${YOUR_EMAIL}?subject=${subject}&body=${body}`;
-            
-            // Optional: Show confirmation message
-            alert('Thank you for your inquiry! Your default email client should open. If not, please email us directly at ' + YOUR_EMAIL);
-            
-            // Reset form
-            this.reset();
-        });
 
         // Add active state to navigation on scroll
         window.addEventListener('scroll', function() {
