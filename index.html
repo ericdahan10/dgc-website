@@ -60,13 +60,6 @@
             align-items: center;
         }
 
-        nav .logo-img img {
-            height: 80px;
-            width: auto;
-            display: block;
-            filter: brightness(1.4) saturate(1.6);
-        }
-
         nav ul {
             display: flex;
             gap: 2.5rem;
@@ -325,130 +318,250 @@
             color: var(--accent);
         }
 
-        /* Starter Package Highlight */
-        .starter-package {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: var(--white);
-            padding: 4rem;
-            border-radius: 12px;
-            margin-top: 4rem;
-            text-align: center;
-            border: 2px solid var(--accent);
-        }
-
-        .starter-package h3 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--white);
-        }
-
-        .starter-package p {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            opacity: 0.95;
-        }
-
-        .starter-package ul {
-            list-style: none;
-            margin: 2rem 0;
-            font-size: 1.1rem;
-        }
-
-        .starter-package li {
-            margin-bottom: 0.8rem;
-        }
-
-        .starter-package li::before {
-            content: "✓ ";
-            color: var(--accent);
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
         /* Contact Section */
         .contact {
-            background: #1a1a1a;
+            background: linear-gradient(180deg, #111111 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
         }
 
-        .contact h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(45, 90, 143, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .contact .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-intro {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 3rem;
+        }
+
+        .contact-intro .contact-tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #4a8ac7;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .contact-intro h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
             text-align: center;
             color: var(--white);
         }
 
-        .contact p {
+        .contact-intro p {
             text-align: center;
-            font-size: 1.2rem;
-            color: var(--gray-light);
-            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0;
+            line-height: 1.7;
         }
 
         .contact-form {
-            max-width: 700px;
+            max-width: 640px;
             margin: 0 auto;
-            background: #2a2a2a;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            border: 1px solid #3a3a3a;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2.5rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.4rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--white);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.3px;
+        }
+
+        .form-group label .required {
+            color: #4a8ac7;
+            margin-left: 2px;
+        }
+
+        .form-group label .optional-tag {
+            font-weight: 400;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.3);
+            margin-left: 4px;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid #3a3a3a;
-            border-radius: 6px;
+            padding: 0.85rem 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            background: #1a1a1a;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.04);
             color: var(--white);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.25);
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: rgba(74, 138, 199, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(74, 138, 199, 0.1);
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-group select option {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 0.5rem;
+        }
+
+        /* Multi-select services */
+        .services-select-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .service-checkbox {
+            display: none;
+        }
+
+        .service-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 0.8rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            transition: all 0.25s ease;
+            background: rgba(255,255,255,0.02);
+            user-select: none;
+        }
+
+        .service-checkbox-label:hover {
+            border-color: rgba(74, 138, 199, 0.3);
+            color: rgba(255,255,255,0.85);
+            background: rgba(74, 138, 199, 0.05);
+        }
+
+        .service-checkbox:checked + .service-checkbox-label {
+            border-color: rgba(74, 138, 199, 0.5);
+            background: rgba(74, 138, 199, 0.1);
+            color: #fff;
+        }
+
+        .service-check-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            font-size: 10px;
+        }
+
+        .service-checkbox:checked + .service-checkbox-label .service-check-icon {
+            background: #4a8ac7;
+            border-color: #4a8ac7;
+        }
+
+        .service-checkbox:checked + .service-checkbox-label .service-check-icon::after {
+            content: '✓';
+            color: #fff;
+            font-weight: 700;
         }
 
         .form-group textarea {
-            min-height: 150px;
+            min-height: 100px;
             resize: vertical;
         }
 
         .submit-button {
             width: 100%;
-            padding: 1.2rem;
-            background: var(--accent);
+            padding: 1rem;
+            background: linear-gradient(135deg, #2d5a8f 0%, #3a7bc8 100%);
             color: var(--white);
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.35s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
         }
 
         .submit-button:hover {
-            background: var(--accent-light);
+            background: linear-gradient(135deg, #3468a3 0%, #4a8ac7 100%);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.5);
+            box-shadow: 0 8px 30px rgba(45, 90, 143, 0.4);
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
         }
 
         /* Footer */
@@ -540,10 +653,6 @@
                 padding: 0.8rem 1.5rem;
             }
 
-            nav .logo-img img {
-                height: 75px;
-            }
-
             /* Hero */
             .hero {
                 min-height: 70vh;
@@ -575,7 +684,7 @@
             .overview h2,
             .use-cases h2,
             .services h2,
-            .contact h2 {
+            .contact-intro h2 {
                 font-size: 1.8rem;
             }
 
@@ -627,24 +736,22 @@
                 font-size: 0.95rem;
             }
 
-            /* Starter Package */
-            .starter-package {
-                padding: 2rem 1.5rem;
-            }
-
-            .starter-package h3 {
-                font-size: 1.8rem;
-            }
-
-            .starter-package p,
-            .starter-package li {
-                font-size: 1rem;
-            }
-
             /* Contact */
             .contact-form {
-                padding: 1.5rem 1.2rem;
+                padding: 2rem 1.5rem;
                 margin: 0 0.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .services-select-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-intro h2 {
+                font-size: 2rem;
             }
 
             .form-group input,
@@ -672,10 +779,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .timeline-content h4 {
-                font-size: 1.2rem;
-            }
-
             .cta-button {
                 width: 100%;
                 text-align: center;
@@ -683,17 +786,11 @@
             }
 
             .contact-form {
-                padding: 1.5rem 1rem;
+                padding: 1.5rem 1.2rem;
             }
 
-            .contact h2 {
-                font-size: 2rem;
-            }
-
-            .contact > .container > div[style*="max-width: 800px"] {
-                padding: 1.5rem !important;
-                margin-left: 1rem !important;
-                margin-right: 1rem !important;
+            .contact-intro h2 {
+                font-size: 1.8rem;
             }
         }
 
@@ -932,10 +1029,6 @@
             .timeline-detail-panel.open {
                 max-height: 350px;
             }
-
-            .use-cases-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 580px) {
@@ -1128,75 +1221,71 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
-
-        <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2>Get In Touch</h2>
-            <p>Ready to transform your business with AI? Let's talk about your specific needs.</p>
-            
-            <div style="max-width: 800px; margin: 0 auto 3rem; background: #2a2a2a; padding: 2rem; border-radius: 8px; border-left: 4px solid var(--accent); text-align: center; border: 1px solid #3a3a3a;">
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--white);">Not Sure Where to Start?</h3>
-                <p style="color: var(--gray-light); font-size: 1.05rem; line-height: 1.7;">Our AI Growth Starter engagement is designed to give you fast, tangible results — an audit of your current workflows, a clear set of AI opportunities, tool recommendations, and a live training session for your team.</p>
+            <div class="contact-intro">
+                <span class="contact-tagline">Not Sure Where to Start?</span>
+                <h2>Get In Touch</h2>
+                <p>Tell us a little about your business and we'll help you find the right path forward — no pressure, no jargon, just a real conversation about what AI can do for you.</p>
             </div>
-            
-            <form
-  class="contact-form editable-section"
-  id="contactForm"
-  action="https://formspree.io/f/mqedlzen"
-  method="POST"
->
-  <!-- Optional: set a subject line in the email you receive -->
-  <input type="hidden" name="_subject" value="New website lead (dahangroup.io)">
 
-  <!-- Optional: redirect after submit (create this page if you use it) -->
-  <!-- <input type="hidden" name="_redirect" value="https://www.dahangroup.io/thank-you.html"> -->
+            <form class="contact-form" id="contactForm" action="https://formspree.io/f/mqedlzen" method="POST">
+                <input type="hidden" name="_subject" value="New website lead (dahangroup.io)">
 
-  <div class="form-group">
-    <label for="name">Name *</label>
-    <input type="text" id="name" name="name" required>
-  </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="you@company.com">
+                    </div>
+                </div>
 
-  <div class="form-group">
-    <label for="email">Email *</label>
-    <input type="email" id="email" name="email" required>
-  </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company <span class="optional-tag">optional</span></label>
+                        <input type="text" id="company" name="company" placeholder="Your company">
+                    </div>
+                </div>
 
-  <div class="form-group">
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone">
-  </div>
+                <div class="form-group">
+                    <label>Services Interested In <span class="optional-tag">select all that apply</span></label>
+                    <div class="services-select-grid">
+                        <input type="checkbox" id="svc-training" name="services" value="Team Training & Workshops" class="service-checkbox">
+                        <label for="svc-training" class="service-checkbox-label"><span class="service-check-icon"></span> Training & Workshops</label>
 
-  <div class="form-group">
-    <label for="company">Company</label>
-    <input type="text" id="company" name="company">
-  </div>
+                        <input type="checkbox" id="svc-tools" name="services" value="AI Tool Optimization" class="service-checkbox">
+                        <label for="svc-tools" class="service-checkbox-label"><span class="service-check-icon"></span> AI Tool Optimization</label>
 
-  <div class="form-group">
-    <label for="service">Service Interested In</label>
-    <select id="service" name="service">
-      <option value="">Select a service</option>
-      <option value="workflow">AI Workflow & Process Optimization</option>
-      <option value="tools">AI Tool Selection & Implementation</option>
-      <option value="prompts">Prompt Engineering</option>
-      <option value="training">AI Training Workshops</option>
-      <option value="assistants">Custom AI Assistants</option>
-      <option value="governance">AI Readiness & Governance</option>
-      <option value="starter">Starter Package</option>
-      <option value="other">Other</option>
-    </select>
-  </div>
+                        <input type="checkbox" id="svc-workflows" name="services" value="AI Workflow Automations" class="service-checkbox">
+                        <label for="svc-workflows" class="service-checkbox-label"><span class="service-check-icon"></span> Workflow Automations</label>
 
-  <div class="form-group">
-    <label for="message">Message *</label>
-    <textarea id="message" name="message" required placeholder="Tell us about your needs and goals..."></textarea>
-  </div>
+                        <input type="checkbox" id="svc-agents" name="services" value="Custom AI Agents" class="service-checkbox">
+                        <label for="svc-agents" class="service-checkbox-label"><span class="service-check-icon"></span> Custom AI Agents</label>
 
-  <button type="submit" class="submit-button">Send Message</button>
-</form>
+                        <input type="checkbox" id="svc-governance" name="services" value="AI Governance & Readiness" class="service-checkbox">
+                        <label for="svc-governance" class="service-checkbox-label"><span class="service-check-icon"></span> Governance & Readiness</label>
 
-            <p class="edit-hint">💡 To change where form submissions go: Update the email in the JavaScript at the bottom of the HTML file</p>
+                        <input type="checkbox" id="svc-advanced" name="services" value="Advanced AI Solutions" class="service-checkbox">
+                        <label for="svc-advanced" class="service-checkbox-label"><span class="service-check-icon"></span> Advanced Solutions</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Additional Comments <span class="optional-tag">optional</span></label>
+                    <textarea id="message" name="message" placeholder="Anything else you'd like us to know..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Let's Talk →</button>
+            </form>
         </div>
     </section>
 
@@ -1237,14 +1326,6 @@
                 }
             });
         });
-
-      
-        
-            
-           
-          
-            
-            
 
         // Add active state to navigation on scroll
         window.addEventListener('scroll', function() {
