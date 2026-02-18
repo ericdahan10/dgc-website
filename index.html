@@ -1094,6 +1094,114 @@
             opacity: 0.8;
             text-align: center;
         }
+        /* ===== DGC Chat Widget ===== */
+#dgc-chat-launcher{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 24px;
+  cursor:pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  z-index: 9999;
+}
+#dgc-chat-launcher:hover{ background: var(--accent-light); }
+
+#dgc-chat-widget{
+  position: fixed;
+  right: 22px;
+  bottom: 90px;
+  width: 360px;
+  max-width: calc(100vw - 44px);
+  height: 460px;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  overflow: hidden;
+  display: none;
+  z-index: 9999;
+}
+
+#dgc-chat-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 14px 14px;
+  background: #2b2b2b;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+}
+#dgc-chat-close{
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#dgc-chat-messages{
+  height: calc(460px - 56px - 54px);
+  padding: 14px;
+  overflow-y: auto;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+}
+
+.dgc-msg{
+  margin: 10px 0;
+  display:flex;
+}
+.dgc-msg.user{ justify-content:flex-end; }
+.dgc-bubble{
+  max-width: 85%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  line-height: 1.35;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.dgc-msg.user .dgc-bubble{ background: var(--accent); }
+.dgc-msg.bot .dgc-bubble{ background: #1a1a1a; border: 1px solid rgba(255,255,255,.08); }
+
+#dgc-chat-form{
+  display:flex;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: #2a2a2a;
+}
+#dgc-chat-input{
+  flex:1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #3a3a3a;
+  background: #1a1a1a;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+}
+#dgc-chat-send{
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: var(--white);
+  cursor:pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+#dgc-chat-send:hover{ background: var(--accent-light); }
+/* ===== End Chat Widget ===== */
+
     </style>
 </head>
 <body>
@@ -1370,6 +1478,27 @@
         </div>
     </footer>
 
+    <!-- DGC Chat Widget -->
+<div id="dgc-chat-launcher" aria-label="Open chat" title="Chat with us">💬</div>
+
+<div id="dgc-chat-widget" aria-hidden="true">
+  <div id="dgc-chat-header">
+    <div>
+      <div style="font-weight:700;">DGC Assistant</div>
+      <div style="font-size:12px; opacity:.8;">Ask us anything</div>
+    </div>
+    <button id="dgc-chat-close" aria-label="Close chat">✕</button>
+  </div>
+
+  <div id="dgc-chat-messages"></div>
+
+  <form id="dgc-chat-form">
+    <input id="dgc-chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
+    <button id="dgc-chat-send" type="submit">Send</button>
+  </form>
+</div>
+
+
     <!-- JavaScript for Form Handling -->
     <script>
         // Hamburger menu toggle
@@ -1442,6 +1571,88 @@
                 panel.classList.add('open');
             }
         }
+        // ===== DGC Chat Widget JS =====
+const DGC_CHAT_API = "https://dgc-chat-api.ericdahan10.workers.dev"; // your Worker URL
+
+const launcher = document.getElementById("dgc-chat-launcher");
+const widget = document.getElementById("dgc-chat-widget");
+const closeBtn = document.getElementById("dgc-chat-close");
+const form = document.getElementById("dgc-chat-form");
+const input = document.getElementById("dgc-chat-input");
+const messagesEl = document.getElementById("dgc-chat-messages");
+
+function addMsg(text, who = "bot") {
+  const wrap = document.createElement("div");
+  wrap.className = `dgc-msg ${who}`;
+  const bubble = document.createElement("div");
+  bubble.className = "dgc-bubble";
+  bubble.textContent = text;
+  wrap.appendChild(bubble);
+  messagesEl.appendChild(wrap);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function openChat() {
+  widget.style.display = "block";
+  widget.setAttribute("aria-hidden", "false");
+  input.focus();
+
+  // greet only once
+  if (!widget.dataset.greeted) {
+    addMsg("Hi! How can we help you today?", "bot");
+    widget.dataset.greeted = "1";
+  }
+}
+
+function closeChat() {
+  widget.style.display = "none";
+  widget.setAttribute("aria-hidden", "true");
+}
+
+launcher.addEventListener("click", openChat);
+closeBtn.addEventListener("click", closeChat);
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  addMsg(userText, "user");
+  input.value = "";
+
+  // simple loading indicator
+  const loadingId = "dgc-loading-" + Date.now();
+  addMsg("…", "bot");
+  const loadingBubble = messagesEl.lastChild.querySelector(".dgc-bubble");
+  loadingBubble.id = loadingId;
+
+  try {
+    const res = await fetch(`${DGC_CHAT_API}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system: "You are the Dahan Group Consulting website assistant. Be concise, helpful, and business-focused.",
+        messages: [{ role: "user", content: userText }],
+      }),
+    });
+
+    const data = await res.json();
+
+    // Claude-style responses typically come in data.content[0].text
+    const reply =
+      data?.content?.[0]?.text ||
+      data?.message?.content?.[0]?.text ||
+      data?.error ||
+      "Sorry — I couldn’t generate a response.";
+
+    document.getElementById(loadingId).textContent = reply;
+  } catch (err) {
+    document.getElementById(loadingId).textContent =
+      "Sorry — there was a connection error. Please try again.";
+  }
+});
+// ===== End DGC Chat Widget JS =====
+
     </script>
 </body>
 </html>
