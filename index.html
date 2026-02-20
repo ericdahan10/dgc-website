@@ -274,44 +274,197 @@
             color: var(--primary);
         }
 
-        /* Services Section - CORE FOCUS */
+        /* Services Section - Interactive Phases */
         .services {
             background: var(--white);
         }
 
         .services h2 {
             font-size: 3.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             text-align: center;
             color: var(--primary);
         }
 
-        .service-category {
-            margin-bottom: 5rem;
-            padding: 3rem;
-            background: var(--off-white);
-            border-radius: 12px;
-            border: 2px solid rgba(30, 58, 95, 0.15);
-        }
-
-        .service-category h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+        /* Phase Tab Buttons */
+        .phase-tabs {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 3rem;
+            position: relative;
         }
 
-        .phase-badge {
-            font-size: 0.8rem;
-            padding: 0.4rem 1rem;
-            background: var(--accent);
-            color: var(--white);
-            border-radius: 20px;
+        .phase-tab {
+            position: relative;
+            padding: 1.4rem 2.5rem;
+            background: var(--off-white);
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            letter-spacing: 0.05em;
+            font-size: 1.05rem;
+            color: var(--gray);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .phase-tab:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .phase-tab:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .phase-tab:not(:last-child) {
+            border-right: none;
+        }
+
+        .phase-tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #2d5a8f, #3a7bc8);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .phase-tab:hover {
+            background: #f0f4f8;
+            color: var(--accent);
+        }
+
+        .phase-tab.active {
+            background: var(--white);
+            color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(20, 45, 90, 0.12);
+            z-index: 2;
+        }
+
+        .phase-tab.active::before {
+            transform: scaleX(1);
+        }
+
+        .phase-tab-number {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-bottom: 0.3rem;
+        }
+
+        .phase-tab.active .phase-tab-number {
+            opacity: 1;
+            color: #3a7bc8;
+        }
+
+        .phase-tab-icon {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        /* Phase Content Panels */
+        .phase-panel {
+            display: none;
+            animation: phaseFadeIn 0.5s ease-out;
+        }
+
+        .phase-panel.active {
+            display: block;
+        }
+
+        @keyframes phaseFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phase-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .phase-header h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--off-white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #2d5a8f, #3a7bc8);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(45, 90, 143, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(20, 45, 90, 0.1);
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #142d5a, #2d5a8f);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.7;
         }
 
         .service-item {
@@ -755,16 +908,40 @@
                 font-size: 2rem;
             }
 
-            .service-category {
-                padding: 1.5rem 1.2rem;
-                margin-bottom: 2.5rem;
+            .phase-tabs {
+                flex-direction: column;
+                gap: 0;
             }
 
-            .service-category h3 {
-                font-size: 1.4rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+            .phase-tab {
+                border-radius: 0 !important;
+                border-right: 2px solid #e0e0e0 !important;
+                border-bottom: none;
+            }
+
+            .phase-tab:first-child {
+                border-radius: 12px 12px 0 0 !important;
+            }
+
+            .phase-tab:last-child {
+                border-radius: 0 0 12px 12px !important;
+                border-bottom: 2px solid #e0e0e0;
+            }
+
+            .phase-tab.active {
+                border-color: var(--accent) !important;
+            }
+
+            .phase-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .service-card h4 {
+                font-size: 1.15rem;
             }
 
             .service-item {
@@ -1881,69 +2058,108 @@
     <section id="services" class="services">
         <div class="container">
             <h2 style="text-align: center; margin-bottom: 1rem;">Our Services</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: var(--gray); max-width: 700px; margin: 0 auto 4rem;">We meet you where you are and scale with you as your needs evolve.</p>
+            <p style="text-align: center; font-size: 1.2rem; color: var(--gray); max-width: 700px; margin: 0 auto 3rem;">We meet you where you are and scale with you as your needs evolve.</p>
 
-            <!-- Phase 1 -->
-            <div class="service-category">
-                <h3><span class="phase-badge">Phase 1</span> Getting Started</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                    <div class="service-item">
-                        <h4>Team Training & Workshops</h4>
-                        <p>Hands-on training designed for business teams, not engineers. We build the skills and confidence your people need to use AI effectively — from live workshops to custom playbooks and prompt libraries.</p>
-                    </div>
-                    <div class="service-item">
-                        <h4>AI Tool Optimization</h4>
-                        <p>With hundreds of AI tools on the market, we cut through the noise. We evaluate your specific needs, recommend the right tools, and optimize how your team uses them — then support you through rollout and adoption.</p>
-                    </div>
-                    <div class="service-item">
+            <!-- Phase Tab Buttons -->
+            <div class="phase-tabs">
+                <button class="phase-tab active" onclick="switchPhase(1)" data-phase="1">
+                    <span class="phase-tab-icon">🚀</span>
+                    <span class="phase-tab-number">Phase 1</span>
+                    Getting Started
+                </button>
+                <button class="phase-tab" onclick="switchPhase(2)" data-phase="2">
+                    <span class="phase-tab-icon">⚡</span>
+                    <span class="phase-tab-number">Phase 2</span>
+                    Going Deeper
+                </button>
+                <button class="phase-tab" onclick="switchPhase(3)" data-phase="3">
+                    <span class="phase-tab-icon">🔮</span>
+                    <span class="phase-tab-number">Phase 3</span>
+                    Advanced
+                </button>
+            </div>
+
+            <!-- Phase 1: Getting Started -->
+            <div class="phase-panel active" id="phase-1">
+                <div class="phase-header">
+                    <h3>Getting Started</h3>
+                    <p>The foundation — quick wins and immediate impact for your business.</p>
+                </div>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-card-icon">🌐</div>
                         <h4>AI Website Creation</h4>
                         <p>We build intelligent, conversion-focused websites with AI chatbots, automated lead capture, and behavioral personalization — so your site works for you around the clock.</p>
                     </div>
-                    <div class="service-item">
-                        <h4>AI Workflow Automations</h4>
-                        <p>We map your current workflows, identify where time is being lost, and build AI-powered automations that eliminate admin work and deliver immediate results across Sales, Operations, Marketing, and Customer Success.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Phase 2 -->
-            <div class="service-category">
-                <h3><span class="phase-badge">Phase 2</span> Going Deeper</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                    <div class="service-item">
-                        <h4>Custom AI Agents</h4>
-                        <p>Purpose-built AI agents designed around your business — from chatbots trained on your FAQs and sales assistants that follow up automatically, to research agents and internal support systems your team will actually use.</p>
-                    </div>
-                    <div class="service-item">
+                    <div class="service-card">
+                        <div class="service-card-icon">🎯</div>
                         <h4>AI Lead Qualification & Email Automation</h4>
                         <p>Every lead gets scored automatically based on their actual conversation and intent. Hot leads get immediate personalized follow-up, warm leads enter nurture sequences, and nothing falls through the cracks.</p>
                     </div>
-                    <div class="service-item">
+                    <div class="service-card">
+                        <div class="service-card-icon">🎓</div>
+                        <h4>Team Training & Workshops</h4>
+                        <p>Hands-on training designed for business teams, not engineers. We build the skills and confidence your people need to use AI effectively — from live workshops to custom playbooks and prompt libraries.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-card-icon">📚</div>
                         <h4>AI Knowledge Base</h4>
                         <p>Turn your company's documents, processes, and expertise into a searchable AI-powered knowledge base. Faster onboarding, instant answers for your team, and consistent information across your organization.</p>
-                    </div>
-                    <div class="service-item">
-                        <h4>AI Governance & Readiness</h4>
-                        <p>AI adoption without a clear framework creates risk. We help you define usage guidelines, data policies, approved tools, and compliance considerations — so your team can move fast without moving recklessly.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Phase 3 -->
-            <div class="service-category">
-                <h3><span class="phase-badge">Phase 3</span> Advanced Capabilities</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                    <div class="service-item">
-                        <h4>Advanced AI Solutions</h4>
-                        <p>For organizations ready to go further — fine-tuned models, retrieval-augmented generation (RAG), AI-powered analytics, and industry-specific solutions built around your unique business challenges.</p>
+            <!-- Phase 2: Going Deeper -->
+            <div class="phase-panel" id="phase-2">
+                <div class="phase-header">
+                    <h3>Going Deeper</h3>
+                    <p>Custom-built systems that transform how your business operates.</p>
+                </div>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-card-icon">⚙️</div>
+                        <h4>AI Workflow Automations</h4>
+                        <p>We map your current workflows, identify where time is being lost, and build AI-powered automations that eliminate admin work and deliver immediate results across Sales, Operations, Marketing, and Customer Success.</p>
                     </div>
-                    <div class="service-item">
+                    <div class="service-card">
+                        <div class="service-card-icon">🛠️</div>
+                        <h4>AI Tool Optimization</h4>
+                        <p>With hundreds of AI tools on the market, we cut through the noise. We evaluate your specific needs, recommend the right tools, and optimize how your team uses them — then support you through rollout and adoption.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-card-icon">📣</div>
                         <h4>AI Marketing & Personalization</h4>
                         <p>Your website and campaigns adapt to every visitor automatically — behavioral targeting, personalized messaging based on traffic source, and AI-driven content that converts better over time.</p>
                     </div>
-                    <div class="service-item">
-                        <h4>Full AI Sales Pipeline</h4>
+                    <div class="service-card">
+                        <div class="service-card-icon">🔄</div>
+                        <h4>AI Sales Pipeline Optimization</h4>
                         <p>End-to-end automation from first touch to closed deal. AI captures leads, qualifies them, sends personalized outreach, drafts responses when prospects reply, and keeps your pipeline moving — all on autopilot.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Advanced Capabilities -->
+            <div class="phase-panel" id="phase-3">
+                <div class="phase-header">
+                    <h3>Advanced Capabilities</h3>
+                    <p>Enterprise-grade AI solutions for organizations ready to lead.</p>
+                </div>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-card-icon">🧠</div>
+                        <h4>Advanced AI Solutions</h4>
+                        <p>For organizations ready to go further — fine-tuned models, retrieval-augmented generation (RAG), AI-powered analytics, and industry-specific solutions built around your unique business challenges.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-card-icon">🤖</div>
+                        <h4>Custom AI Agents</h4>
+                        <p>Purpose-built AI agents designed around your business — from chatbots trained on your FAQs and sales assistants that follow up automatically, to research agents and internal support systems your team will actually use.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-card-icon">🛡️</div>
+                        <h4>AI Governance & Readiness</h4>
+                        <p>AI adoption without a clear framework creates risk. We help you define usage guidelines, data policies, approved tools, and compliance considerations — so your team can move fast without moving recklessly.</p>
                     </div>
                 </div>
             </div>
@@ -2174,6 +2390,30 @@
                 panel.classList.add('open');
             }
         }
+        // ===== Phase Tab Switching =====
+        function switchPhase(phase) {
+            // Update tabs
+            document.querySelectorAll('.phase-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (parseInt(tab.dataset.phase) === phase) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Update panels with animation
+            document.querySelectorAll('.phase-panel').forEach(panel => {
+                panel.classList.remove('active');
+                panel.style.animation = 'none';
+            });
+
+            const activePanel = document.getElementById('phase-' + phase);
+            // Trigger reflow for animation restart
+            void activePanel.offsetWidth;
+            activePanel.style.animation = 'phaseFadeIn 0.5s ease-out';
+            activePanel.classList.add('active');
+        }
+        // ===== End Phase Tab Switching =====
+
         // ===== DGC Chat Widget JS =====
 const DGC_CHAT_API = "https://dgc-chat-api.ericdahan10.workers.dev";
 const FORMSPREE_URL = "https://formspree.io/f/mqedlzen";
