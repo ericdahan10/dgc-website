@@ -2346,6 +2346,23 @@ async function submitInlineForm() {
     console.error("Formspree error:", e);
   }
 
+  // Send to lead qualification worker for scoring + personalized email
+  try {
+    fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone || "",
+        source: "AI Chatbot (inline form)",
+        conversation: chatHistory.slice(-6).map(m => m.role + ": " + m.content).join("\n"),
+      }),
+    });
+  } catch (e) {
+    console.error("Lead worker error:", e);
+  }
+
   // Show success
   formEl.innerHTML = '<div class="dgc-form-success">✅ Thanks ' + name.split(" ")[0] + '! <a href="https://calendar.app.google/Nr94UDUnvfWpMzk49" target="_blank" style="color:#4a8ac7;text-decoration:underline;">Book a call</a> or we\'ll be in touch soon.</div>';
   contactCollected = true;
@@ -2470,6 +2487,31 @@ setTimeout(() => {
 }, 30000);
 
 // ===== End DGC Chat Widget JS =====
+
+// ===== Contact Form → Lead Worker =====
+document.getElementById("contactForm").addEventListener("submit", function() {
+  const name = document.getElementById("name")?.value || "";
+  const email = document.getElementById("email")?.value || "";
+  const phone = document.getElementById("phone")?.value || "";
+  const company = document.getElementById("company")?.value || "";
+  const message = document.getElementById("message")?.value || "";
+  const services = Array.from(document.querySelectorAll('.service-checkbox:checked')).map(cb => cb.value).join(", ");
+
+  if (email) {
+    fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        source: "Website Contact Form",
+        conversation: "Company: " + (company || "N/A") + "\nServices interested in: " + (services || "N/A") + "\nMessage: " + (message || "N/A"),
+      }),
+    }).catch(e => console.error("Lead worker error:", e));
+  }
+});
+// ===== End Contact Form =====
 
 
         // ===== DGC Personalization Engine =====
