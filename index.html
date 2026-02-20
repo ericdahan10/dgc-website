@@ -1077,8 +1077,34 @@
                 font-size: 1.1rem;
             }
 
-            .use-cases-grid {
-                grid-template-columns: 1fr;
+            .use-cases .service-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding-bottom: 1rem;
+                grid-template-columns: none !important;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.05);
+                border-radius: 4px;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar-thumb {
+                background: rgba(45,90,143,0.25);
+                border-radius: 4px;
+            }
+
+            .use-cases .service-card {
+                min-width: 260px;
+                flex-shrink: 0;
+                scroll-snap-align: start;
             }
 
             .cta-button {
