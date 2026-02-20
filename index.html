@@ -1052,32 +1052,7 @@
                 margin-bottom: 0;
             }
 
-            /* Swipe indicator - mobile only */
-            .use-cases .swipe-hint {
-                display: none;
-            }
-
-            @media (max-width: 768px) {
-                .use-cases .swipe-hint {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 6px;
-                    margin-top: 0.8rem;
-                    color: rgba(0,0,0,0.3);
-                    font-size: 0.75rem;
-                    font-family: 'Space Grotesk', sans-serif;
-                }
-
-                .use-cases .swipe-hint svg {
-                    animation: swipeHint 1.5s ease-in-out infinite;
-                }
-            }
-
-            @keyframes swipeHint {
-                0%, 100% { transform: translateX(0); }
-                50% { transform: translateX(6px); }
-            }
+            /* Swipe indicator - hidden here, shown at base level */
 
             /* Services - horizontal scrolling tabs */
             .services h2 {
@@ -1596,6 +1571,33 @@
         }
 
         
+
+        /* Swipe hint - hidden on desktop */
+        .swipe-hint {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .swipe-hint {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                margin-top: 0.8rem;
+                color: rgba(0,0,0,0.3);
+                font-size: 0.75rem;
+                font-family: 'Space Grotesk', sans-serif;
+            }
+
+            .swipe-hint svg {
+                animation: swipeHint 1.5s ease-in-out infinite;
+            }
+
+            @keyframes swipeHint {
+                0%, 100% { transform: translateX(0); }
+                50% { transform: translateX(6px); }
+            }
+        }
 
         /* Mobile detail - hidden on desktop */
         .mobile-detail {
