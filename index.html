@@ -998,27 +998,218 @@
                 font-size: 1.2rem;
             }
 
-            /* Services */
+            /* Use Cases - horizontal scroll on mobile */
+            .use-cases .service-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding-bottom: 1rem;
+                grid-template-columns: none !important;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.05);
+                border-radius: 4px;
+            }
+
+            .use-cases .service-grid::-webkit-scrollbar-thumb {
+                background: rgba(45,90,143,0.25);
+                border-radius: 4px;
+            }
+
+            .use-cases .service-card {
+                min-width: calc(100vw - 4rem);
+                max-width: calc(100vw - 4rem);
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                padding: 1.2rem;
+            }
+
+            .use-cases .service-card p {
+                font-size: 0.88rem;
+            }
+
+            .use-cases .service-card-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                margin-bottom: 0.8rem;
+            }
+
+            .use-cases .service-card-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .use-cases .service-card h4 {
+                font-size: 1rem;
+                margin-bottom: 0;
+            }
+
+            /* Swipe indicator - mobile only */
+            .use-cases .swipe-hint {
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                .use-cases .swipe-hint {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    margin-top: 0.8rem;
+                    color: rgba(0,0,0,0.3);
+                    font-size: 0.75rem;
+                    font-family: 'Space Grotesk', sans-serif;
+                }
+
+                .use-cases .swipe-hint svg {
+                    animation: swipeHint 1.5s ease-in-out infinite;
+                }
+            }
+
+            @keyframes swipeHint {
+                0%, 100% { transform: translateX(0); }
+                50% { transform: translateX(6px); }
+            }
+
+            /* Services - horizontal scrolling tabs */
             .services h2 {
                 font-size: 2rem;
             }
 
             .phase-tabs {
-                flex-direction: column;
-                gap: 0.75rem;
+                flex-direction: row;
+                gap: 0.5rem;
                 padding: 0 1rem;
+                overflow-x: auto;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .phase-tabs::-webkit-scrollbar {
+                display: none;
             }
 
             .phase-tab {
-                min-width: auto;
+                min-width: 140px;
+                padding: 1rem 1.2rem;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            .phase-tab-number {
+                font-size: 0.6rem;
             }
 
             .phase-header h3 {
                 font-size: 1.5rem;
             }
 
-            .service-card {
-                padding: 1.5rem;
+            .phase-header p {
+                font-size: 0.95rem;
+            }
+
+            /* Service cards - horizontal scroll */
+            .phase-panel .service-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding-bottom: 0.5rem;
+                grid-template-columns: none !important;
+            }
+
+            .phase-panel .service-grid::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .phase-panel .service-grid::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.05);
+                border-radius: 4px;
+            }
+
+            .phase-panel .service-grid::-webkit-scrollbar-thumb {
+                background: rgba(45,90,143,0.2);
+                border-radius: 4px;
+            }
+
+            .phase-panel .service-card {
+                min-width: calc(100vw - 4rem);
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                padding: 1.2rem;
+            }
+
+            .phase-panel .service-card-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                margin-bottom: 0.8rem;
+            }
+
+            .phase-panel .service-card-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .phase-panel .service-card h4 {
+                font-size: 1.05rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .phase-panel .service-card p {
+                display: none;
+                animation: detailFadeIn 0.3s ease-out;
+            }
+
+            .phase-panel .service-card.expanded p {
+                display: block !important;
+                font-size: 0.85rem;
+                line-height: 1.6;
+                margin-top: 0.5rem;
+            }
+
+            .phase-panel .service-card {
+                cursor: pointer;
+            }
+
+            /* Tap to expand hint */
+            .phase-panel .service-card::after {
+                content: 'Tap to read more';
+                display: block;
+                font-size: 0.68rem;
+                color: rgba(0,0,0,0.25);
+                font-family: 'Space Grotesk', sans-serif;
+                margin-top: 0.6rem;
+                letter-spacing: 0.5px;
+            }
+
+            .phase-panel .service-card.expanded::after {
+                content: '';
+                display: none;
+            }
+
+            .phase-panel .service-card-category {
+                font-size: 0.62rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .phase-panel .service-card-badge {
+                margin-top: 0.8rem;
+            }
+
+            .phase-panel .badge-item {
+                font-size: 0.62rem;
+                padding: 3px 8px;
             }
 
             .service-card h4 {
@@ -1036,6 +1227,63 @@
             .service-item p,
             .service-item li {
                 font-size: 0.95rem;
+            }
+
+            /* Approach - inline expand on mobile */
+            .timeline-detail-panel {
+                display: none !important;
+            }
+
+            .orbit-node-wrap {
+                width: 115px;
+                height: 115px;
+            }
+
+            .orbit-node-label {
+                font-size: 0.72rem;
+            }
+
+            .timeline-item.active::after { display: none; }
+
+            /* Mobile inline detail that appears under each node */
+            .mobile-detail {
+                display: none;
+                background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+                border: 1px solid rgba(45,90,143,0.15);
+                border-left: 3px solid #3a7bc8;
+                border-radius: 12px;
+                padding: 1rem 1.2rem;
+                margin-top: 0.8rem;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+                text-align: left;
+                animation: detailFadeIn 0.3s ease-out;
+                width: 250px;
+            }
+
+            .timeline-item .mobile-detail.show {
+                display: block !important;
+            }
+
+            @keyframes detailFadeIn {
+                from { opacity: 0; transform: translateY(-8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .mobile-detail h4 {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.9rem;
+                color: #142d5a !important;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                margin-bottom: 0.4rem;
+            }
+
+            .mobile-detail p {
+                color: #555555 !important;
+                font-size: 0.85rem;
+                line-height: 1.65;
+                margin: 0;
             }
 
             /* Contact */
@@ -1075,36 +1323,6 @@
 
             .hero p {
                 font-size: 1.1rem;
-            }
-
-            .use-cases .service-grid {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                gap: 1rem;
-                padding-bottom: 1rem;
-                grid-template-columns: none !important;
-            }
-
-            .use-cases .service-grid::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .use-cases .service-grid::-webkit-scrollbar-track {
-                background: rgba(0,0,0,0.05);
-                border-radius: 4px;
-            }
-
-            .use-cases .service-grid::-webkit-scrollbar-thumb {
-                background: rgba(45,90,143,0.25);
-                border-radius: 4px;
-            }
-
-            .use-cases .service-card {
-                min-width: 260px;
-                flex-shrink: 0;
-                scroll-snap-align: start;
             }
 
             .cta-button {
@@ -1351,27 +1569,23 @@
             }
 
             .timeline-line {
-                top: 70px;
-                bottom: 70px;
-                left: 50%;
-                right: auto;
-                width: 2px;
-                height: auto;
-                transform: translateX(-50%);
-                background: linear-gradient(180deg, rgba(45,90,143,0.1), rgba(74,138,199,0.3), rgba(45,90,143,0.1));
+                display: none;
             }
-
-            .timeline-line::before { left: 50%; top: 25%; transform: translate(-50%, -50%); }
-            .timeline-line::after { right: auto; left: 50%; top: 75%; transform: translate(-50%, -50%); }
 
             .timeline-items-wrapper {
                 flex-direction: column;
-                gap: 2rem;
+                gap: 1rem;
+            }
+
+            .timeline-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             .orbit-node-wrap {
-                width: 115px;
-                height: 115px;
+                width: 110px;
+                height: 110px;
             }
 
             .orbit-node-label {
@@ -1379,18 +1593,14 @@
             }
 
             .timeline-item.active::after { display: none; }
-
-            .timeline-detail-inner {
-                padding: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            .timeline-detail-panel.open {
-                max-height: 350px;
-            }
         }
 
         
+
+        /* Mobile detail - hidden on desktop */
+        .mobile-detail {
+            display: none;
+        }
 
         /* Edit Mode Styles - for easy content updates */
         .editable-section {
@@ -2161,6 +2371,10 @@
                     <p>Empower your organization with the knowledge, tools, and frameworks to adopt AI with confidence.</p>
                 </div>
             </div>
+            <div class="swipe-hint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                Swipe to explore
+            </div>
         </div>
     </section>
 
@@ -2185,6 +2399,10 @@
                                 </svg>
                                 <span class="orbit-node-label">Assess</span>
                             </div>
+                            <div class="mobile-detail" data-for="assess">
+                                <h4>Assess</h4>
+                                <p>We map your workflows, understand your challenges, and identify where AI can deliver the most meaningful impact.</p>
+                            </div>
                         </div>
 
                         <div class="timeline-item" data-step="build" onclick="toggleTimelineNode(this)">
@@ -2198,6 +2416,10 @@
                                 </svg>
                                 <span class="orbit-node-label">Build</span>
                             </div>
+                            <div class="mobile-detail" data-for="build">
+                                <h4>Build</h4>
+                                <p>We design and build AI solutions tailored to your situation — the right tools, the right roadmap, ready to go.</p>
+                            </div>
                         </div>
 
                         <div class="timeline-item" data-step="implement" onclick="toggleTimelineNode(this)">
@@ -2210,6 +2432,10 @@
                                     <circle class="node-planet-sm" cx="24" cy="88" r="3" fill="#3a7bc8" opacity="0.4"/>
                                 </svg>
                                 <span class="orbit-node-label">Implement</span>
+                            </div>
+                            <div class="mobile-detail" data-for="implement">
+                                <h4>Implement</h4>
+                                <p>We support you through launch — deployment, integration, and hands-on enablement to drive real results.</p>
                             </div>
                         </div>
                     </div>
@@ -2630,6 +2856,7 @@
             const step = element.getAttribute('data-step');
             const panel = document.getElementById('panel-' + step);
             const isActive = element.classList.contains('active');
+            const isMobile = window.innerWidth <= 768;
 
             // Close all items and panels
             document.querySelectorAll('.timeline-item').forEach(item => {
@@ -2638,11 +2865,19 @@
             document.querySelectorAll('.timeline-detail-panel').forEach(p => {
                 p.classList.remove('open');
             });
+            document.querySelectorAll('.mobile-detail').forEach(d => {
+                d.classList.remove('show');
+            });
 
             // If it wasn't already active, open it
             if (!isActive) {
                 element.classList.add('active');
-                panel.classList.add('open');
+                if (isMobile) {
+                    const mobileDetail = element.querySelector('.mobile-detail');
+                    if (mobileDetail) mobileDetail.classList.add('show');
+                } else {
+                    panel.classList.add('open');
+                }
             }
         }
         // ===== Phase Tab Switching =====
@@ -2668,6 +2903,15 @@
             activePanel.classList.add('active');
         }
         // ===== End Phase Tab Switching =====
+
+        // ===== Mobile Service Card Expand =====
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.phase-panel .service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+            });
+        }
 
         // ===== DGC Chat Widget JS =====
 const DGC_CHAT_API = "https://dgc-chat-api.ericdahan10.workers.dev";
