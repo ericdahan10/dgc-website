@@ -290,85 +290,90 @@
         .phase-tabs {
             display: flex;
             justify-content: center;
-            gap: 0;
+            gap: 1rem;
             margin-bottom: 3rem;
-            position: relative;
         }
 
         .phase-tab {
             position: relative;
-            padding: 1.4rem 2.5rem;
-            background: var(--off-white);
-            border: 2px solid #e0e0e0;
+            padding: 1.6rem 2.8rem;
+            background: var(--white);
+            border: 1px solid #eaedf2;
+            border-radius: 16px;
             cursor: pointer;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
             font-size: 1.05rem;
-            color: var(--gray);
+            color: #999;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
-            z-index: 1;
-        }
-
-        .phase-tab:first-child {
-            border-radius: 12px 0 0 12px;
-        }
-
-        .phase-tab:last-child {
-            border-radius: 0 12px 12px 0;
-        }
-
-        .phase-tab:not(:last-child) {
-            border-right: none;
+            text-align: center;
+            min-width: 180px;
         }
 
         .phase-tab::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 3px;
             background: linear-gradient(90deg, #2d5a8f, #3a7bc8);
             transform: scaleX(0);
+            transform-origin: center;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .phase-tab::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(45,90,143,0.04) 0%, rgba(58,123,200,0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .phase-tab:hover {
-            background: #f0f4f8;
-            color: var(--accent);
+            color: #555;
+            border-color: #d0d5de;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .phase-tab:hover::after {
+            opacity: 1;
         }
 
         .phase-tab.active {
-            background: var(--white);
-            color: var(--accent);
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px rgba(20, 45, 90, 0.12);
-            z-index: 2;
+            color: #142d5a;
+            border-color: rgba(45, 90, 143, 0.3);
+            box-shadow: 0 8px 30px rgba(45, 90, 143, 0.12);
+            transform: translateY(-2px);
         }
 
         .phase-tab.active::before {
             transform: scaleX(1);
         }
 
+        .phase-tab.active::after {
+            opacity: 1;
+        }
+
         .phase-tab-number {
             display: block;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            opacity: 0.5;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
+            color: #ccc;
+            transition: color 0.3s;
         }
 
         .phase-tab.active .phase-tab-number {
-            opacity: 1;
             color: #3a7bc8;
-        }
-
-        .phase-tab-icon {
-            font-size: 1.4rem;
-            margin-bottom: 0.3rem;
-            display: block;
         }
 
         /* Phase Content Panels */
@@ -410,62 +415,152 @@
             gap: 1.5rem;
         }
 
+        /* New Service Cards */
         .service-card {
-            background: var(--off-white);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid transparent;
+            background: var(--white);
+            padding: 2rem 2rem 1.8rem;
+            border-radius: 16px;
+            border: 1px solid #eaedf2;
             transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: default;
             position: relative;
             overflow: hidden;
         }
 
-        .service-card::after {
+        .service-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #2d5a8f, #3a7bc8);
-            opacity: 0;
+            right: 0;
+            height: 120px;
+            border-radius: 16px 16px 0 0;
+            opacity: 0.45;
             transition: opacity 0.3s;
+            pointer-events: none;
         }
+
+        .service-card.tint-blue::before { background: linear-gradient(135deg, #e8f0fe 0%, #f8faff 100%); }
+        .service-card.tint-green::before { background: linear-gradient(135deg, #e6f7ed 0%, #f7fcf9 100%); }
+        .service-card.tint-purple::before { background: linear-gradient(135deg, #f0e8fe 0%, #faf8ff 100%); }
+        .service-card.tint-orange::before { background: linear-gradient(135deg, #fef3e8 0%, #fffcf8 100%); }
+        .service-card.tint-red::before { background: linear-gradient(135deg, #fee8ea 0%, #fff8f8 100%); }
+        .service-card.tint-teal::before { background: linear-gradient(135deg, #e8faf6 0%, #f7fdfb 100%); }
 
         .service-card:hover {
-            border-color: rgba(45, 90, 143, 0.25);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(20, 45, 90, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(20, 45, 90, 0.1);
+            border-color: rgba(45, 90, 143, 0.2);
         }
 
-        .service-card:hover::after {
-            opacity: 1;
-        }
+        .service-card:hover::before { opacity: 0.7; }
 
         .service-card-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #142d5a, #2d5a8f);
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
             margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
         }
 
+        .service-card-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-blue { background: linear-gradient(135deg, #2d5a8f, #3a7bc8); }
+        .icon-green { background: linear-gradient(135deg, #1a8a5c, #2db87a); }
+        .icon-purple { background: linear-gradient(135deg, #6c3fa0, #9261d0); }
+        .icon-orange { background: linear-gradient(135deg, #c76a1a, #e8922d); }
+        .icon-red { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        .icon-teal { background: linear-gradient(135deg, #0e8a7e, #1abc9c); }
+
+        .service-card-category {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card-category .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .cat-blue { color: #2d5a8f; }
+        .cat-blue .dot { background: #2d5a8f; }
+        .cat-green { color: #1a8a5c; }
+        .cat-green .dot { background: #1a8a5c; }
+        .cat-purple { color: #6c3fa0; }
+        .cat-purple .dot { background: #6c3fa0; }
+        .cat-orange { color: #c76a1a; }
+        .cat-orange .dot { background: #c76a1a; }
+        .cat-red { color: #c0392b; }
+        .cat-red .dot { background: #c0392b; }
+        .cat-teal { color: #0e8a7e; }
+        .cat-teal .dot { background: #0e8a7e; }
+
         .service-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.7rem;
             color: var(--primary);
+            position: relative;
+            z-index: 1;
         }
 
         .service-card p {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--gray);
             line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
+
+        .service-card-badge {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge-item {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-item svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .badge-blue { color: #2d5a8f; background: rgba(45,90,143,0.08); border: 1px solid rgba(45,90,143,0.15); }
+        .badge-green { color: #1a8a5c; background: rgba(26,138,92,0.08); border: 1px solid rgba(26,138,92,0.15); }
+        .badge-purple { color: #6c3fa0; background: rgba(108,63,160,0.08); border: 1px solid rgba(108,63,160,0.15); }
+        .badge-orange { color: #c76a1a; background: rgba(199,106,26,0.08); border: 1px solid rgba(199,106,26,0.15); }
+        .badge-red { color: #c0392b; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.15); }
+        .badge-teal { color: #0e8a7e; background: rgba(14,138,126,0.08); border: 1px solid rgba(14,138,126,0.15); }
 
         .service-item {
             background: var(--white);
@@ -910,26 +1005,12 @@
 
             .phase-tabs {
                 flex-direction: column;
-                gap: 0;
+                gap: 0.75rem;
+                padding: 0 1rem;
             }
 
             .phase-tab {
-                border-radius: 0 !important;
-                border-right: 2px solid #e0e0e0 !important;
-                border-bottom: none;
-            }
-
-            .phase-tab:first-child {
-                border-radius: 12px 12px 0 0 !important;
-            }
-
-            .phase-tab:last-child {
-                border-radius: 0 0 12px 12px !important;
-                border-bottom: 2px solid #e0e0e0;
-            }
-
-            .phase-tab.active {
-                border-color: var(--accent) !important;
+                min-width: auto;
             }
 
             .phase-header h3 {
@@ -1977,30 +2058,54 @@
         <div class="container">
             <h2>How Companies Use AI</h2>
             <p class="subtitle">Our work spans the most common areas where AI delivers measurable ROI:</p>
-            <div class="use-cases-grid editable-section">
-                <div class="use-case-card">
-                    <h3>Automation</h3>
-                    <p>Eliminate repetitive manual work and free your team to focus on what matters</p>
+            <div class="service-grid editable-section" style="max-width: 1200px; margin: 0 auto;">
+                <div class="service-card tint-blue">
+                    <div class="service-card-icon icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.29.55.84.94 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <div class="service-card-category cat-blue"><span class="dot"></span> EFFICIENCY</div>
+                    <h4>Automation</h4>
+                    <p>Eliminate repetitive manual work and free your team to focus on what matters.</p>
                 </div>
-                <div class="use-case-card">
-                    <h3>Data & Insights</h3>
-                    <p>Turn raw data into clear, actionable decisions across your business</p>
+                <div class="service-card tint-green">
+                    <div class="service-card-icon icon-green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <div class="service-card-category cat-green"><span class="dot"></span> INTELLIGENCE</div>
+                    <h4>Data & Insights</h4>
+                    <p>Turn raw data into clear, actionable decisions across your business.</p>
                 </div>
-                <div class="use-case-card">
-                    <h3>Personalization</h3>
-                    <p>Deliver smarter, more relevant customer experiences at scale</p>
+                <div class="service-card tint-orange">
+                    <div class="service-card-icon icon-orange">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <div class="service-card-category cat-orange"><span class="dot"></span> EXPERIENCE</div>
+                    <h4>Personalization</h4>
+                    <p>Deliver smarter, more relevant customer experiences at scale.</p>
                 </div>
-                <div class="use-case-card">
-                    <h3>Innovation</h3>
-                    <p>Identify new opportunities to enhance your products and services with AI</p>
+                <div class="service-card tint-purple">
+                    <div class="service-card-icon icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 12 18.469c-1.006 0-1.92.44-2.544 1.138l-.003.003"/></svg>
+                    </div>
+                    <div class="service-card-category cat-purple"><span class="dot"></span> GROWTH</div>
+                    <h4>Innovation</h4>
+                    <p>Identify new opportunities to enhance your products and services with AI.</p>
                 </div>
-                <div class="use-case-card">
-                    <h3>Operations</h3>
-                    <p>Streamline workflows, reduce costs, and improve execution across teams</p>
+                <div class="service-card tint-teal">
+                    <div class="service-card-icon icon-teal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="service-card-category cat-teal"><span class="dot"></span> OPERATIONS</div>
+                    <h4>Operations</h4>
+                    <p>Streamline workflows, reduce costs, and improve execution across teams.</p>
                 </div>
-                <div class="use-case-card">
-                    <h3>Enablement</h3>
-                    <p>Empower your organization with the knowledge, tools, and frameworks to adopt AI with confidence</p>
+                <div class="service-card tint-red">
+                    <div class="service-card-icon icon-red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="service-card-category cat-red"><span class="dot"></span> PEOPLE</div>
+                    <h4>Enablement</h4>
+                    <p>Empower your organization with the knowledge, tools, and frameworks to adopt AI with confidence.</p>
                 </div>
             </div>
         </div>
@@ -2063,18 +2168,15 @@
             <!-- Phase Tab Buttons -->
             <div class="phase-tabs">
                 <button class="phase-tab active" onclick="switchPhase(1)" data-phase="1">
-                    <span class="phase-tab-icon">🚀</span>
-                    <span class="phase-tab-number">Phase 1</span>
+                    <span class="phase-tab-number">🚀 Phase 1</span>
                     Getting Started
                 </button>
                 <button class="phase-tab" onclick="switchPhase(2)" data-phase="2">
-                    <span class="phase-tab-icon">⚡</span>
-                    <span class="phase-tab-number">Phase 2</span>
+                    <span class="phase-tab-number">⚡ Phase 2</span>
                     Going Deeper
                 </button>
                 <button class="phase-tab" onclick="switchPhase(3)" data-phase="3">
-                    <span class="phase-tab-icon">🔮</span>
-                    <span class="phase-tab-number">Phase 3</span>
+                    <span class="phase-tab-number">🧠 Phase 3</span>
                     Advanced
                 </button>
             </div>
@@ -2086,25 +2188,53 @@
                     <p>The foundation — quick wins and immediate impact for your business.</p>
                 </div>
                 <div class="service-grid">
-                    <div class="service-card">
-                        <div class="service-card-icon">🌐</div>
+                    <div class="service-card tint-blue">
+                        <div class="service-card-icon icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </div>
+                        <div class="service-card-category cat-blue"><span class="dot"></span> WEB & AI</div>
                         <h4>AI Website Creation</h4>
-                        <p>We build intelligent, conversion-focused websites with AI chatbots, automated lead capture, and behavioral personalization — so your site works for you around the clock.</p>
+                        <p>Intelligent, conversion-focused websites with AI chatbots, automated lead capture, and behavioral personalization — so your site works for you around the clock.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Live 24/7</span>
+                            <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> AI-powered</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🎯</div>
+                    <div class="service-card tint-green">
+                        <div class="service-card-icon icon-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div class="service-card-category cat-green"><span class="dot"></span> LEAD GEN</div>
                         <h4>AI Lead Qualification & Email Automation</h4>
-                        <p>Every lead gets scored automatically based on their actual conversation and intent. Hot leads get immediate personalized follow-up, warm leads enter nurture sequences, and nothing falls through the cracks.</p>
+                        <p>Every lead gets scored automatically based on their actual conversation and intent. Hot leads get immediate personalized follow-up — nothing falls through the cracks.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Auto-scoring</span>
+                            <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Instant emails</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🎓</div>
+                    <div class="service-card tint-purple">
+                        <div class="service-card-icon icon-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div class="service-card-category cat-purple"><span class="dot"></span> TRAINING</div>
                         <h4>Team Training & Workshops</h4>
-                        <p>Hands-on training designed for business teams, not engineers. We build the skills and confidence your people need to use AI effectively — from live workshops to custom playbooks and prompt libraries.</p>
+                        <p>Hands-on training designed for business teams, not engineers. We build the skills and confidence your people need to use AI effectively — from workshops to custom playbooks.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Hands-on</span>
+                            <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Playbooks</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">📚</div>
+                    <div class="service-card tint-orange">
+                        <div class="service-card-icon icon-orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </div>
+                        <div class="service-card-category cat-orange"><span class="dot"></span> KNOWLEDGE</div>
                         <h4>AI Knowledge Base</h4>
-                        <p>Turn your company's documents, processes, and expertise into a searchable AI-powered knowledge base. Faster onboarding, instant answers for your team, and consistent information across your organization.</p>
+                        <p>Turn your company's documents, processes, and expertise into a searchable AI-powered knowledge base. Faster onboarding, instant answers, and consistent information.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Instant answers</span>
+                            <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> All your docs</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2116,25 +2246,49 @@
                     <p>Custom-built systems that transform how your business operates.</p>
                 </div>
                 <div class="service-grid">
-                    <div class="service-card">
-                        <div class="service-card-icon">⚙️</div>
+                    <div class="service-card tint-blue">
+                        <div class="service-card-icon icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </div>
+                        <div class="service-card-category cat-blue"><span class="dot"></span> AUTOMATION</div>
                         <h4>AI Workflow Automations</h4>
-                        <p>We map your current workflows, identify where time is being lost, and build AI-powered automations that eliminate admin work and deliver immediate results across Sales, Operations, Marketing, and Customer Success.</p>
+                        <p>We map your workflows, identify where time is being lost, and build AI-powered automations that eliminate admin work and deliver immediate results.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Saves 10+ hrs/week</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🛠️</div>
+                    <div class="service-card tint-teal">
+                        <div class="service-card-icon icon-teal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                        </div>
+                        <div class="service-card-category cat-teal"><span class="dot"></span> TOOLS</div>
                         <h4>AI Tool Optimization</h4>
-                        <p>With hundreds of AI tools on the market, we cut through the noise. We evaluate your specific needs, recommend the right tools, and optimize how your team uses them — then support you through rollout and adoption.</p>
+                        <p>We cut through the noise — evaluate your needs, recommend the right tools, optimize how your team uses them, and support you through rollout and adoption.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Right tools, fast</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">📣</div>
+                    <div class="service-card tint-orange">
+                        <div class="service-card-icon icon-orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div class="service-card-category cat-orange"><span class="dot"></span> MARKETING</div>
                         <h4>AI Marketing & Personalization</h4>
-                        <p>Your website and campaigns adapt to every visitor automatically — behavioral targeting, personalized messaging based on traffic source, and AI-driven content that converts better over time.</p>
+                        <p>Your website and campaigns adapt to every visitor automatically — behavioral targeting, personalized messaging, and AI-driven content that converts.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Higher conversions</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🔄</div>
+                    <div class="service-card tint-green">
+                        <div class="service-card-icon icon-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <div class="service-card-category cat-green"><span class="dot"></span> SALES</div>
                         <h4>AI Sales Pipeline Optimization</h4>
-                        <p>End-to-end automation from first touch to closed deal. AI captures leads, qualifies them, sends personalized outreach, drafts responses when prospects reply, and keeps your pipeline moving — all on autopilot.</p>
+                        <p>End-to-end automation from first touch to closed deal. AI captures leads, qualifies them, sends personalized outreach, and keeps your pipeline moving.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Full autopilot</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2146,20 +2300,41 @@
                     <p>Enterprise-grade AI solutions for organizations ready to lead.</p>
                 </div>
                 <div class="service-grid">
-                    <div class="service-card">
-                        <div class="service-card-icon">🧠</div>
+                    <div class="service-card tint-purple">
+                        <div class="service-card-icon icon-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 12 18.469c-1.006 0-1.92.44-2.544 1.138l-.003.003"/></svg>
+                        </div>
+                        <div class="service-card-category cat-purple"><span class="dot"></span> ADVANCED AI</div>
                         <h4>Advanced AI Solutions</h4>
-                        <p>For organizations ready to go further — fine-tuned models, retrieval-augmented generation (RAG), AI-powered analytics, and industry-specific solutions built around your unique business challenges.</p>
+                        <p>Fine-tuned models, retrieval-augmented generation (RAG), AI-powered analytics, and industry-specific solutions built around your unique business challenges.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Enterprise-grade</span>
+                            <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Custom-built</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🤖</div>
+                    <div class="service-card tint-blue">
+                        <div class="service-card-icon icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/><circle cx="12" cy="16" r="1"/></svg>
+                        </div>
+                        <div class="service-card-category cat-blue"><span class="dot"></span> AI AGENTS</div>
                         <h4>Custom AI Agents</h4>
-                        <p>Purpose-built AI agents designed around your business — from chatbots trained on your FAQs and sales assistants that follow up automatically, to research agents and internal support systems your team will actually use.</p>
+                        <p>Purpose-built AI agents designed around your business — from chatbots and sales assistants to research agents and internal support systems your team will actually use.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Works 24/7</span>
+                            <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Purpose-built</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <div class="service-card-icon">🛡️</div>
+                    <div class="service-card tint-red">
+                        <div class="service-card-icon icon-red">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="service-card-category cat-red"><span class="dot"></span> GOVERNANCE</div>
                         <h4>AI Governance & Readiness</h4>
-                        <p>AI adoption without a clear framework creates risk. We help you define usage guidelines, data policies, approved tools, and compliance considerations — so your team can move fast without moving recklessly.</p>
+                        <p>We help you define usage guidelines, data policies, approved tools, and compliance considerations — so your team can move fast without moving recklessly.</p>
+                        <div class="service-card-badge">
+                            <span class="badge-item badge-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Risk-proof</span>
+                            <span class="badge-item badge-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Full framework</span>
+                        </div>
                     </div>
                 </div>
             </div>
