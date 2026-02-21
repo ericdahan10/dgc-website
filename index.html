@@ -3121,8 +3121,9 @@ async function submitEscalationForm() {
 
   const ticketId = "DGC-" + new Date().toISOString().slice(0,10).replace(/-/g,"") + "-" + Math.random().toString(36).substring(2,6).toUpperCase();
 
+  // Route through Cloudflare Worker to avoid CORS — worker calls Apps Script server-side
   try {
-    await fetch("https://script.google.com/macros/s/AKfycbywQXzIqRHOoDhXptjX0Mz3fKh06gQiv_yLg0Yf0nTFZDvqDRTHt1I1PuwbMaSMVb27lA/exec", {
+    await fetch(DGC_CHAT_API + "/escalation", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
