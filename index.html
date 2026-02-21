@@ -3402,10 +3402,10 @@ document.getElementById("contactForm").addEventListener("submit", function() {
           // PRIORITY 1: UTM source
           const utmVariants = {
             linkedin: { headline: "Your Competitors Are Already Using AI — Here's How to Pull Ahead", subtitle: "We help growing teams implement AI that saves time, closes more deals, and delivers better customer experiences. No hype — just real results.", cta: "Let's Connect 🤝", stat: "Sales teams using AI close 30% more deals — with less effort" },
-            google: { headline: "Stop Losing Hours to Manual Work — AI Can Fix That", subtitle: "From workflow automation to AI chatbots, we implement solutions that save 240+ hours per year and convert more of your website visitors into customers.", cta: "See How We Help →", stat: "Businesses recover 240+ hours per year through AI automation" },
+            google: { headline: "Stop Losing Hours to Manual Work — AI Can Fix That", subtitle: "From workflow automation to AI chatbots, we implement solutions that save 240+ hours per year and convert more of your website visitors into customers.", cta: "See How We Help ✨", stat: "Businesses recover 240+ hours per year through AI automation" },
             referral: { headline: "You Were Referred for a Reason — Let's Show You What AI Can Do", subtitle: "Our clients automate tedious work, respond to leads instantly, and close more deals. We'd love to show you the same results.", cta: "Start the Conversation 💬", stat: "AI chatbots increase website conversions by 23% on average" },
-            twitter: { headline: "AI That Actually Moves the Needle for Your Business", subtitle: "Not theory — real systems that save your team 10+ hours a week, qualify leads automatically, and keep customers coming back.", cta: "See Our Services →", stat: "Teams using AI save 2+ hours per person, per day" },
-            email: { headline: timeGreeting + " — Ready to See What AI Can Do for Your Business?", subtitle: "You clicked through for a reason. Let's talk about where AI can save you the most time and revenue.", cta: "Book a Free Audit →", stat: "Companies that implement AI see 25%+ revenue growth (IBM)" }
+            twitter: { headline: "AI That Actually Moves the Needle for Your Business", subtitle: "Not theory — real systems that save your team 10+ hours a week, qualify leads automatically, and keep customers coming back.", cta: "See Our Services 🔍", stat: "Teams using AI save 2+ hours per person, per day" },
+            email: { headline: timeGreeting + " — Ready to See What AI Can Do for Your Business?", subtitle: "You clicked through for a reason. Let's talk about where AI can save you the most time and revenue.", cta: "Book a Free Audit 🎯", stat: "Companies that implement AI see 25%+ revenue growth (IBM)" }
           };
 
           if (source && utmVariants[source]) {
@@ -3422,10 +3422,10 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             const topSection = getMostViewedSection(sectionsViewed);
             if (topSection) {
               const sectionMessages = {
-                training: { headline: "Your Team Could Be Saving 2+ Hours a Day with AI", subtitle: "You've been exploring our training services. Let's run a workshop and show your team exactly where AI fits into their workflow.", cta: "Book a Workshop →", stat: "Teams using AI save 2+ hours per person, per day (HubSpot)" },
-                automation: { headline: "Let's Automate the Work That's Eating Your Team's Time", subtitle: "Businesses recover 240+ hours per year through automation. You've been exploring this — let's talk about what's possible for your workflows.", cta: "See Automation in Action →", stat: "Companies save $46,000/yr on average from AI workflow automation" },
-                agents: { headline: "A Custom AI Agent That Works for Your Business, 24/7", subtitle: "AI agents handle inquiries, qualify leads, and resolve issues without adding headcount. You've been looking at this — let's build one for you.", cta: "Explore AI Agents →", stat: "AI chatbots increase conversions by 23% and resolve issues 18% faster" },
-                advanced: { headline: "Ready for the AI That Puts You 3 Steps Ahead of Competitors", subtitle: "Companies that scale AI beyond pilots see 25%+ revenue growth. You've been exploring advanced capabilities — let's map out what's possible.", cta: "Let's Go Deeper →", stat: "Leaders using advanced AI see 25%+ revenue growth (IBM)" }
+                training: { headline: "Your Team Could Be Saving 2+ Hours a Day with AI", subtitle: "You've been exploring our training services. Let's run a workshop and show your team exactly where AI fits into their workflow.", cta: "Book a Workshop 📋", stat: "Teams using AI save 2+ hours per person, per day (HubSpot)" },
+                automation: { headline: "Let's Automate the Work That's Eating Your Team's Time", subtitle: "Businesses recover 240+ hours per year through automation. You've been exploring this — let's talk about what's possible for your workflows.", cta: "See Automation in Action ⚡", stat: "Companies save $46,000/yr on average from AI workflow automation" },
+                agents: { headline: "A Custom AI Agent That Works for Your Business, 24/7", subtitle: "AI agents handle inquiries, qualify leads, and resolve issues without adding headcount. You've been looking at this — let's build one for you.", cta: "Explore AI Agents 🤖", stat: "AI chatbots increase conversions by 23% and resolve issues 18% faster" },
+                advanced: { headline: "Ready for the AI That Puts You 3 Steps Ahead of Competitors", subtitle: "Companies that scale AI beyond pilots see 25%+ revenue growth. You've been exploring advanced capabilities — let's map out what's possible.", cta: "Let's Go Deeper 🔬", stat: "Leaders using advanced AI see 25%+ revenue growth (IBM)" }
               };
               if (sectionMessages[topSection]) {
                 const v = sectionMessages[topSection];
@@ -3439,7 +3439,7 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             if (!applied) {
               if (hero) hero.textContent = "Welcome Back — Let's Find Your AI Quick Win";
               if (subtitle) subtitle.textContent = "You've been here before. Our clients typically see their first ROI within 30 days — let's figure out where that is for your business.";
-              if (cta) cta.textContent = "Book a Free AI Audit →";
+              if (cta) cta.textContent = "Book a Free AI Audit 🎯";
               if (statPill) statPill.textContent = "Most clients see ROI from AI within 30–90 days of implementation";
               applied = true;
             }
@@ -3449,7 +3449,7 @@ document.getElementById("contactForm").addEventListener("submit", function() {
           if (!applied && visitCount === 2) {
             if (hero) hero.textContent = timeGreeting + " — Good to See You Back";
             if (subtitle) subtitle.textContent = "Still weighing whether AI is right for your business? Our free AI Audit gives you a clear picture — no commitment, just clarity.";
-            if (cta) cta.textContent = "Get Your Free AI Audit →";
+            if (cta) cta.textContent = "Get Your Free AI Audit 🎯";
             if (statPill) statPill.textContent = "Our free AI Audit identifies your highest-ROI opportunities in 30 minutes";
             applied = true;
           }
@@ -3472,26 +3472,35 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             if (statPill) statPill.textContent = v.stat;
           }
 
-          // --- Rotating stat pill (cycles every 5s) ---
-          const stats = [
-            "Companies using AI automation save 240+ hours per year",
-            "AI chatbots increase website conversions by 23% on average",
-            "Businesses resolve support tickets 52% faster with AI",
-            "Sales teams using AI close 30% more deals — with less effort",
-            "Good UX + AI personalization can increase conversions up to 400%"
+          // --- Full hero rotation (headline + subtitle + CTA + stat) cycles every 10s ---
+          const heroRotationVariants = [
+            { headline: "Stop Losing Time, Leads, and Revenue to Manual Work", subtitle: "We build AI systems that work while you sleep — automating follow-up, qualifying leads, and delivering answers in seconds, not days.", cta: "Book a Consultation 🚀", stat: "AI chatbots increase website conversions by 23% on average" },
+            { headline: "Your Competitors Are Already Using AI — Are You?", subtitle: "From lead qualification to workflow automation, we implement AI that saves your team 10+ hours a week and keeps your pipeline moving.", cta: "See How We Help ✨", stat: "Companies using AI automation save 240+ hours per year" },
+            { headline: "What If AI Handled the Work Your Team Hates?", subtitle: "Repetitive tasks, slow follow-up, manual reporting — we automate the friction so your team can focus on the work that actually grows your business.", cta: "See Our Services 🔍", stat: "Teams using AI save 2+ hours per person, per day" },
+            { headline: "Planning Your Next Business Move? AI Is the Smartest One", subtitle: "We help companies implement AI that closes more deals, serves customers faster, and unlocks growth — without adding headcount.", cta: "Book a Free Audit 🎯", stat: "Sales teams using AI close 30% more deals — with less effort" },
+            { headline: "Most Businesses Are Leaving AI on the Table — Don't Be One of Them", subtitle: "We make AI practical. From your first chatbot to fully automated workflows, we build systems that deliver real ROI from day one.", cta: "Start the Conversation 💬", stat: "Businesses resolve support tickets 52% faster with AI" },
+            { headline: "AI Won't Replace Your Business — But It Will Transform It", subtitle: "We partner with companies at every stage of AI adoption — building the tools, training the teams, and automating the workflows that create lasting competitive advantage.", cta: "Let's Connect 🤝", stat: "Companies scaling AI beyond pilots see 25%+ revenue growth (IBM)" },
+            { headline: "The Best Time to Implement AI Was Last Year. The Second Best Is Now.", subtitle: "We cut through the noise and build AI systems that matter — lead capture, workflow automation, and customer intelligence that drive measurable results.", cta: "Book a Consultation 🚀", stat: "Good UX + AI personalization can increase conversions up to 400%" },
+            { headline: "Stop Guessing. Start Automating.", subtitle: "We identify exactly where AI will save you the most time and revenue — then we build it. No fluff, no vendor lock-in, just results.", cta: "Get Your Free AI Audit 🎯", stat: "Businesses recover 240+ hours per year through AI automation" }
           ];
-          let statIndex = 0;
-          function rotateStat() {
-            if (!statPill) return;
-            statPill.style.opacity = '0';
-            statPill.style.transition = 'opacity 0.4s';
+
+          let heroIndex = heroRotationVariants.findIndex(v => hero && v.headline === hero.textContent);
+          if (heroIndex === -1) heroIndex = 0;
+
+          function rotateHero() {
+            const els = [hero, subtitle, cta, statPill];
+            els.forEach(el => { if (el) { el.style.transition = 'opacity 0.5s'; el.style.opacity = '0'; } });
             setTimeout(() => {
-              statIndex = (statIndex + 1) % stats.length;
-              statPill.textContent = stats[statIndex];
-              statPill.style.opacity = '1';
-            }, 400);
+              heroIndex = (heroIndex + 1) % heroRotationVariants.length;
+              const v = heroRotationVariants[heroIndex];
+              if (hero) hero.textContent = v.headline;
+              if (subtitle) subtitle.textContent = v.subtitle;
+              if (cta) cta.textContent = v.cta;
+              if (statPill) statPill.textContent = v.stat;
+              els.forEach(el => { if (el) el.style.opacity = '1'; });
+            }, 500);
           }
-          setInterval(rotateStat, 30000);
+          setInterval(rotateHero, 45000);
 
           // --- Section scroll tracking ---
           const serviceObserver = new IntersectionObserver((entries) => {
