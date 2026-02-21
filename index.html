@@ -196,6 +196,47 @@
             text-align: center;
         }
 
+        /* Hero proof pill */
+        .hero-proof-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(74,138,199,0.1);
+            border: 1px solid rgba(74,138,199,0.25);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 1.6rem;
+            animation: fadeInUp 0.6s ease-out;
+            letter-spacing: 0.2px;
+        }
+        .hero-proof-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4a8ac7;
+            animation: pillPulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pillPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+
+        .hero-sub-cta {
+            display: block;
+            font-size: 0.82rem !important;
+            color: rgba(255,255,255,0.35) !important;
+            margin-top: 0.9rem !important;
+            margin-bottom: 0 !important;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.2px;
+        }
+
         .cta-button {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -213,6 +254,92 @@
             background: var(--accent-light);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(30, 58, 95, 0.5);
+        }
+
+        /* ===== Stats Strip ===== */
+        .stats-strip {
+            background: #ffffff;
+            border-top: 1px solid #eaedf2;
+            border-bottom: 1px solid #eaedf2;
+            padding: 0;
+        }
+
+        .stats-strip-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .stat-item {
+            padding: 2.2rem 2rem;
+            text-align: center;
+            border-right: 1px solid #eaedf2;
+            position: relative;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #142d5a;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.03em;
+        }
+
+        .stat-number span {
+            color: #3a7bc8;
+        }
+
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: #888;
+            line-height: 1.5;
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
+        .stat-source {
+            display: block;
+            font-size: 0.68rem;
+            color: #bbb;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 900px) {
+            .stats-strip-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stat-item:nth-child(2) {
+                border-right: none;
+            }
+            .stat-item:nth-child(3) {
+                border-top: 1px solid #eaedf2;
+            }
+            .stat-item:nth-child(4) {
+                border-top: 1px solid #eaedf2;
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-strip-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .stat-item {
+                padding: 1.5rem 1rem;
+            }
         }
 
         /* Container */
@@ -511,6 +638,20 @@
             color: var(--primary);
             position: relative;
             z-index: 1;
+        }
+
+        .service-card .service-outcome {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #142d5a;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 1;
+            padding: 0.5rem 0.75rem;
+            background: rgba(45,90,143,0.06);
+            border-left: 3px solid #3a7bc8;
+            border-radius: 0 6px 6px 0;
         }
 
         .service-card p {
@@ -914,6 +1055,15 @@
             .hero p {
                 font-size: 1rem;
                 margin: 0 auto 2rem;
+            }
+
+            .hero-proof-pill {
+                font-size: 0.72rem;
+                padding: 5px 12px;
+            }
+
+            .hero-sub-cta {
+                font-size: 0.78rem !important;
             }
 
             /* Sections */
@@ -2226,11 +2376,45 @@
         <div class="shooting-star"></div>
         <div class="shooting-star shooting-star-2"></div>
         <div class="container">
-            <h1>AI for Real Business Growth</h1>
-            <p>We help companies unlock growth and efficiency by applying AI to the problems that matter most.</p>
-            <a href="https://calendar.app.google/Nr94UDUnvfWpMzk49" target="_blank" class="cta-button">Book a Consultation 🚀</a>
+            <div class="hero-proof-pill">
+                <span class="hero-proof-dot"></span>
+                <span id="hero-stat">Companies using AI automation save 240+ hours per year</span>
+            </div>
+            <h1 id="hero-headline">Stop Losing Time, Leads, and Revenue to Manual Work</h1>
+            <p id="hero-subtitle">We build AI systems that work while you sleep — automating follow-up, qualifying leads, and delivering answers in seconds, not days.</p>
+            <a href="https://calendar.app.google/Nr94UDUnvfWpMzk49" target="_blank" class="cta-button" id="hero-cta">Get a Free AI Audit 🚀</a>
         </div>
     </section>
+
+    <!-- Stats Strip -->
+    <div class="stats-strip">
+        <div class="stats-strip-inner">
+            <div class="stat-item">
+                <div class="stat-number">240<span>+</span></div>
+                <div class="stat-label">hours saved per year through AI workflow automation
+                    <span class="stat-source">Industry avg. — McKinsey / Zapier*</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">23<span>%</span></div>
+                <div class="stat-label">more conversions with an AI chatbot on your site
+                    <span class="stat-source">Glassix study, 2024*</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">52<span>%</span></div>
+                <div class="stat-label">faster ticket resolution with AI-powered support
+                    <span class="stat-source">Freshworks, 2024*</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">400<span>%</span></div>
+                <div class="stat-label">conversion rate increase from better UX &amp; AI personalization
+                    <span class="stat-source">Forrester Research*</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Overview Section -->
     <section id="overview" class="overview">
@@ -2425,6 +2609,7 @@
                         </div>
                         <div class="service-card-category cat-blue"><span class="dot"></span> WEB & AI</div>
                         <h4>AI Website Creation</h4>
+                        <p class="service-outcome">Good UX + AI chat = up to 23% more conversions and leads captured 24/7.</p>
                         <p>Intelligent, conversion-focused websites with AI chatbots, automated lead capture, and behavioral personalization — so your site works for you around the clock.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Live 24/7</span>
@@ -2437,6 +2622,7 @@
                         </div>
                         <div class="service-card-category cat-green"><span class="dot"></span> LEAD GEN</div>
                         <h4>AI Lead Qualification & Email Automation</h4>
+                        <p class="service-outcome">Stop losing hot leads to slow follow-up — automated scoring and instant outreach mean no opportunity slips through.</p>
                         <p>Every lead gets scored automatically based on their actual conversation and intent. Hot leads get immediate personalized follow-up — nothing falls through the cracks.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Auto-scoring</span>
@@ -2449,6 +2635,7 @@
                         </div>
                         <div class="service-card-category cat-purple"><span class="dot"></span> TRAINING</div>
                         <h4>Team Training & Workshops</h4>
+                        <p class="service-outcome">Teams using AI save 2+ hours per day — your people will leave knowing exactly how to reclaim that time.</p>
                         <p>Hands-on training designed for business teams, not engineers. We build the skills and confidence your people need to use AI effectively — from workshops to custom playbooks.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Hands-on</span>
@@ -2461,6 +2648,7 @@
                         </div>
                         <div class="service-card-category cat-orange"><span class="dot"></span> KNOWLEDGE</div>
                         <h4>AI Knowledge Base</h4>
+                        <p class="service-outcome">New hires onboard faster. Questions get answered instantly. Your team stops wasting hours searching for information.</p>
                         <p>Turn your company's documents, processes, and expertise into a searchable AI-powered knowledge base. Faster onboarding, instant answers, and consistent information.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Instant answers</span>
@@ -2483,6 +2671,7 @@
                         </div>
                         <div class="service-card-category cat-blue"><span class="dot"></span> AUTOMATION</div>
                         <h4>AI Workflow Automations</h4>
+                        <p class="service-outcome">Businesses recover 240+ hours per year by automating repetitive tasks — that's 6 full work weeks back.</p>
                         <p>We map your workflows, identify where time is being lost, and build AI-powered automations that eliminate admin work and deliver immediate results.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Saves 10+ hrs/week</span>
@@ -2494,6 +2683,7 @@
                         </div>
                         <div class="service-card-category cat-teal"><span class="dot"></span> TOOLS</div>
                         <h4>AI Tool Optimization</h4>
+                        <p class="service-outcome">Most teams use 10% of their AI tools' potential — we unlock the other 90%.</p>
                         <p>We cut through the noise — evaluate your needs, recommend the right tools, optimize how your team uses them, and support you through rollout and adoption.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Right tools, fast</span>
@@ -2505,6 +2695,7 @@
                         </div>
                         <div class="service-card-category cat-orange"><span class="dot"></span> MARKETING</div>
                         <h4>AI Marketing & Personalization</h4>
+                        <p class="service-outcome">Personalized experiences drive 20–40% more revenue — your marketing works harder without more spend.</p>
                         <p>Your website and campaigns adapt to every visitor automatically — behavioral targeting, personalized messaging, and AI-driven content that converts.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Higher conversions</span>
@@ -2516,6 +2707,7 @@
                         </div>
                         <div class="service-card-category cat-green"><span class="dot"></span> SALES</div>
                         <h4>AI Sales Pipeline Optimization</h4>
+                        <p class="service-outcome">Sales teams using AI close 30% more deals and spend 82% more time on actual selling, not admin.</p>
                         <p>End-to-end automation from first touch to closed deal. AI captures leads, qualifies them, sends personalized outreach, and keeps your pipeline moving.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Full autopilot</span>
@@ -2537,6 +2729,7 @@
                         </div>
                         <div class="service-card-category cat-purple"><span class="dot"></span> ADVANCED AI</div>
                         <h4>Advanced AI Solutions</h4>
+                        <p class="service-outcome">Companies that scale AI beyond pilots see 25%+ revenue growth — this is where the real competitive advantage lives.</p>
                         <p>Fine-tuned models, retrieval-augmented generation (RAG), AI-powered analytics, and industry-specific solutions built around your unique business challenges.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Enterprise-grade</span>
@@ -2549,6 +2742,7 @@
                         </div>
                         <div class="service-card-category cat-blue"><span class="dot"></span> AI AGENTS</div>
                         <h4>Custom AI Agents</h4>
+                        <p class="service-outcome">A purpose-built AI agent works 24/7 — handling inquiries, qualifying leads, and resolving issues without adding headcount.</p>
                         <p>Purpose-built AI agents designed around your business — from chatbots and sales assistants to research agents and internal support systems your team will actually use.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Works 24/7</span>
@@ -2561,6 +2755,7 @@
                         </div>
                         <div class="service-card-category cat-red"><span class="dot"></span> GOVERNANCE</div>
                         <h4>AI Governance & Readiness</h4>
+                        <p class="service-outcome">Move fast without the risk — a clear governance framework means your team can adopt AI confidently and compliantly.</p>
                         <p>We help you define usage guidelines, data policies, approved tools, and compliance considerations — so your team can move fast without moving recklessly.</p>
                         <div class="service-card-badge">
                             <span class="badge-item badge-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Risk-proof</span>
@@ -2666,6 +2861,7 @@
               <text x="98" y="37" font-family="'Questrial', sans-serif" font-weight="400" font-size="6" fill="rgba(255,255,255,0.4)" letter-spacing="4">CONSULTING</text>
             </svg>
             <p style="font-size:0.8rem; opacity:0.4; margin:0;">&copy; 2025 Dahan Group Consulting. All rights reserved.</p>
+            <p style="font-size:0.72rem; opacity:0.3; margin:0; max-width:600px; text-align:center; line-height:1.6;">* What businesses achieve with AI — based on published industry research</p>
         </div>
     </footer>
 
@@ -3182,9 +3378,31 @@ document.getElementById("contactForm").addEventListener("submit", function() {
         (function() {
           const params = new URLSearchParams(window.location.search);
           const source = (params.get('utm_source') || '').toLowerCase();
-          const hero = document.querySelector('.hero h1');
-          const subtitle = document.querySelector('.hero p');
-          const cta = document.querySelector('.hero .cta-button');
+          const hero = document.getElementById('hero-headline');
+          const subtitle = document.getElementById('hero-subtitle');
+          const cta = document.getElementById('hero-cta');
+          const statPill = document.getElementById('hero-stat');
+
+          // --- Rotating stat pills (cycles every 5s on first visit) ---
+          const stats = [
+            "Companies using AI automation save 240+ hours per year",
+            "AI chatbots increase website conversions by 23% on average",
+            "Businesses resolve support tickets 52% faster with AI",
+            "Sales teams using AI close 30% more deals — with less effort",
+            "Good UX + AI personalization can increase conversions up to 400%"
+          ];
+          let statIndex = 0;
+          function rotateStat() {
+            if (!statPill) return;
+            statPill.style.opacity = '0';
+            statPill.style.transition = 'opacity 0.4s';
+            setTimeout(() => {
+              statIndex = (statIndex + 1) % stats.length;
+              statPill.textContent = stats[statIndex];
+              statPill.style.opacity = '1';
+            }, 400);
+          }
+          setInterval(rotateStat, 5000);
 
           // --- Visit tracking ---
           const now = Date.now();
@@ -3206,35 +3424,39 @@ document.getElementById("contactForm").addEventListener("submit", function() {
           if (hour >= 12 && hour < 17) timeGreeting = "Good afternoon";
           else if (hour >= 17) timeGreeting = "Good evening";
 
-          // --- Determine which personalization to apply (priority order) ---
           let applied = false;
 
-          // PRIORITY 1: UTM source (explicit marketing links)
+          // PRIORITY 1: UTM source
           const utmVariants = {
             linkedin: {
-              headline: "AI Solutions for Growing Teams",
-              subtitle: "We help companies like yours unlock efficiency and growth with practical AI — no hype, just results.",
-              cta: "Let's Connect 🤝"
+              headline: "Your Competitors Are Already Using AI — Here's How to Pull Ahead",
+              subtitle: "We help growing teams implement AI that saves time, closes more deals, and delivers better customer experiences. No hype — just real results.",
+              cta: "Let's Connect 🤝",
+              stat: "Sales teams using AI close 30% more deals — with less effort"
             },
             google: {
-              headline: "Looking for AI Consulting? You're in the Right Place",
-              subtitle: "From workflow automation to custom AI agents — we help businesses implement AI that actually delivers ROI.",
-              cta: "See How We Help →"
+              headline: "Stop Losing Hours to Manual Work — AI Can Fix That",
+              subtitle: "From workflow automation to AI chatbots, we implement solutions that save 240+ hours per year and convert more of your website visitors into customers.",
+              cta: "See How We Help →",
+              stat: "Businesses recover 240+ hours per year through AI automation"
             },
             referral: {
-              headline: "Welcome — Glad You Were Referred",
-              subtitle: "Someone you trust pointed you our way. Let's talk about what AI can do for your business.",
-              cta: "Start the Conversation 💬"
+              headline: "You Were Referred for a Reason — Let's Show You What AI Can Do",
+              subtitle: "Our clients automate tedious work, respond to leads instantly, and close more deals. We'd love to show you the same results.",
+              cta: "Start the Conversation 💬",
+              stat: "AI chatbots increase website conversions by 23% on average"
             },
             twitter: {
-              headline: "AI That Drives Real Business Results",
-              subtitle: "Not just theory — we build and implement AI solutions that save time, cut costs, and grow revenue.",
-              cta: "See Our Services →"
+              headline: "AI That Actually Moves the Needle for Your Business",
+              subtitle: "Not theory — real systems that save your team 10+ hours a week, qualify leads automatically, and keep customers coming back.",
+              cta: "See Our Services →",
+              stat: "Teams using AI save 2+ hours per person, per day"
             },
             email: {
-              headline: timeGreeting + " — Good to See You Here",
-              subtitle: "You clicked through for a reason. Let us show you how AI can transform the way your team works.",
-              cta: "Let's Talk →"
+              headline: timeGreeting + " — Ready to See What AI Can Do for Your Business?",
+              subtitle: "You clicked through for a reason. Let's talk about where AI can save you the most time and revenue.",
+              cta: "Book a Free Audit →",
+              stat: "Companies that implement AI see 25%+ revenue growth (IBM)"
             }
           };
 
@@ -3243,76 +3465,91 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             if (hero) hero.textContent = v.headline;
             if (subtitle) subtitle.textContent = v.subtitle;
             if (cta) cta.textContent = v.cta;
+            if (statPill) statPill.textContent = v.stat;
             applied = true;
-            console.log("Personalization: UTM source =", source);
           }
 
           // PRIORITY 2: Returning visitor (3+ visits)
           if (!applied && visitCount >= 3) {
-            // Check if they've been looking at specific services
             const topSection = getMostViewedSection(sectionsViewed);
-
             if (topSection) {
               const sectionMessages = {
-                'training': {
-                  headline: "Ready to Upskill Your Team with AI?",
-                  subtitle: "You've been exploring our training services. Let's set up a workshop tailored to your team's needs.",
-                  cta: "Book a Workshop →"
+                training: {
+                  headline: "Your Team Could Be Saving 2+ Hours a Day with AI",
+                  subtitle: "You've been exploring our training services. Let's run a workshop and show your team exactly where AI fits into their workflow.",
+                  cta: "Book a Workshop →",
+                  stat: "Teams using AI save 2+ hours per person, per day (HubSpot)"
                 },
-                'automation': {
-                  headline: "Let's Automate What's Slowing You Down",
-                  subtitle: "You've been checking out our workflow automation services. We'd love to show you what's possible.",
-                  cta: "See Automation in Action →"
+                automation: {
+                  headline: "Let's Automate the Work That's Eating Your Team's Time",
+                  subtitle: "Businesses recover 240+ hours per year through automation. You've been exploring this — let's talk about what's possible for your workflows.",
+                  cta: "See Automation in Action →",
+                  stat: "Companies save $46,000/yr on average from AI workflow automation"
                 },
-                'agents': {
-                  headline: "Custom AI Agents, Built for Your Business",
-                  subtitle: "Interested in AI agents? Let's talk about building one designed around your workflows.",
-                  cta: "Explore AI Agents →"
+                agents: {
+                  headline: "A Custom AI Agent That Works for Your Business, 24/7",
+                  subtitle: "AI agents handle inquiries, qualify leads, and resolve issues without adding headcount. You've been looking at this — let's build one for you.",
+                  cta: "Explore AI Agents →",
+                  stat: "AI chatbots increase conversions by 23% and resolve issues 18% faster"
                 },
-                'advanced': {
-                  headline: "Ready for Advanced AI?",
-                  subtitle: "Fine-tuned models, RAG systems, and more — let's discuss what's next for your business.",
-                  cta: "Let's Go Deeper →"
+                advanced: {
+                  headline: "Ready for the AI That Puts You 3 Steps Ahead of Competitors",
+                  subtitle: "Companies that scale AI beyond pilots see 25%+ revenue growth. You've been exploring advanced capabilities — let's map out what's possible.",
+                  cta: "Let's Go Deeper →",
+                  stat: "Leaders using advanced AI see 25%+ revenue growth (IBM)"
                 }
               };
-
               if (sectionMessages[topSection]) {
                 const v = sectionMessages[topSection];
                 if (hero) hero.textContent = v.headline;
                 if (subtitle) subtitle.textContent = v.subtitle;
                 if (cta) cta.textContent = v.cta;
+                if (statPill) statPill.textContent = v.stat;
                 applied = true;
               }
             }
-
             if (!applied) {
-              if (hero) hero.textContent = "Welcome Back — Let's Keep Going";
-              if (subtitle) subtitle.textContent = "You've been here before, so you already know we're serious about AI. Let's find the right next step for your business.";
-              if (cta) cta.textContent = "Book a Free Consultation →";
+              if (hero) hero.textContent = "Welcome Back — Let's Find Your AI Quick Win";
+              if (subtitle) subtitle.textContent = "You've been here before. Our clients typically see their first ROI within 30 days — let's figure out where that is for your business.";
+              if (cta) cta.textContent = "Book a Free AI Audit →";
+              if (statPill) statPill.textContent = "Most clients see ROI from AI within 30–90 days of implementation";
               applied = true;
             }
           }
 
           // PRIORITY 3: Second visit
           if (!applied && visitCount === 2) {
-            if (hero) hero.textContent = timeGreeting + " — Welcome Back";
-            if (subtitle) subtitle.textContent = "Good to see you again. Still exploring how AI can help your business? We're here when you're ready.";
-            if (cta) cta.textContent = "Let's Talk →";
+            if (hero) hero.textContent = timeGreeting + " — Good to See You Back";
+            if (subtitle) subtitle.textContent = "Still weighing whether AI is right for your business? Our free AI Audit gives you a clear picture — no commitment, just clarity.";
+            if (cta) cta.textContent = "Get Your Free AI Audit →";
+            if (statPill) statPill.textContent = "Our free AI Audit identifies your highest-ROI opportunities in 30 minutes";
             applied = true;
           }
 
-          // PRIORITY 4: First visit with time-of-day greeting
+          // PRIORITY 4: First visit — time-aware
           if (!applied) {
-            // Keep default hero but add time-aware greeting to subtitle
-            if (subtitle) {
-              const timeSubtitles = {
-                morning: "Start your day with a smarter approach. We help companies unlock growth and efficiency by applying AI to the problems that matter most.",
-                afternoon: "We help companies unlock growth and efficiency by applying AI to the problems that matter most.",
-                evening: "Planning your next move? We help companies unlock growth and efficiency by applying AI to the problems that matter most."
-              };
-              if (hour < 12) subtitle.textContent = timeSubtitles.morning;
-              else if (hour >= 17) subtitle.textContent = timeSubtitles.evening;
-            }
+            const timeVariants = {
+              morning: {
+                headline: "Stop Losing Time, Leads, and Revenue to Manual Work",
+                subtitle: "Start today with a smarter approach. We build AI systems that automate follow-up, qualify leads instantly, and deliver answers in seconds — not days.",
+                stat: "Companies using AI automation save 240+ hours per year"
+              },
+              afternoon: {
+                headline: "Stop Losing Time, Leads, and Revenue to Manual Work",
+                subtitle: "We build AI systems that work while you sleep — automating follow-up, qualifying leads, and delivering answers in seconds, not days.",
+                stat: "AI chatbots increase website conversions by 23% on average"
+              },
+              evening: {
+                headline: "Planning Your Next Business Move? AI Is the Smartest One",
+                subtitle: "While you plan, your competitors are automating. We build AI systems that save 240+ hours per year and keep leads from going cold.",
+                stat: "Sales teams using AI close 30% more deals — with less effort"
+              }
+            };
+            const tod = hour < 12 ? 'morning' : hour >= 17 ? 'evening' : 'afternoon';
+            const v = timeVariants[tod];
+            if (hero) hero.textContent = v.headline;
+            if (subtitle) subtitle.textContent = v.subtitle;
+            if (statPill) statPill.textContent = v.stat;
           }
 
           // --- Section scroll tracking ---
@@ -3321,24 +3558,20 @@ document.getElementById("contactForm").addEventListener("submit", function() {
               if (entry.isIntersecting) {
                 const el = entry.target;
                 let section = null;
-
                 const text = el.textContent.toLowerCase();
                 if (text.includes('training') || text.includes('workshop')) section = 'training';
                 else if (text.includes('automation') || text.includes('workflow')) section = 'automation';
                 else if (text.includes('agent')) section = 'agents';
                 else if (text.includes('advanced') || text.includes('fine-tuned') || text.includes('rag')) section = 'advanced';
-
                 if (section) {
                   const viewed = JSON.parse(localStorage.getItem('dgc_sections') || '[]');
                   viewed.push({ section: section, time: Date.now() });
-                  // Keep last 50 entries
                   if (viewed.length > 50) viewed.splice(0, viewed.length - 50);
                   localStorage.setItem('dgc_sections', JSON.stringify(viewed));
                 }
               }
             });
           }, { threshold: 0.5 });
-
 
           // --- Helper: find most viewed section ---
           function getMostViewedSection(sections) {
@@ -3348,7 +3581,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
               counts[s.section] = (counts[s.section] || 0) + 1;
             });
             const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-            // Only return if they've shown real interest (3+ views)
             return sorted[0][1] >= 3 ? sorted[0][0] : null;
           }
 
@@ -3361,8 +3593,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
               clearTimeout(scrollTimeout);
               scrollTimeout = setTimeout(() => {
                 const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-
-                // If they've scrolled 60%+ of the page, show a subtle nudge
                 if (scrollPercent > 0.6) {
                   showSmartNudge();
                   window.removeEventListener('scroll', scrollHandler);
@@ -3373,7 +3603,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
 
           function showSmartNudge() {
             if (localStorage.getItem('dgc_popup_shown')) return;
-
             const nudge = document.createElement('div');
             nudge.id = 'dgc-smart-nudge';
             nudge.innerHTML = `
@@ -3386,12 +3615,10 @@ document.getElementById("contactForm").addEventListener("submit", function() {
                 </div>
               </div>
             `;
-
             document.body.appendChild(nudge);
             localStorage.setItem('dgc_popup_shown', Date.now());
           }
 
-          // Add nudge animation
           const nudgeStyle = document.createElement('style');
           nudgeStyle.textContent = `
             @keyframes nudgeSlide {
