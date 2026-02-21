@@ -262,34 +262,9 @@
             margin-bottom: 4rem;
         }
 
-        .use-cases-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
 
-        .use-case-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
 
-        .use-case-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
 
-        .use-case-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
 
         /* Services Section - Interactive Phases */
         .services {
@@ -579,53 +554,13 @@
         .badge-red { color: #c0392b; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.15); }
         .badge-teal { color: #0e8a7e; background: rgba(14,138,126,0.08); border: 1px solid rgba(14,138,126,0.15); }
 
-        .service-item {
-            background: var(--white);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-        }
 
-        .service-item h4 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
 
-        .service-item p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
 
-        .service-item ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
 
-        .service-item li {
-            margin-bottom: 0.7rem;
-            color: var(--gray);
-        }
 
-        .service-item strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
 
-        .deliverables {
-            background: rgba(30, 58, 95, 0.05);
-            padding: 1.5rem;
-            border-radius: 6px;
-            margin-top: 1.5rem;
-        }
 
-        .deliverables h5 {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            color: var(--accent);
-        }
 
         /* Contact Section */
         .contact {
@@ -1001,19 +936,8 @@
                 font-size: 1rem;
             }
 
-            /* Use Cases Grid */
-            .use-cases-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
 
-            .use-case-card {
-                padding: 1.5rem;
-            }
 
-            .use-case-card h3 {
-                font-size: 1.2rem;
-            }
 
             /* Use Cases - horizontal scroll on mobile */
             .use-cases .service-grid {
@@ -1208,18 +1132,8 @@
                 font-size: 1.15rem;
             }
 
-            .service-item {
-                padding: 1.5rem 1.2rem;
-            }
 
-            .service-item h4 {
-                font-size: 1.3rem;
-            }
 
-            .service-item p,
-            .service-item li {
-                font-size: 0.95rem;
-            }
 
             /* Approach - inline expand on mobile */
             .timeline-detail-panel {
@@ -1626,14 +1540,6 @@
             position: relative;
         }
 
-        .edit-hint {
-            font-size: 0.85rem;
-            color: var(--gray-light);
-            font-style: italic;
-            margin-top: 1.5rem;
-            opacity: 0.8;
-            text-align: center;
-        }
         /* ===== DGC Chat Widget ===== */
 
 /* Launcher button */
@@ -3376,7 +3282,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
                 if (subtitle) subtitle.textContent = v.subtitle;
                 if (cta) cta.textContent = v.cta;
                 applied = true;
-                console.log("Personalization: returning visitor, interest =", topSection);
               }
             }
 
@@ -3385,7 +3290,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
               if (subtitle) subtitle.textContent = "You've been here before, so you already know we're serious about AI. Let's find the right next step for your business.";
               if (cta) cta.textContent = "Book a Free Consultation →";
               applied = true;
-              console.log("Personalization: returning visitor (general)");
             }
           }
 
@@ -3395,7 +3299,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             if (subtitle) subtitle.textContent = "Good to see you again. Still exploring how AI can help your business? We're here when you're ready.";
             if (cta) cta.textContent = "Let's Talk →";
             applied = true;
-            console.log("Personalization: second visit");
           }
 
           // PRIORITY 4: First visit with time-of-day greeting
@@ -3410,7 +3313,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
               if (hour < 12) subtitle.textContent = timeSubtitles.morning;
               else if (hour >= 17) subtitle.textContent = timeSubtitles.evening;
             }
-            console.log("Personalization: first visit, time =", timeGreeting);
           }
 
           // --- Section scroll tracking ---
@@ -3437,10 +3339,6 @@ document.getElementById("contactForm").addEventListener("submit", function() {
             });
           }, { threshold: 0.5 });
 
-          // Observe service items
-          document.querySelectorAll('.service-item').forEach(item => {
-            serviceObserver.observe(item);
-          });
 
           // --- Helper: find most viewed section ---
           function getMostViewedSection(sections) {
