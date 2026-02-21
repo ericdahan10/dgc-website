@@ -3486,7 +3486,7 @@ document.getElementById("contactForm").addEventListener("submit", function() {
           ];
 
           let heroIndex = heroRotationVariants.findIndex(v => hero && v.headline === hero.textContent);
-          if (heroIndex === -1) heroIndex = 0;
+         if (heroIndex === -1) heroIndex = Math.floor(Math.random() * heroRotationVariants.length);
 
           function rotateHero() {
             const els = [hero, subtitle, cta, statPill];
