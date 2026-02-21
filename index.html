@@ -2969,11 +2969,88 @@ function showContactForm() {
   messagesEl.appendChild(formWrap);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 
-  // Focus first field
   setTimeout(() => {
     const nameField = document.getElementById("dgc-lead-name");
     if (nameField) nameField.focus();
   }, 100);
+}
+
+// ── Escalation form — email + phone required before ticket fires ──
+let pendingEscalationData = null;
+
+function showEscalationForm(ticketData) {
+  pendingEscalationData = ticketData;
+
+  const formWrap = document.createElement("div");
+  formWrap.className = "dgc-inline-form";
+  formWrap.id = "dgc-escalation-form";
+  formWrap.innerHTML = `
+    <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:8px;font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px;">TO CONNECT YOU WITH OUR TEAM</div>
+    <label>Name</label>
+    <input type="text" id="dgc-esc-name" placeholder="Your name" />
+    <label>Email <span style="color:#e57373;">*</span></label>
+    <input type="email" id="dgc-esc-email" placeholder="you@company.com" required />
+    <label>Phone <span style="color:#e57373;">*</span></label>
+    <input type="tel" id="dgc-esc-phone" placeholder="(555) 123-4567" required />
+    <button onclick="submitEscalationForm()">Connect Me With Your Team &rarr;</button>
+  `;
+  messagesEl.appendChild(formWrap);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+
+  setTimeout(() => {
+    const nameField = document.getElementById("dgc-esc-name");
+    if (nameField) nameField.focus();
+  }, 100);
+}
+
+async function submitEscalationForm() {
+  const name = (document.getElementById("dgc-esc-name")?.value || "").trim();
+  const email = (document.getElementById("dgc-esc-email")?.value || "").trim();
+  const phone = (document.getElementById("dgc-esc-phone")?.value || "").trim();
+
+  if (!email || !phone) {
+    alert("Please enter your email and phone number so our team can reach you.");
+    return;
+  }
+
+  const formEl = document.getElementById("dgc-escalation-form");
+  const btn = formEl.querySelector("button");
+  btn.textContent = "Connecting you...";
+  btn.disabled = true;
+
+  // Enrich the pending ticket with contact info
+  if (pendingEscalationData) {
+    pendingEscalationData.name = name || "Unknown";
+    pendingEscalationData.email = email;
+    pendingEscalationData.phone = phone;
+  }
+
+  // Fire the ticket to the worker
+  try {
+    await fetch(DGC_CHAT_API + "/escalate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ticketData: pendingEscalationData,
+        messages: chatHistory.slice(-10),
+      }),
+    });
+  } catch (e) {
+    console.error("Escalation submit error:", e);
+  }
+
+  // Show success
+  formEl.innerHTML = `<div class="dgc-form-success">✅ Got it, ${name ? name.split(" ")[0] : "thanks"}! A specialist will reach out to ${email} shortly.</div>`;
+  contactCollected = true;
+  pendingEscalationData = null;
+
+  // Update chat history so Claude knows
+  chatHistory.push({ role: "user", content: "My name is " + (name || "unknown") + ", email is " + email + ", phone is " + phone });
+  chatHistory.push({ role: "assistant", content: "Perfect, I've passed your details to our team. Someone will be in touch shortly!" });
+
+  setTimeout(() => {
+    addMsg("Our team has your details and will reach out soon. Is there anything else I can help with in the meantime?", "bot");
+  }, 800);
 }
 
 async function submitInlineForm() {
@@ -3094,8 +3171,8 @@ async function sendMessage(text) {
     const isEscalation = lower.includes("specialist will") || lower.includes("team member") || lower.includes("someone will") || lower.includes("follow up shortly") || lower.includes("be in touch shortly") || lower.includes("escalat");
 
     if (isEscalation) {
-      // Escalation detected — show booking CTA, not lead form
-      setTimeout(() => showQuickReplies(["Book a call now", "I'll wait for your team", "Tell me more first"]), 600);
+      // Escalation detected — collect contact info before firing ticket
+      setTimeout(() => showEscalationForm(null), 600);
     } else if (!contactCollected && (lower.includes("contact") || lower.includes("email") || lower.includes("reach out") || lower.includes("get in touch") || lower.includes("schedule") || lower.includes("book"))) {
       setTimeout(() => showContactForm(), 600);
     } else if (lower.includes("service") || lower.includes("help you")) {
