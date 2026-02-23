@@ -317,6 +317,8 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+        /* Reserve vertical space to reduce layout shifts when hero text changes */
+        min-height: 5.5rem;
       }
 
       .hero p {
@@ -328,6 +330,7 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+        min-height: 3.2rem;
       }
 
       .hero .container {
@@ -362,6 +365,11 @@
 
       section {
         padding: 6rem 0;
+      }
+
+      /* Offset anchor scrolling to account for fixed nav */
+      section[id] {
+        scroll-margin-top: 110px;
       }
 
       /* Stats Strip */
@@ -1252,8 +1260,8 @@
         }
 
         .use-cases .service-card {
-          min-width: calc(100vw - 4rem);
-          max-width: calc(100vw - 4rem);
+          min-width: calc(100% - 4rem);
+          max-width: calc(100% - 4rem);
           flex-shrink: 0;
           scroll-snap-align: center;
           padding: 1.2rem;
@@ -1346,7 +1354,7 @@
         }
 
         .phase-panel .service-card {
-          min-width: calc(100vw - 4rem);
+          min-width: calc(100% - 4rem);
           flex-shrink: 0;
           scroll-snap-align: center;
           padding: 1.2rem;
@@ -1517,10 +1525,12 @@
       @media (max-width: 480px) {
         .hero h1 {
           font-size: 2rem;
+          min-height: 3.2rem;
         }
 
         .hero p {
           font-size: 1.1rem;
+          min-height: 2.6rem;
         }
 
         .cta-button {
