@@ -2529,16 +2529,7 @@
         color: rgba(255, 255, 255, 0.7);
       }
 
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+      /* duplicate fadeInUp removed (consolidated earlier) */
 
       /* ===== End Chat Widget ===== */
 
@@ -2780,6 +2771,7 @@
         <a
           href="https://calendar.app.google/Nr94UDUnvfWpMzk49"
           target="_blank"
+          rel="noopener noreferrer"
           class="cta-button"
           id="hero-cta"
           >Book a Consultation 🚀</a
@@ -4124,6 +4116,7 @@
             <a
               href="https://calendar.app.google/Nr94UDUnvfWpMzk49"
               target="_blank"
+              rel="noopener noreferrer"
               style="
                 display: inline-block;
                 padding: 14px 32px;
@@ -4629,6 +4622,52 @@
         activePanel.style.animation = "phaseFadeIn 0.5s ease-out";
         activePanel.classList.add("active");
       }
+      // ===== Auto-rotate Phase Tabs (optional autoplay) =====
+      (function () {
+        const AUTO_PHASE_INTERVAL = 6000; // ms
+        let autoTimer = null;
+        let paused = false;
+
+        function getCurrentPhase() {
+          const activeTab = document.querySelector(".phase-tab.active");
+          return activeTab ? parseInt(activeTab.dataset.phase) : 1;
+        }
+
+        function nextPhase() {
+          if (paused) return;
+          const current = getCurrentPhase();
+          const next = current >= 3 ? 1 : current + 1;
+          switchPhase(next);
+        }
+
+        function startAuto() {
+          stopAuto();
+          autoTimer = setInterval(nextPhase, AUTO_PHASE_INTERVAL);
+        }
+
+        function stopAuto() {
+          if (autoTimer) clearInterval(autoTimer);
+          autoTimer = null;
+        }
+
+        // Pause on user hover or focus in the tabs area
+        const tabsEl = document.querySelector(".phase-tabs");
+        if (tabsEl) {
+          tabsEl.addEventListener("mouseenter", () => (paused = true));
+          tabsEl.addEventListener("mouseleave", () => (paused = false));
+        }
+
+        // If user clicks a tab, pause briefly then resume
+        document.querySelectorAll(".phase-tab").forEach((tab) => {
+          tab.addEventListener("click", () => {
+            paused = true;
+            setTimeout(() => (paused = false), AUTO_PHASE_INTERVAL * 1.5);
+          });
+        });
+
+        // Start autoplay
+        startAuto();
+      })();
       // ===== End Phase Tab Switching =====
 
       // ===== Mobile Service Card Expand =====
@@ -4769,7 +4808,7 @@
         formWrap.className = "dgc-inline-form";
         formWrap.innerHTML = `
     <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:10px;font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px;">GET IN TOUCH</div>
-    <a href="${BOOKING_URL}" target="_blank" style="display:block;text-align:center;padding:10px 14px;background:linear-gradient(135deg,#2d5a8f,#3a7bc8);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;margin-bottom:12px;transition:all 0.2s;">📅 Book a Free Consultation</a>
+    <a href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;padding:10px 14px;background:linear-gradient(135deg,#2d5a8f,#3a7bc8);color:#fff;border-radius:8px;font-size:0.88rem;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;margin-bottom:12px;transition:all 0.2s;">📅 Book a Free Consultation</a>
     <div style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.3);margin-bottom:10px;">— or leave your info and we'll reach out —</div>
     <label>Name</label>
     <input type="text" id="dgc-lead-name" placeholder="Your name" />
@@ -5006,7 +5045,7 @@
           name.split(" ")[0] +
           '! <a href="' +
           BOOKING_URL +
-          '" target="_blank" style="color:#4a8ac7;text-decoration:underline;">Book a call</a> or we\'ll be in touch soon.</div>';
+          '" target="_blank" rel="noopener noreferrer" style="color:#4a8ac7;text-decoration:underline;">Book a call</a> or we\'ll be in touch soon.</div>';
         contactCollected = true;
 
         chatHistory.push({
@@ -5543,7 +5582,7 @@
             });
           }, 500);
         }
-        setInterval(rotateHero, 6000);
+        setInterval(rotateHero, 8000);
 
         // --- Section scroll tracking ---
         const serviceObserver = new IntersectionObserver(
@@ -5612,7 +5651,7 @@
           if (localStorage.getItem("dgc_popup_shown")) return;
           const nudge = document.createElement("div");
           nudge.id = "dgc-smart-nudge";
-          nudge.innerHTML = `<div style="position:fixed;bottom:90px;left:24px;max-width:300px;background:#0d1117;border:1px solid rgba(45,90,143,0.3);border-radius:12px;padding:18px 20px;box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:9998;animation:nudgeSlide 0.4s ease-out;font-family:'Inter',sans-serif;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#fff;font-size:14px;margin-bottom:6px;">Enjoying what you see? 👋</div><div style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.5;margin-bottom:14px;">We'd love to chat about how AI can help your business. No pressure.</div><div style="display:flex;gap:8px;"><a href="https://calendar.app.google/Nr94UDUnvfWpMzk49" target="_blank" onclick="document.getElementById('dgc-smart-nudge').remove()" style="padding:8px 16px;background:linear-gradient(135deg,#2d5a8f,#3a7bc8);color:#fff;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;">Book a Call</a><button onclick="this.closest('#dgc-smart-nudge').remove()" style="padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;cursor:pointer;">Maybe Later</button></div></div>`;
+          nudge.innerHTML = `<div style="position:fixed;bottom:90px;left:24px;max-width:300px;background:#0d1117;border:1px solid rgba(45,90,143,0.3);border-radius:12px;padding:18px 20px;box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:9998;animation:nudgeSlide 0.4s ease-out;font-family:'Inter',sans-serif;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#fff;font-size:14px;margin-bottom:6px;">Enjoying what you see? 👋</div><div style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.5;margin-bottom:14px;">We'd love to chat about how AI can help your business. No pressure.</div><div style="display:flex;gap:8px;"><a href="https://calendar.app.google/Nr94UDUnvfWpMzk49" target="_blank" rel="noopener noreferrer" onclick="document.getElementById('dgc-smart-nudge').remove()" style="padding:8px 16px;background:linear-gradient(135deg,#2d5a8f,#3a7bc8);color:#fff;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;">Book a Call</a><button onclick="this.closest('#dgc-smart-nudge').remove()" style="padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;cursor:pointer;">Maybe Later</button></div></div>`;
           document.body.appendChild(nudge);
           localStorage.setItem("dgc_popup_shown", Date.now());
         }
