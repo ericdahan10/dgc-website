@@ -6,7 +6,6 @@ const ALLOWED_ORIGINS = new Set([
   "https://www.dahangroup.io",
 ]);
 
-
 function assertRequiredEnv(env, keys) {
   const missing = keys.filter((key) => !env?.[key]);
   if (missing.length) {
@@ -164,7 +163,7 @@ function corsHeaders(request) {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
     "Access-Control-Allow-Headers": "Content-Type",
-    "Vary": "Origin",
+    Vary: "Origin",
   };
 }
 
@@ -175,7 +174,9 @@ function extractLeadFromTags(text) {
   if (match) {
     try {
       const leadData = JSON.parse(match[1]);
-      const cleanText = text.replace(/\[LEAD_DATA\].*?\[\/LEAD_DATA\]/s, "").trim();
+      const cleanText = text
+        .replace(/\[LEAD_DATA\].*?\[\/LEAD_DATA\]/s, "")
+        .trim();
       return { leadData, cleanText };
     } catch (e) {
       return { leadData: null, cleanText: text };
@@ -189,7 +190,9 @@ function extractSupportTicket(text) {
   if (match) {
     try {
       const ticketData = JSON.parse(match[1]);
-      const cleanText = text.replace(/\[SUPPORT_TICKET\].*?\[\/SUPPORT_TICKET\]/s, "").trim();
+      const cleanText = text
+        .replace(/\[SUPPORT_TICKET\].*?\[\/SUPPORT_TICKET\]/s, "")
+        .trim();
       return { ticketData, cleanText };
     } catch (e) {
       return { ticketData: null, cleanText: text };
@@ -246,9 +249,12 @@ function extractLeadFromConversation(messages) {
 
       if (!name) {
         const beforeEmail = text.split(email)[0].trim();
-        const words = beforeEmail.replace(/[,.\-–—:]/g, " ").trim().split(/\s+/);
+        const words = beforeEmail
+          .replace(/[,.\-–—:]/g, " ")
+          .trim()
+          .split(/\s+/);
         const possibleName = words.filter(
-          (w) => /^[A-Z]/.test(w) && w.length > 1 && w.length < 20
+          (w) => /^[A-Z]/.test(w) && w.length > 1 && w.length < 20,
         );
         if (possibleName.length > 0 && possibleName.length <= 3) {
           name = possibleName.join(" ");
@@ -285,15 +291,18 @@ async function submitToFormspree(leadData, chatContext, env) {
   try {
     const res = await fetch(env.FORMSPREE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify({
         _replyto: env.ADMIN_EMAIL,
         _subject: "New Chatbot Lead - DGC Website",
         "Lead Name": leadData.name || "Not provided",
         "Lead Email": leadData.email || "Not provided",
         "Lead Phone": leadData.phone || "Not provided",
-        "Source": "AI Chatbot",
-        "Conversation": chatContext || "Lead captured via chat widget",
+        Source: "AI Chatbot",
+        Conversation: chatContext || "Lead captured via chat widget",
       }),
     });
     console.log("Formspree status:", res.status);
@@ -341,7 +350,7 @@ async function postToAppsScript(payload, env) {
     if (redirectUrl) {
       const followRes = await fetch(redirectUrl, {
         method: "GET",
-        headers: { "Accept": "application/json" },
+        headers: { Accept: "application/json" },
       });
       return followRes;
     }
@@ -357,27 +366,35 @@ async function handleSupportTicket(ticketData, messages, env) {
   const chatContext = buildChatContext(messages);
   const now = new Date().toISOString();
 
-  const urgencyEmoji = ticketData.urgency === "high" ? "🔴" : ticketData.urgency === "medium" ? "🟡" : "🟢";
+  const urgencyEmoji =
+    ticketData.urgency === "high"
+      ? "🔴"
+      : ticketData.urgency === "medium"
+        ? "🟡"
+        : "🟢";
   const categoryLabel = ticketData.category?.toUpperCase() || "SUPPORT";
 
   // 1. Email admin via Formspree
   try {
     await fetch(env.FORMSPREE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify({
         _replyto: env.ADMIN_EMAIL,
         _subject: `${urgencyEmoji} [${categoryLabel}] Support Ticket ${ticketId} — ${ticketData.issue_summary}`,
         "Ticket ID": ticketId,
-        "Date": now,
-        "Category": categoryLabel,
-        "Urgency": ticketData.urgency?.toUpperCase() || "MEDIUM",
+        Date: now,
+        Category: categoryLabel,
+        Urgency: ticketData.urgency?.toUpperCase() || "MEDIUM",
         "Issue Summary": ticketData.issue_summary || "No summary provided",
         "Client Name": ticketData.name || "Unknown",
         "Client Email": ticketData.email || "Not provided",
         "Client Phone": ticketData.phone || "Not provided",
         "Needs Human": ticketData.needs_human ? "YES" : "NO",
-        "Conversation": chatContext,
+        Conversation: chatContext,
       }),
     });
     console.log("Support ticket emailed:", ticketId);
@@ -387,22 +404,30 @@ async function handleSupportTicket(ticketData, messages, env) {
 
   // 2. [FIX] Log to Google Sheet via Apps Script — using manual redirect follow
   try {
-    const sheetRes = await postToAppsScript({
-      action: "logSupportTicket",
-      ticketId,
-      date: now,
-      category: categoryLabel,
-      urgency: ticketData.urgency || "medium",
-      issueSummary: ticketData.issue_summary || "",
-      clientName: ticketData.name || "",
-      clientEmail: ticketData.email || "",
-      clientPhone: ticketData.phone || "",
-      needsHuman: ticketData.needs_human ? "YES" : "NO",
-      status: "OPEN",
-      conversation: chatContext,
-    }, env);
+    const sheetRes = await postToAppsScript(
+      {
+        action: "logSupportTicket",
+        ticketId,
+        date: now,
+        category: categoryLabel,
+        urgency: ticketData.urgency || "medium",
+        issueSummary: ticketData.issue_summary || "",
+        clientName: ticketData.name || "",
+        clientEmail: ticketData.email || "",
+        clientPhone: ticketData.phone || "",
+        needsHuman: ticketData.needs_human ? "YES" : "NO",
+        status: "OPEN",
+        conversation: chatContext,
+      },
+      env,
+    );
     const sheetText = await sheetRes.text();
-    console.log("Support ticket logged to Sheet:", ticketId, "Response:", sheetText);
+    console.log(
+      "Support ticket logged to Sheet:",
+      ticketId,
+      "Response:",
+      sheetText,
+    );
   } catch (e) {
     console.error("Sheet logging failed:", e.message);
   }
@@ -451,14 +476,23 @@ export default {
         console.log("Escalation proxy response:", res.status, text);
         return new Response(text, {
           status: 200,
-          headers: { "Content-Type": "application/json", ...corsHeaders(request) },
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders(request),
+          },
         });
       } catch (e) {
         console.error("Escalation proxy error:", e.message);
-        return new Response(JSON.stringify({ success: false, error: e.message }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders(request) },
-        });
+        return new Response(
+          JSON.stringify({ success: false, error: e.message }),
+          {
+            status: 500,
+            headers: {
+              "Content-Type": "application/json",
+              ...corsHeaders(request),
+            },
+          },
+        );
       }
     }
 
@@ -493,15 +527,18 @@ export default {
       let rawText = data?.content?.[0]?.text || "";
 
       // ── Step 1: Extract support ticket tag ───────────────────────────────
-      const { ticketData, cleanText: afterTicket } = extractSupportTicket(rawText);
+      const { ticketData, cleanText: afterTicket } =
+        extractSupportTicket(rawText);
       rawText = afterTicket;
 
       // ── Step 2: Extract lead data tag ─────────────────────────────────────
-      const { leadData: tagLead, cleanText: afterLead } = extractLeadFromTags(rawText);
+      const { leadData: tagLead, cleanText: afterLead } =
+        extractLeadFromTags(rawText);
       rawText = afterLead;
 
       // ── Step 3: [FIX] Extract [SHOW_CONTACT] tag ─────────────────────────
-      const { showContact, cleanText: afterContact } = extractShowContact(rawText);
+      const { showContact, cleanText: afterContact } =
+        extractShowContact(rawText);
       rawText = afterContact;
 
       // Update response text — no tags leak to the user
@@ -521,7 +558,8 @@ export default {
         console.log("Support ticket detected:", JSON.stringify(ticketData));
 
         // Enrich ticket with lead info if we have it
-        if (tagLead?.email && !ticketData.email) ticketData.email = tagLead.email;
+        if (tagLead?.email && !ticketData.email)
+          ticketData.email = tagLead.email;
         if (tagLead?.name && !ticketData.name) ticketData.name = tagLead.name;
 
         // Also try fallback scan for name/email if still missing
@@ -557,10 +595,16 @@ export default {
       // Fallback: scan last user message for email
       if (!leadSubmitted) {
         const lastUserMsg = messages.filter((m) => m.role === "user").pop();
-        if (lastUserMsg && /[\w.+-]+@[\w-]+\.[\w.]+/.test(lastUserMsg.content)) {
+        if (
+          lastUserMsg &&
+          /[\w.+-]+@[\w-]+\.[\w.]+/.test(lastUserMsg.content)
+        ) {
           const fallbackLead = extractLeadFromConversation(messages);
           if (fallbackLead) {
-            console.log("Lead found via fallback:", JSON.stringify(fallbackLead));
+            console.log(
+              "Lead found via fallback:",
+              JSON.stringify(fallbackLead),
+            );
             ctx.waitUntil(submitToFormspree(fallbackLead, chatContext, env));
             ctx.waitUntil(sendToLeadWorker(fallbackLead, chatContext, env));
           }
@@ -571,17 +615,22 @@ export default {
       const responseBody = { ...data, _routing: routing };
 
       return new Response(JSON.stringify(responseBody), {
-        headers: { "Content-Type": "application/json", ...corsHeaders(request) },
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders(request),
+        },
       });
-
     } catch (err) {
       console.error("Worker error:", err.message);
       return new Response(
         JSON.stringify({ error: "API call failed. Please try again." }),
         {
           status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders(request) },
-        }
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders(request),
+          },
+        },
       );
     }
   },

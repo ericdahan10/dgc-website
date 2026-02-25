@@ -19,7 +19,7 @@ function corsHeaders(request) {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
     "Access-Control-Allow-Headers": "Content-Type",
-    "Vary": "Origin",
+    Vary: "Origin",
   };
 }
 
@@ -89,7 +89,10 @@ async function notifyOwner(leadData, qualification, env) {
   try {
     await fetch(env.FORMSPREE_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify({
         _replyto: env.ADMIN_EMAIL,
         _subject: `[DGC Lead - ${qualification.category}] ${leadData.name || "New Lead"}`,
@@ -97,9 +100,9 @@ async function notifyOwner(leadData, qualification, env) {
         "Lead Email": leadData.email,
         "Lead Phone": leadData.phone || "N/A",
         "Lead Score": `${qualification.score}/100 (${qualification.category})`,
-        "Interests": qualification.interests.join(", "),
-        "Source": leadData.source || "Website",
-        "Conversation": leadData.conversation || leadData.message || "N/A",
+        Interests: qualification.interests.join(", "),
+        Source: leadData.source || "Website",
+        Conversation: leadData.conversation || leadData.message || "N/A",
         "AI Email Draft": `Subject: ${qualification.subject}\n\n${qualification.email}`,
       }),
     });
@@ -111,7 +114,10 @@ async function notifyOwner(leadData, qualification, env) {
 function buildHtmlEmail(body) {
   const htmlBody = body
     .replace(/\n/g, "<br>")
-    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" style="color:#2d5a8f;text-decoration:none;">$1</a>');
+    .replace(
+      /(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" style="color:#2d5a8f;text-decoration:none;">$1</a>',
+    );
 
   return `<!DOCTYPE html>
 <html>
@@ -175,12 +181,16 @@ function buildHtmlEmail(body) {
 
 async function sendProspectEmail(leadData, qualification, env) {
   try {
-    const emailBody = qualification.email || "Thanks for your interest! A member of our team will be in touch shortly.";
+    const emailBody =
+      qualification.email ||
+      "Thanks for your interest! A member of our team will be in touch shortly.";
     const htmlEmail = buildHtmlEmail(emailBody);
 
     const payload = JSON.stringify({
       to: leadData.email,
-      subject: qualification.subject || "Thanks for reaching out to Dahan Group Consulting",
+      subject:
+        qualification.subject ||
+        "Thanks for reaching out to Dahan Group Consulting",
       body: emailBody,
       html: htmlEmail,
     });
@@ -219,7 +229,8 @@ export default {
 
     if (request.method !== "POST") {
       return new Response("Method not allowed", {
-        status: 405, headers: corsHeaders(request),
+        status: 405,
+        headers: corsHeaders(request),
       });
     }
 
@@ -233,10 +244,13 @@ export default {
       const leadData = await request.json();
 
       if (!leadData.email) {
-        return new Response(
-          JSON.stringify({ error: "Email is required" }),
-          { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders(request) } }
-        );
+        return new Response(JSON.stringify({ error: "Email is required" }), {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders(request),
+          },
+        });
       }
 
       const qualification = await qualifyLead(leadData, env.ANTHROPIC_API_KEY);
@@ -244,7 +258,13 @@ export default {
       if (!qualification) {
         return new Response(
           JSON.stringify({ error: "Failed to qualify lead" }),
-          { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders(request) } }
+          {
+            status: 500,
+            headers: {
+              "Content-Type": "application/json",
+              ...corsHeaders(request),
+            },
+          },
         );
       }
 
@@ -258,15 +278,22 @@ export default {
           category: qualification.category,
           interests: qualification.interests,
         }),
-        { headers: { "Content-Type": "application/json", ...corsHeaders(request) } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders(request),
+          },
+        },
       );
     } catch (err) {
       console.error("Worker error:", err.message);
-      return new Response(
-        JSON.stringify({ error: "Processing failed" }),
-        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders(request) } }
-      );
+      return new Response(JSON.stringify({ error: "Processing failed" }), {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders(request),
+        },
+      });
     }
   },
 };
-
