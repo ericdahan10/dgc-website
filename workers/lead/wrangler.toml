@@ -1,0 +1,8 @@
+name = "dgc-lead-worker"
+main = "index.js"
+compatibility_date = "2025-02-24"
+
+[vars]
+GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywQXzIqRHOoDhXptjX0Mz3fKh06gQiv_yLg0Yf0nTFZDvqDRTHt1I1PuwbMaSMVb27lA/exec"
+FORMSPREE_URL = "https://formspree.io/f/mqedlzen"
+ADMIN_EMAIL = "admin@dahangroup.io"

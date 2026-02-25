@@ -1,0 +1,9 @@
+name = "dgc-chat-api"
+main = "index.js"
+compatibility_date = "2025-02-24"
+
+[vars]
+FORMSPREE_URL = "https://formspree.io/f/mqedlzen"
+GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwg9b1cl8mCD4SKBiVT0U1YLCeLpwHozy8Qz7AH64F7qHUB-D5auH7g2HnhN87VFWbbxA/exec"
+ADMIN_EMAIL = "admin@dahangroup.io"
+LEAD_WORKER_URL = "https://dgc-lead-worker.ericdahan10.workers.dev"
