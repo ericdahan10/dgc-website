@@ -1,3 +1,7 @@
+function getConfig(key) {
+  return PropertiesService.getScriptProperties().getProperty(key);
+}
+
 function doPost(e) {
   try {
     console.log(

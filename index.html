@@ -4706,6 +4706,7 @@
 
       const chatHistory = [];
       let contactCollected = false;
+      let escalationShown = false;
 
       // ── Render helpers ──
       function simpleMarkdown(text) {
@@ -4842,6 +4843,8 @@
       let pendingEscalationData = null;
 
       function showEscalationForm(ticketData) {
+        if (escalationShown) return;
+        escalationShown = true;
         pendingEscalationData = ticketData;
 
         const formWrap = document.createElement("div");
@@ -5121,10 +5124,12 @@
           // ── [FIX] Route based on worker's _routing field ──
           if (routing.action === "escalation") {
             // Support issue → show escalation form (email + phone required)
-            setTimeout(
-              () => showEscalationForm(routing.ticketData || null),
-              600,
-            );
+            if (!escalationShown) {
+              setTimeout(
+                () => showEscalationForm(routing.ticketData || null),
+                600,
+              );
+            }
           } else if (routing.action === "contact") {
             // General interest → show contact form with booking link
             if (!contactCollected) {
