@@ -5129,6 +5129,8 @@
                 () => showEscalationForm(routing.ticketData || null),
                 600,
               );
+            } else {
+              setTimeout(() => addMsg("You've already submitted a request — our team will be in touch within 2–3 business days.", "bot"), 600);
             }
           } else if (routing.action === "contact") {
             // General interest → show contact form with booking link
