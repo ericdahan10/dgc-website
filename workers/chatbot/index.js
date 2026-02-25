@@ -587,7 +587,6 @@ export default {
 
       if (tagLead?.email) {
         console.log("Lead found via tags:", JSON.stringify(tagLead));
-        ctx.waitUntil(submitToFormspree(tagLead, chatContext, env));
         ctx.waitUntil(sendToLeadWorker(tagLead, chatContext, env));
         leadSubmitted = true;
       }
@@ -605,7 +604,6 @@ export default {
               "Lead found via fallback:",
               JSON.stringify(fallbackLead),
             );
-            ctx.waitUntil(submitToFormspree(fallbackLead, chatContext, env));
             ctx.waitUntil(sendToLeadWorker(fallbackLead, chatContext, env));
           }
         }

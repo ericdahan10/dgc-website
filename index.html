@@ -5009,36 +5009,13 @@
         btn.disabled = true;
 
         try {
-          await fetch(FORMSPREE_URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              _subject: "New Chatbot Lead - DGC Website",
-              name: name,
-              email: email,
-              phone: phone || "Not provided",
-              source: "AI Chatbot (inline form)",
-              message: chatHistory
-                .slice(-6)
-                .map((m) => m.role + ": " + m.content)
-                .join("\n"),
-            }),
-          });
-        } catch (e) {
-          console.error("Formspree error:", e);
-        }
-
-        try {
-          fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
+          await fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: name,
               email: email,
-              phone: phone || "",
+              phone: phone || "Not provided",
               source: "AI Chatbot (inline form)",
               conversation: chatHistory
                 .slice(-6)
