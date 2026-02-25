@@ -285,13 +285,6 @@ function buildChatContext(messages) {
     .join("\n");
 }
 
-function generateTicketId() {
-  const now = new Date();
-  const datePart = now.toISOString().slice(0, 10).replace(/-/g, "");
-  const randPart = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `DGC-${datePart}-${randPart}`;
-}
-
 // ── Formspree (lead notify) ───────────────────────────────────────────────────
 
 async function submitToFormspree(leadData, chatContext, env) {
@@ -364,82 +357,6 @@ async function postToAppsScript(payload, env) {
   }
 
   return res;
-}
-
-// ── Support ticket: email admin + log to Sheet ────────────────────────────────
-
-async function handleSupportTicket(ticketData, messages, env) {
-  const ticketId = generateTicketId();
-  const chatContext = buildChatContext(messages);
-  const now = new Date().toISOString();
-
-  const urgencyEmoji =
-    ticketData.urgency === "high"
-      ? "🔴"
-      : ticketData.urgency === "medium"
-        ? "🟡"
-        : "🟢";
-  const categoryLabel = ticketData.category?.toUpperCase() || "SUPPORT";
-
-  // 1. Email admin via Formspree
-  try {
-    await fetch(env.FORMSPREE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        _replyto: env.ADMIN_EMAIL,
-        _subject: `${urgencyEmoji} [${categoryLabel}] Support Ticket ${ticketId} — ${ticketData.issue_summary}`,
-        "Ticket ID": ticketId,
-        Date: now,
-        Category: categoryLabel,
-        Urgency: ticketData.urgency?.toUpperCase() || "MEDIUM",
-        "Issue Summary": ticketData.issue_summary || "No summary provided",
-        "Client Name": ticketData.name || "Unknown",
-        "Client Email": ticketData.email || "Not provided",
-        "Client Phone": ticketData.phone || "Not provided",
-        "Needs Human": ticketData.needs_human ? "YES" : "NO",
-        Conversation: chatContext,
-      }),
-    });
-    console.log("Support ticket emailed:", ticketId);
-  } catch (e) {
-    console.error("Support ticket email failed:", e.message);
-  }
-
-  // 2. [FIX] Log to Google Sheet via Apps Script — using manual redirect follow
-  try {
-    const sheetRes = await postToAppsScript(
-      {
-        action: "logSupportTicket",
-        ticketId,
-        date: now,
-        category: categoryLabel,
-        urgency: ticketData.urgency || "medium",
-        issueSummary: ticketData.issue_summary || "",
-        clientName: ticketData.name || "",
-        clientEmail: ticketData.email || "",
-        clientPhone: ticketData.phone || "",
-        needsHuman: ticketData.needs_human ? "YES" : "NO",
-        status: "OPEN",
-        conversation: chatContext,
-      },
-      env,
-    );
-    const sheetText = await sheetRes.text();
-    console.log(
-      "Support ticket logged to Sheet:",
-      ticketId,
-      "Response:",
-      sheetText,
-    );
-  } catch (e) {
-    console.error("Sheet logging failed:", e.message);
-  }
-
-  return ticketId;
 }
 
 // ── Main handler ──────────────────────────────────────────────────────────────
@@ -586,13 +503,17 @@ export default {
           urgency: ticketData.urgency || "medium",
         };
 
-        ctx.waitUntil(handleSupportTicket(ticketData, messages, env));
       }
 
-      // ── Step 5: Handle lead capture ───────────────────────────────────────
+      // ── Step 5: Handle lead capture (skip if support ticket was raised) ─────
       let leadSubmitted = false;
 
-      if (tagLead?.email) {
+      if (ticketData) {
+        // User is an existing customer escalating an issue — not a new lead
+        leadSubmitted = true;
+      }
+
+      if (!leadSubmitted && tagLead?.email) {
         console.log("Lead found via tags:", JSON.stringify(tagLead));
         ctx.waitUntil(sendToLeadWorker(tagLead, chatContext, env));
         leadSubmitted = true;

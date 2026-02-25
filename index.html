@@ -4927,6 +4927,16 @@
         }
 
         try {
+          const esc = pendingEscalationData || {};
+          const urgency = (esc.urgency || "medium").toLowerCase();
+          const urgencyLabel = urgency === "high" ? "[HIGH]" : urgency === "medium" ? "[MEDIUM]" : "[LOW]";
+          const category = esc.category ? esc.category.toUpperCase() : "ESCALATION";
+          const issueSummary = esc.issue_summary || "Client requested human support";
+          const conversation = chatHistory
+            .slice(-10)
+            .map((m) => `${m.role.toUpperCase()}: ${m.content}`)
+            .join("\n");
+
           await fetch(FORMSPREE_URL, {
             method: "POST",
             headers: {
@@ -4934,24 +4944,16 @@
               Accept: "application/json",
             },
             body: JSON.stringify({
-              _replyto: "admin@dahangroup.io",
-              _subject: "[ESCALATION] Support Ticket " + ticketId,
+              _replyto: email,
+              _subject: `${urgencyLabel} [${category}] Support Ticket ${ticketId} — ${issueSummary}`,
               "Ticket ID": ticketId,
               "Client Name": name || "Unknown",
               "Client Email": email,
               "Client Phone": phone,
-              Category:
-                pendingEscalationData && pendingEscalationData.category
-                  ? pendingEscalationData.category.toUpperCase()
-                  : "ESCALATION",
-              Urgency:
-                pendingEscalationData && pendingEscalationData.urgency
-                  ? pendingEscalationData.urgency.toUpperCase()
-                  : "MEDIUM",
-              "Issue Summary":
-                pendingEscalationData && pendingEscalationData.issue_summary
-                  ? pendingEscalationData.issue_summary
-                  : "Client requested human support",
+              Category: category,
+              Urgency: urgency.toUpperCase(),
+              "Issue Summary": issueSummary,
+              Conversation: conversation || "No conversation recorded",
             }),
           });
         } catch (e) {
