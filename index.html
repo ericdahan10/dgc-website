@@ -5136,6 +5136,8 @@
             // General interest → show contact form with booking link
             if (!contactCollected) {
               setTimeout(() => showContactForm(), 600);
+            } else {
+              setTimeout(() => addMsg("You're already on our radar — a specialist will be in touch with you shortly.", "bot"), 600);
             }
           } else {
             // Normal conversation — show contextual quick replies
