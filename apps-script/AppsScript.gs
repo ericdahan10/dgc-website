@@ -27,7 +27,7 @@ function doPost(e) {
   } catch (err) {
     console.error("doPost error:", err && err.stack ? err.stack : err);
     return ContentService.createTextOutput(
-      JSON.stringify({ success: false, error: err.message, stack: err.stack }),
+      JSON.stringify({ success: false, error: "Internal error" }),
     ).setMimeType(ContentService.MimeType.JSON);
   }
 }
@@ -86,7 +86,7 @@ function logSupportTicket(payload) {
     const clientEmail =
       payload.clientEmail || payload.client_email || payload.email || "";
     const needsHuman = payload.needsHuman || payload.needs_human || "YES";
-    const dateCreated = payload.date || now;
+    const dateCreated = now;
 
     const data = sheet.getDataRange().getValues();
     let existingRow = -1;
@@ -133,7 +133,7 @@ function logSupportTicket(payload) {
       err && err.stack ? err.stack : err,
     );
     return ContentService.createTextOutput(
-      JSON.stringify({ success: false, error: err.message, stack: err.stack }),
+      JSON.stringify({ success: false, error: "Internal error" }),
     ).setMimeType(ContentService.MimeType.JSON);
   }
 }

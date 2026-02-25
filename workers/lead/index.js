@@ -12,6 +12,12 @@ function assertRequiredEnv(env, keys) {
   }
 }
 
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+};
+
 function corsHeaders(request) {
   const origin = request.headers.get("Origin");
   const allowOrigin = ALLOWED_ORIGINS.has(origin) ? origin : "null";
@@ -20,6 +26,7 @@ function corsHeaders(request) {
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
     "Access-Control-Allow-Headers": "Content-Type",
     Vary: "Origin",
+    ...SECURITY_HEADERS,
   };
 }
 
@@ -37,7 +44,7 @@ Name: ${leadData.name || "Unknown"}
 Email: ${leadData.email || "Unknown"}
 Phone: ${leadData.phone || "Not provided"}
 Source: ${leadData.source || "Website"}
-Conversation/Message: ${leadData.conversation || leadData.message || "No conversation recorded"}
+Conversation/Message: <user_message>${leadData.conversation || leadData.message || "No conversation recorded"}</user_message>
 
 SCORING CRITERIA:
 - Mentions specific pain point or project = +30

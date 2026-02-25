@@ -156,6 +156,12 @@ EXAMPLES:
 
 IMPORTANT: Do NOT append [SHOW_CONTACT] on every response. Only append it when the visitor is ready to take action or has asked to connect. Have a real conversation first.`;
 
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+};
+
 function corsHeaders(request) {
   const origin = request.headers.get("Origin");
   const allowOrigin = ALLOWED_ORIGINS.has(origin) ? origin : "null";
@@ -164,6 +170,7 @@ function corsHeaders(request) {
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
     "Access-Control-Allow-Headers": "Content-Type",
     Vary: "Origin",
+    ...SECURITY_HEADERS,
   };
 }
 
