@@ -9,6 +9,13 @@ function doPost(e) {
         ? JSON.parse(e.postData.contents)
         : {};
 
+    const expectedSecret = PropertiesService.getScriptProperties().getProperty("WORKER_SECRET");
+    if (!expectedSecret || payload._secret !== expectedSecret) {
+      return ContentService.createTextOutput(
+        JSON.stringify({ success: false, error: "Unauthorized" }),
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+
     console.log("doPost parsed payload:", JSON.stringify(payload));
 
     if (payload.action === "logSupportTicket") {

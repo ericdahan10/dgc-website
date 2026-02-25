@@ -24,7 +24,7 @@ function corsHeaders(request) {
   return {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-API-Key",
     Vary: "Origin",
     ...SECURITY_HEADERS,
   };
@@ -200,6 +200,7 @@ async function sendProspectEmail(leadData, qualification, env) {
         "Thanks for reaching out to Dahan Group Consulting",
       body: emailBody,
       html: htmlEmail,
+      _secret: env.APPS_SCRIPT_SECRET,
     });
 
     const response = await fetch(env.GOOGLE_APPS_SCRIPT_URL, {
@@ -238,6 +239,15 @@ export default {
       return new Response("Method not allowed", {
         status: 405,
         headers: corsHeaders(request),
+      });
+    }
+
+    // ── API key auth ──────────────────────────────────────────────────────────
+    const apiKey = request.headers.get("X-API-Key");
+    if (!apiKey || apiKey !== env.SITE_API_KEY) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json", ...corsHeaders(request) },
       });
     }
 

@@ -168,7 +168,7 @@ function corsHeaders(request) {
   return {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-API-Key",
     Vary: "Origin",
     ...SECURITY_HEADERS,
   };
@@ -341,7 +341,7 @@ async function postToAppsScript(payload, env) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     redirect: "manual",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ ...payload, _secret: env.APPS_SCRIPT_SECRET }),
   });
 
   // If Apps Script returns a redirect (302/303), follow it with GET
@@ -448,6 +448,15 @@ export default {
       return new Response("Method not allowed", {
         status: 405,
         headers: corsHeaders(request),
+      });
+    }
+
+    // ── API key auth ──────────────────────────────────────────────────────────
+    const apiKey = request.headers.get("X-API-Key");
+    if (!apiKey || apiKey !== env.SITE_API_KEY) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json", ...corsHeaders(request) },
       });
     }
 

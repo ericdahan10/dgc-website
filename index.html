@@ -4695,6 +4695,7 @@
       const DGC_CHAT_API = "https://dgc-chat-api.ericdahan10.workers.dev";
       const FORMSPREE_URL = "https://formspree.io/f/mqedlzen";
       const BOOKING_URL = "https://calendar.app.google/Nr94UDUnvfWpMzk49";
+      const API_KEY = "489d814d3d9bbba8918cfbfc8a219c345d7e599642ce82e3";
 
       const launcher = document.getElementById("dgc-chat-launcher");
       const widget = document.getElementById("dgc-chat-widget");
@@ -4898,7 +4899,7 @@
         try {
           await fetch(DGC_CHAT_API + "/escalation", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
             body: JSON.stringify({
               action: "logSupportTicket",
               ticketId: ticketId,
@@ -5013,7 +5014,7 @@
         try {
           await fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
             body: JSON.stringify({
               name: name,
               email: email,
@@ -5080,7 +5081,7 @@
         try {
           const res = await fetch(DGC_CHAT_API, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
             body: JSON.stringify({ messages: chatHistory.slice(-10) }),
           });
 
@@ -5241,7 +5242,7 @@
           if (email) {
             fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
               body: JSON.stringify({
                 name: name,
                 email: email,
