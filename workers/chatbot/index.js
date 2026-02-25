@@ -359,6 +359,75 @@ async function postToAppsScript(payload, env) {
   return res;
 }
 
+// ── Client confirmation email ─────────────────────────────────────────────────
+
+function buildConfirmationEmail(clientName, ticketId) {
+  const firstName = clientName ? clientName.split(" ")[0] : "there";
+  const htmlBody = `Hi ${firstName},<br><br>We've received your request and our team is already working on it. We'll be in touch within 2–3 business days.<br><br>The DGC Team`;
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f7;padding:32px 16px;">
+<tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <tr>
+    <td style="background:linear-gradient(135deg,#0d1117 0%,#142d5a 100%);padding:28px 32px;text-align:center;">
+      <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+        <tr>
+          <td style="vertical-align:middle;padding-right:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;border:2px solid #2d5a8f;display:inline-block;text-align:center;line-height:32px;">
+              <span style="color:#4a8ac7;font-size:14px;font-weight:bold;">&#9678;</span>
+            </div>
+          </td>
+          <td style="vertical-align:middle;">
+            <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:0.5px;">DAHAN GROUP</span>
+            <span style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:300;letter-spacing:0.5px;"> CONSULTING</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:32px 32px 8px;font-size:15px;line-height:1.7;color:#333333;">
+      ${htmlBody}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:16px 32px 32px;">
+      <table cellpadding="0" cellspacing="0" style="background:#f8f9fc;border-left:3px solid #2d5a8f;border-radius:4px;padding:12px 16px;width:100%;">
+        <tr><td style="font-size:12px;color:#888888;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-bottom:4px;">Ticket Reference</td></tr>
+        <tr><td style="font-size:14px;color:#1a1a1a;font-weight:700;">${ticketId}</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 32px;"><div style="border-top:1px solid #e8e8ee;"></div></td>
+  </tr>
+  <tr>
+    <td style="padding:24px 32px 28px;">
+      <div style="font-size:13px;font-weight:700;color:#1a1a1a;">Dahan Group Consulting</div>
+      <div style="font-size:12px;color:#2d5a8f;margin-top:2px;">AI for Real Business Growth</div>
+      <div style="margin-top:10px;font-size:12px;color:#888888;">
+        <a href="https://dahangroup.io" style="color:#2d5a8f;text-decoration:none;">dahangroup.io</a> &middot;
+        <a href="mailto:admin@dahangroup.io" style="color:#2d5a8f;text-decoration:none;">admin@dahangroup.io</a>
+      </div>
+    </td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;">
+  <tr>
+    <td style="padding:16px 32px;text-align:center;font-size:11px;color:#aaaaaa;">
+      You're receiving this because you submitted a support request via dahangroup.io
+    </td>
+  </tr>
+</table>
+</td></tr></table>
+</body>
+</html>`;
+}
+
 // ── Main handler ──────────────────────────────────────────────────────────────
 
 export default {
@@ -398,6 +467,26 @@ export default {
         const res = await postToAppsScript(payload, env);
         const text = await res.text();
         console.log("Escalation proxy response:", res.status, text);
+
+        // Send confirmation email to client
+        if (payload.clientEmail) {
+          const html = buildConfirmationEmail(
+            payload.clientName,
+            payload.ticketId,
+          );
+          ctx.waitUntil(
+            postToAppsScript(
+              {
+                to: payload.clientEmail,
+                subject: `We've received your request — Ticket ${payload.ticketId}`,
+                body: `Hi ${payload.clientName || "there"},\n\nWe've received your support request and will be in touch within 2–3 business days.\n\nTicket ID: ${payload.ticketId}\n\nThe DGC Team`,
+                html,
+              },
+              env,
+            ),
+          );
+        }
+
         return new Response(text, {
           status: 200,
           headers: {
