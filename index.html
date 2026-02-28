@@ -3408,8 +3408,7 @@
           <div class="phase-header">
             <h3>Getting Started</h3>
             <p>
-              The foundation: quick wins and immediate impact for your
-              business.
+              The foundation: quick wins and immediate impact for your business.
             </p>
           </div>
           <div class="service-grid">
@@ -4035,8 +4034,8 @@
               <h4>AI Governance & Readiness</h4>
               <p>
                 We help you define usage guidelines, data policies, approved
-                tools, and compliance considerations, so your team can move
-                fast without moving recklessly.
+                tools, and compliance considerations, so your team can move fast
+                without moving recklessly.
               </p>
               <p
                 style="
@@ -4119,8 +4118,8 @@
           <h2>Get In Touch</h2>
           <p>
             Tell us a little about your business and we'll help you find the
-            right path forward. No pressure, no jargon, just a real
-            conversation about what AI can do for you.
+            right path forward. No pressure, no jargon, just a real conversation
+            about what AI can do for you.
           </p>
           <div style="margin: 1.5rem 0 2rem; text-align: center">
             <a
@@ -4419,20 +4418,12 @@
     </footer>
 
     <!-- DGC Chat Widget -->
-    <div id="dgc-chat-launcher" aria-label="Open chat" title="Chat with us">
-      <svg
-        width="26"
-        height="26"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#fff"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path
-          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-        />
+    <div id="dgc-chat-launcher" aria-label="Open chat" title="Chat with ECHO">
+      <svg width="28" height="28" viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="19" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5"/>
+        <circle cx="25" cy="25" r="5" fill="#ffffff"/>
+        <ellipse cx="25" cy="25" rx="13" ry="9" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8" transform="rotate(-25 25 25)"/>
+        <circle cx="38" cy="25" r="2.5" fill="#7db8e8"/>
       </svg>
     </div>
 
@@ -4481,8 +4472,8 @@
             <div class="dgc-status-dot"></div>
           </div>
           <div>
-            <div class="dgc-header-title">DGC Assistant</div>
-            <div class="dgc-header-subtitle">Powered by AI</div>
+            <div class="dgc-header-title">ECHO</div>
+            <div class="dgc-header-subtitle">AI Chatbot</div>
           </div>
         </div>
         <button id="dgc-chat-close" aria-label="Close chat">
@@ -4902,7 +4893,10 @@
         try {
           await fetch(DGC_CHAT_API + "/escalation", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": API_KEY,
+            },
             body: JSON.stringify({
               action: "logSupportTicket",
               ticketId: ticketId,
@@ -4933,9 +4927,17 @@
         try {
           const esc = pendingEscalationData || {};
           const urgency = (esc.urgency || "medium").toLowerCase();
-          const urgencyLabel = urgency === "high" ? "[HIGH]" : urgency === "medium" ? "[MEDIUM]" : "[LOW]";
-          const category = esc.category ? esc.category.toUpperCase() : "ESCALATION";
-          const issueSummary = esc.issue_summary || "Client requested human support";
+          const urgencyLabel =
+            urgency === "high"
+              ? "[HIGH]"
+              : urgency === "medium"
+                ? "[MEDIUM]"
+                : "[LOW]";
+          const category = esc.category
+            ? esc.category.toUpperCase()
+            : "ESCALATION";
+          const issueSummary =
+            esc.issue_summary || "Client requested human support";
           const conversation = chatHistory
             .slice(-10)
             .map((m) => `${m.role.toUpperCase()}: ${m.content}`)
@@ -5017,7 +5019,10 @@
         try {
           await fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": API_KEY,
+            },
             body: JSON.stringify({
               name: name,
               email: email,
@@ -5084,7 +5089,10 @@
         try {
           const res = await fetch(DGC_CHAT_API, {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": API_KEY,
+            },
             body: JSON.stringify({ messages: chatHistory.slice(-10) }),
           });
 
@@ -5130,14 +5138,28 @@
                 600,
               );
             } else {
-              setTimeout(() => addMsg("You've already submitted a request. Our team will be in touch within 2–3 business days.", "bot"), 600);
+              setTimeout(
+                () =>
+                  addMsg(
+                    "You've already submitted a request. Our team will be in touch within 2–3 business days.",
+                    "bot",
+                  ),
+                600,
+              );
             }
           } else if (routing.action === "contact") {
             // General interest → show contact form with booking link
             if (!contactCollected) {
               setTimeout(() => showContactForm(), 600);
             } else {
-              setTimeout(() => addMsg("You're already on our radar. A specialist will be in touch with you shortly.", "bot"), 600);
+              setTimeout(
+                () =>
+                  addMsg(
+                    "You're already on our radar. A specialist will be in touch with you shortly.",
+                    "bot",
+                  ),
+                600,
+              );
             }
           } else {
             // Normal conversation — show contextual quick replies
@@ -5251,7 +5273,10 @@
           if (email) {
             fetch("https://dgc-lead-worker.ericdahan10.workers.dev", {
               method: "POST",
-              headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+              headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": API_KEY,
+              },
               body: JSON.stringify({
                 name: name,
                 email: email,
@@ -5337,8 +5362,7 @@
           },
           email: {
             headline:
-              timeGreeting +
-              ". Ready to See What AI Can Do for Your Business?",
+              timeGreeting + ". Ready to See What AI Can Do for Your Business?",
             subtitle:
               "You clicked through for a reason. Let's talk about where AI can save you the most time and revenue.",
             cta: "Book a Free Audit 🎯",
