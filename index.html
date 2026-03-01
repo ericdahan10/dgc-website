@@ -487,14 +487,15 @@
       /* Phase Tab Buttons */
       .phase-tabs {
         display: flex;
-        justify-content: center;
+        justify-content: stretch;
         gap: 1rem;
-        margin-bottom: 3rem;
+        margin-bottom: 1.8rem;
       }
 
       .phase-tab {
         position: relative;
-        padding: 1.6rem 2.8rem;
+        flex: 1;
+        padding: 2.2rem 1rem;
         background: var(--white);
         border: 1px solid #eaedf2;
         border-radius: 16px;
@@ -506,7 +507,12 @@
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         overflow: hidden;
         text-align: center;
-        min-width: 180px;
+        min-width: 0;
+        max-width: 260px;
+      }
+
+      .phase-tabs {
+        justify-content: center;
       }
 
       .phase-tab::before {
@@ -619,14 +625,14 @@
 
       .service-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.1rem;
       }
 
       /* New Service Cards */
       .service-card {
         background: var(--white);
-        padding: 2rem 2rem 1.8rem;
+        padding: 1.5rem 1.6rem 1.3rem;
         border-radius: 16px;
         border: 1px solid #eaedf2;
         transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -678,13 +684,13 @@
       }
 
       .service-card-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1.2rem;
+        margin-bottom: 0.85rem;
         position: relative;
         z-index: 1;
       }
@@ -715,11 +721,11 @@
 
       .service-card-category {
         font-family: "Space Grotesk", sans-serif;
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         font-weight: 700;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.4rem;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -772,25 +778,25 @@
       }
 
       .service-card h4 {
-        font-size: 1.25rem;
-        margin-bottom: 0.7rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.45rem;
         color: var(--primary);
         position: relative;
         z-index: 1;
       }
 
       .service-card p {
-        font-size: 0.92rem;
+        font-size: 0.88rem;
         color: var(--gray);
-        line-height: 1.7;
+        line-height: 1.65;
         position: relative;
         z-index: 1;
       }
 
       .service-card-badge {
         display: flex;
-        gap: 0.6rem;
-        margin-top: 1.2rem;
+        gap: 0.5rem;
+        margin-top: 0.85rem;
         flex-wrap: wrap;
         position: relative;
         z-index: 1;
@@ -1226,6 +1232,7 @@
         .overview h2,
         .use-cases h2,
         .services h2,
+        .services-intro h2,
         .contact-intro h2 {
           font-size: 1.8rem;
         }
@@ -2607,6 +2614,681 @@
           opacity: 0;
         }
       }
+
+      /* ===== AI in Action Showcase ===== */
+      .ai-in-action {
+        background: linear-gradient(160deg, #080d18 0%, #0b1220 55%, #09101c 100%);
+        padding: 5rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .ai-in-action::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 15% 60%, rgba(45,90,143,0.07) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 25%, rgba(108,63,160,0.05) 0%, transparent 50%);
+        pointer-events: none;
+      }
+      .ai-in-action .section-header {
+        text-align: center; margin-bottom: 3rem; position: relative; z-index: 1;
+      }
+      .ai-in-action .section-eyebrow {
+        display: inline-block;
+        background: rgba(74,138,199,0.12);
+        border: 1px solid rgba(74,138,199,0.28);
+        color: #4a8ac7;
+        font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+        padding: 0.35rem 1rem; border-radius: 20px; margin-bottom: 1rem;
+        font-family: "Space Grotesk", sans-serif; text-transform: uppercase;
+      }
+      .ai-in-action h2 { font-size: 3rem; color: #ffffff; margin-bottom: 0.75rem; }
+      .ai-in-action .section-subtitle {
+        font-size: 1.1rem; color: rgba(255,255,255,0.45); max-width: 560px; margin: 0 auto;
+      }
+
+      /* Showcase single-card container */
+      .showcase-wrapper { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+      .showcase-card {
+        display: none;
+        grid-template-columns: 46% 54%;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #eaedf2;
+        min-height: 380px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .showcase-card.visible { opacity: 1; }
+
+      /* Left column */
+      .showcase-left {
+        background: #ffffff;
+        padding: 2.8rem;
+        display: flex; flex-direction: column; justify-content: center;
+        position: relative; overflow: hidden;
+      }
+      .showcase-left::before {
+        content: ""; position: absolute; top: 0; left: 0; right: 0; height: 170px;
+        opacity: 0.55; pointer-events: none;
+      }
+      .tint-blue   .showcase-left::before { background: linear-gradient(135deg, #e8f0fe 0%, transparent 100%); }
+      .tint-purple .showcase-left::before { background: linear-gradient(135deg, #f0e8fe 0%, transparent 100%); }
+      .tint-green  .showcase-left::before { background: linear-gradient(135deg, #e6f7ed 0%, transparent 100%); }
+      .tint-orange .showcase-left::before { background: linear-gradient(135deg, #fef3e8 0%, transparent 100%); }
+      .tint-teal   .showcase-left::before { background: linear-gradient(135deg, #e8faf6 0%, transparent 100%); }
+      .showcase-left h3 {
+        font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0 0.75rem;
+        color: #0d1117; line-height: 1.2;
+      }
+      .showcase-desc { font-size: 0.97rem; color: #4a5568; line-height: 1.65; margin-bottom: 0; }
+
+      /* Right column */
+      .showcase-right {
+        background: #0d1117;
+        padding: 2rem 1.8rem;
+        display: flex; align-items: center; justify-content: center;
+      }
+
+      /* Demo mockups */
+      .card-demo {
+        border-radius: 12px; overflow: hidden; width: 100%;
+        display: flex; flex-direction: column;
+      }
+      .card-demo.large { height: 300px; }
+
+      /* ECHO chat */
+      .demo-chat { background: #0d1828; border: 1px solid rgba(58,123,200,0.2); }
+      .demo-chat-bar {
+        background: #1a2840; padding: 0.55rem 0.85rem;
+        display: flex; align-items: center; gap: 0.5rem;
+        font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+        color: #7db8e8; font-family: "Space Grotesk", sans-serif;
+        border-bottom: 1px solid rgba(58,123,200,0.18); flex-shrink: 0;
+      }
+      .demo-chat-orb { width: 16px; height: 16px; flex-shrink: 0; }
+      .demo-messages {
+        flex: 1; padding: 0.7rem 0.8rem;
+        display: flex; flex-direction: column; gap: 0.38rem; overflow: hidden;
+      }
+      .demo-msg {
+        font-size: 0.66rem; padding: 0.3rem 0.6rem; border-radius: 8px;
+        max-width: 85%; line-height: 1.45; font-family: "Space Grotesk", sans-serif;
+      }
+      .demo-msg-bot {
+        background: rgba(45,90,143,0.28); color: #93c5fd;
+        align-self: flex-start; border-radius: 8px 8px 8px 2px;
+        border: 1px solid rgba(45,90,143,0.3);
+      }
+      .demo-msg-user {
+        background: #2d5a8f; color: #e2e8f0;
+        align-self: flex-end; border-radius: 8px 8px 2px 8px;
+      }
+      .demo-typing {
+        display: flex; gap: 3px; padding: 0.3rem 0.6rem;
+        background: rgba(45,90,143,0.18); align-self: flex-start;
+        border-radius: 8px; border: 1px solid rgba(45,90,143,0.18);
+      }
+      .demo-typing span {
+        width: 5px; height: 5px; background: #7db8e8;
+        border-radius: 50%; animation: tdot 1.2s infinite;
+      }
+      .demo-typing span:nth-child(2) { animation-delay: 0.2s; }
+      .demo-typing span:nth-child(3) { animation-delay: 0.4s; }
+      @keyframes tdot {
+        0%,100% { opacity: 0.3; transform: translateY(0); }
+        50% { opacity: 1; transform: translateY(-2.5px); }
+      }
+
+      /* TRACE */
+      .demo-trace {
+        background: #0d0818; border: 1px solid rgba(108,63,160,0.2);
+        padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.5rem;
+      }
+      .demo-trace-header { display: flex; justify-content: space-between; align-items: center; }
+      .demo-trace-name { font-size: 0.7rem; color: #c4b5fd; font-weight: 700; font-family: "Space Grotesk", sans-serif; }
+      .demo-trace-score {
+        background: linear-gradient(135deg,#6c3fa0,#9261d0); color: #fff;
+        font-size: 0.63rem; font-weight: 700; padding: 0.13rem 0.44rem;
+        border-radius: 20px; font-family: "Space Grotesk", sans-serif;
+      }
+      .demo-trace-tag {
+        background: rgba(108,63,160,0.14); border: 1px solid rgba(108,63,160,0.24);
+        color: #a78bfa; font-size: 0.62rem; padding: 0.25rem 0.5rem;
+        border-radius: 5px; font-family: "Space Grotesk", sans-serif; line-height: 1.4;
+      }
+      .demo-trace-btn {
+        background: linear-gradient(90deg,#6c3fa0,#9261d0); color: #fff;
+        font-size: 0.63rem; font-weight: 700; padding: 0.33rem 0.65rem;
+        border-radius: 7px; text-align: center; font-family: "Space Grotesk", sans-serif;
+        margin-top: auto; cursor: default;
+      }
+
+      /* Workflow */
+      .demo-flow {
+        background: #040f08; border: 1px solid rgba(26,138,92,0.15);
+        padding: 0.8rem 1rem; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 0.2rem;
+      }
+      .demo-flow-node {
+        background: rgba(26,138,92,0.1); border: 1px solid rgba(26,138,92,0.3);
+        color: #4ade80; font-size: 0.63rem; font-weight: 600;
+        padding: 0.28rem 0.75rem; border-radius: 20px;
+        font-family: "Space Grotesk", sans-serif; text-align: center; width: 96%;
+      }
+      .demo-flow-node.pulse { animation: pnode 2s infinite; }
+      .demo-flow-node.dim { color: rgba(74,222,128,0.4); border-color: rgba(26,138,92,0.15); background: rgba(26,138,92,0.04); }
+      .demo-flow-arrow { color: rgba(74,222,128,0.35); font-size: 0.7rem; line-height: 1; }
+      @keyframes pnode {
+        0%,100% { border-color: rgba(26,138,92,0.35); box-shadow: none; }
+        50% { border-color: rgba(74,222,128,0.65); box-shadow: 0 0 10px rgba(74,222,128,0.2); }
+      }
+
+      /* Audit */
+      .demo-audit {
+        background: #110800; border: 1px solid rgba(199,106,26,0.2);
+        padding: 0.8rem 1rem; display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+      }
+      .demo-audit-score { font-size: 2.5rem; font-weight: 800; color: #f59e0b; font-family: "Space Grotesk", sans-serif; line-height: 1; }
+      .demo-audit-score span { font-size: 1rem; color: rgba(245,158,11,0.4); }
+      .demo-audit-label { font-size: 0.58rem; color: rgba(245,158,11,0.48); font-family: "Space Grotesk", sans-serif; text-transform: uppercase; letter-spacing: 0.1em; margin: 0.22rem 0 0.55rem; }
+      .demo-audit-bars { width: 100%; display: flex; flex-direction: column; gap: 0.26rem; }
+      .demo-bar-row { display: flex; align-items: center; gap: 0.45rem; }
+      .demo-bar-label { font-size: 0.58rem; color: rgba(245,158,11,0.55); font-family: "Space Grotesk", sans-serif; width: 90px; flex-shrink: 0; }
+      .demo-bar-track { flex: 1; height: 6px; background: rgba(245,158,11,0.1); border-radius: 3px; overflow: hidden; }
+      .demo-bar-fill { height: 100%; background: linear-gradient(90deg,#c76a1a,#f59e0b); border-radius: 3px; }
+
+      /* Website */
+      .demo-website { background: #0d1117; border: 1px solid rgba(14,138,126,0.2); }
+      .demo-browser-bar {
+        background: #161b22; padding: 0.45rem 0.8rem;
+        display: flex; align-items: center; gap: 0.5rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;
+      }
+      .demo-browser-dots { display: flex; gap: 5px; }
+      .demo-browser-dots span { width: 7px; height: 7px; border-radius: 50%; }
+      .demo-browser-dots span:nth-child(1) { background: #ff5f57; }
+      .demo-browser-dots span:nth-child(2) { background: #febc2e; }
+      .demo-browser-dots span:nth-child(3) { background: #28c840; }
+      .demo-browser-url { flex: 1; background: #0d1117; border-radius: 4px; padding: 0.12rem 0.5rem; font-size: 0.6rem; color: #58a6ff; font-family: monospace; }
+      .demo-website-body { flex: 1; padding: 0.7rem 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; }
+      .demo-site-nav { display: flex; gap: 0.75rem; }
+      .demo-site-nav span { font-size: 0.55rem; color: rgba(255,255,255,0.3); font-family: "Space Grotesk", sans-serif; }
+      .demo-site-headline { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.85); font-family: "Space Grotesk", sans-serif; line-height: 1.3; }
+      .demo-site-chat-pill {
+        display: inline-flex; align-items: center; gap: 0.3rem;
+        background: #2d5a8f; color: #fff; font-size: 0.55rem;
+        padding: 0.22rem 0.6rem; border-radius: 20px;
+        font-family: "Space Grotesk", sans-serif; font-weight: 600; align-self: flex-start;
+      }
+
+      /* Value props */
+      .card-value-props { list-style: none; padding: 0; margin: 0.7rem 0 0.85rem; display: flex; flex-direction: column; gap: 0.38rem; }
+      .card-value-props li { font-size: 0.875rem; color: #4a5568; display: flex; align-items: flex-start; gap: 0.4rem; line-height: 1.45; }
+      .card-value-props li::before { content: "✓"; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; margin-top: 0.06rem; }
+      .tint-blue   .card-value-props li::before { color: #3a7bc8; }
+      .tint-purple .card-value-props li::before { color: #6c3fa0; }
+      .tint-green  .card-value-props li::before { color: #1a8a5c; }
+      .tint-orange .card-value-props li::before { color: #c76a1a; }
+      .tint-teal   .card-value-props li::before { color: #0e8a7e; }
+
+      /* Impact stat */
+      .showcase-stat { font-size: 0.85rem; font-weight: 600; margin: 0 0 1rem; font-family: "Space Grotesk", sans-serif; }
+      .tint-blue   .showcase-stat { color: #3a7bc8; }
+      .tint-purple .showcase-stat { color: #6c3fa0; }
+      .tint-green  .showcase-stat { color: #1a8a5c; }
+      .tint-orange .showcase-stat { color: #c76a1a; }
+      .tint-teal   .showcase-stat { color: #0e8a7e; }
+
+      /* Navigation dots */
+      .showcase-nav {
+        display: flex; justify-content: center; align-items: center;
+        gap: 0.5rem; margin-top: 2rem; position: relative; z-index: 1;
+      }
+      .showcase-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.18); border: none; cursor: pointer;
+        transition: all 0.35s ease; padding: 0;
+      }
+      .showcase-dot.active { background: #4a8ac7; width: 28px; border-radius: 4px; }
+
+      /* Progress bar */
+      .showcase-progress-wrap {
+        max-width: 1100px; margin: 0.75rem auto 0;
+        height: 2px; background: rgba(255,255,255,0.07);
+        border-radius: 2px; overflow: hidden; position: relative; z-index: 1;
+      }
+      .showcase-progress-fill {
+        height: 100%; background: rgba(74,138,199,0.7);
+        border-radius: 2px; width: 0%;
+      }
+
+      @media (max-width: 768px) {
+        .ai-in-action h2 { font-size: 1.8rem; }
+        .showcase-card { grid-template-columns: 1fr; }
+        .showcase-right { padding: 1.5rem; }
+        .card-demo.large { height: 230px; }
+        .showcase-left { padding: 1.8rem; }
+        .showcase-left h3 { font-size: 1.35rem; }
+      }
+
+
+      /* ── ECHO widget mockup (matches real UI) ── */
+      .demo-echo-widget {
+        background: #141929;
+        display: flex; flex-direction: column;
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .demo-echo-header {
+        background: #1c2235;
+        padding: 0.55rem 0.75rem;
+        display: flex; align-items: center; gap: 0.6rem;
+        border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0;
+      }
+      .demo-echo-avatar {
+        width: 32px; height: 32px; border-radius: 8px;
+        background: linear-gradient(135deg, #1e3a60, #2d5a8f);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; position: relative;
+      }
+      .demo-echo-avatar::after {
+        content: ""; position: absolute; bottom: -1px; right: -1px;
+        width: 7px; height: 7px; border-radius: 50%;
+        background: #4ade80; border: 1.5px solid #1c2235;
+      }
+      .demo-echo-header-text { flex: 1; }
+      .demo-echo-title { font-size: 0.72rem; font-weight: 700; color: #ffffff; font-family: "Space Grotesk", sans-serif; line-height: 1.1; }
+      .demo-echo-subtitle { font-size: 0.55rem; color: rgba(255,255,255,0.45); font-family: "Space Grotesk", sans-serif; }
+      .demo-echo-close { font-size: 0.7rem; color: rgba(255,255,255,0.3); cursor: default; }
+      .demo-echo-body { flex: 1; padding: 0.55rem 0.65rem; display: flex; flex-direction: column; gap: 0.3rem; overflow: hidden; }
+      .demo-echo-bubble {
+        display: flex; gap: 0.4rem; align-items: flex-start;
+      }
+      .demo-echo-bubble-icon {
+        width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+        background: linear-gradient(135deg, #1e3a60, #2d5a8f);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .demo-echo-bubble-text {
+        background: #242d45; border-radius: 4px 12px 12px 12px;
+        padding: 0.32rem 0.55rem; font-size: 0.6rem; color: rgba(255,255,255,0.88);
+        font-family: "Space Grotesk", sans-serif; line-height: 1.4; flex: 1;
+      }
+      .demo-echo-timestamp { font-size: 0.5rem; color: rgba(255,255,255,0.25); font-family: "Space Grotesk", sans-serif; padding-left: 0.3rem; margin-top: -0.1rem; }
+      .demo-echo-action {
+        background: #1e2840; border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 10px; padding: 0.32rem 0.6rem;
+        font-size: 0.58rem; color: rgba(255,255,255,0.75);
+        font-family: "Space Grotesk", sans-serif; display: flex; align-items: center; gap: 0.4rem;
+      }
+      .demo-echo-input-row {
+        background: #1c2235; border-top: 1px solid rgba(255,255,255,0.07);
+        padding: 0.4rem 0.6rem; display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0;
+      }
+      .demo-echo-input-field {
+        flex: 1; background: #111827; border-radius: 20px;
+        padding: 0.28rem 0.7rem; font-size: 0.55rem;
+        color: rgba(255,255,255,0.3); font-family: "Space Grotesk", sans-serif;
+      }
+      .demo-echo-send {
+        width: 24px; height: 24px; border-radius: 8px;
+        background: #2d5a8f; display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+      }
+      .demo-echo-footer-text {
+        text-align: center; font-size: 0.48rem; color: rgba(255,255,255,0.18);
+        font-family: "Space Grotesk", sans-serif; letter-spacing: 0.08em;
+        padding-bottom: 0.3rem; flex-shrink: 0;
+      }
+
+      /* ── TRACE lead detail mockup (matches real UI) ── */
+      .demo-trace-detail {
+        background: #141929;
+        display: flex; flex-direction: column;
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 0.65rem 0.75rem; gap: 0.35rem;
+      }
+      .demo-trd-name-row { display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; }
+      .demo-trd-name { font-size: 0.75rem; font-weight: 700; color: #ffffff; font-family: "Space Grotesk", sans-serif; margin-right: 0.1rem; }
+      .demo-trd-badge { font-size: 0.5rem; padding: 0.1rem 0.35rem; border-radius: 20px; font-family: "Space Grotesk", sans-serif; font-weight: 600; }
+      .demo-trd-badge.blue { background: rgba(58,123,200,0.25); color: #7db8e8; border: 1px solid rgba(58,123,200,0.3); }
+      .demo-trd-badge.orange { background: rgba(199,106,26,0.2); color: #f59e0b; border: 1px solid rgba(199,106,26,0.3); }
+      .demo-trd-badge.gray { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+      .demo-trd-score {
+        margin-left: auto; width: 28px; height: 28px; border-radius: 50%;
+        border: 2px solid #4ade80; display: flex; align-items: center; justify-content: center;
+        font-size: 0.7rem; font-weight: 700; color: #4ade80; font-family: "Space Grotesk", sans-serif; flex-shrink: 0;
+      }
+      .demo-trd-company { font-size: 0.55rem; color: rgba(255,255,255,0.4); font-family: "Space Grotesk", sans-serif; }
+      .demo-trd-apollo-label { font-size: 0.5rem; font-weight: 700; color: #f59e0b; font-family: "Space Grotesk", sans-serif; letter-spacing: 0.08em; }
+      .demo-trd-apollo-tags { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+      .demo-trd-apollo-tag { font-size: 0.5rem; padding: 0.1rem 0.35rem; border-radius: 4px; border: 1px solid rgba(245,158,11,0.25); color: rgba(255,255,255,0.65); font-family: "Space Grotesk", sans-serif; }
+      .demo-trd-apollo-tag b { color: #f59e0b; }
+      .demo-trd-opener {
+        background: rgba(45,90,143,0.1); border-left: 2.5px solid #3a7bc8;
+        border-radius: 0 6px 6px 0; padding: 0.28rem 0.45rem;
+      }
+      .demo-trd-section-label { font-size: 0.48rem; font-weight: 700; letter-spacing: 0.08em; font-family: "Space Grotesk", sans-serif; margin-bottom: 0.18rem; }
+      .demo-trd-section-label.blue { color: #7db8e8; }
+      .demo-trd-section-label.green { color: #4ade80; }
+      .demo-trd-section-label.gray { color: rgba(255,255,255,0.35); }
+      .demo-trd-opener-text { font-size: 0.58rem; color: rgba(255,255,255,0.8); font-family: "Space Grotesk", sans-serif; font-style: italic; line-height: 1.35; }
+      .demo-trd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; }
+      .demo-trd-card { background: rgba(255,255,255,0.04); border-radius: 5px; padding: 0.3rem 0.4rem; }
+      .demo-trd-card-text { font-size: 0.54rem; color: rgba(255,255,255,0.55); font-family: "Space Grotesk", sans-serif; line-height: 1.35; }
+      .demo-trd-cta {
+        background: rgba(74,222,128,0.06); border-left: 2.5px solid #4ade80;
+        border-radius: 0 6px 6px 0; padding: 0.28rem 0.45rem;
+      }
+      .demo-trd-cta-text { font-size: 0.56rem; color: rgba(255,255,255,0.75); font-family: "Space Grotesk", sans-serif; line-height: 1.35; }
+      .demo-trd-footer {
+        display: flex; justify-content: space-between; align-items: center;
+        border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.25rem; margin-top: auto;
+      }
+      .demo-trd-footer-nav { font-size: 0.48rem; color: rgba(255,255,255,0.25); font-family: "Space Grotesk", sans-serif; }
+      .demo-trd-copy-btn {
+        font-size: 0.5rem; padding: 0.18rem 0.5rem; border-radius: 5px;
+        background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6);
+        font-family: "Space Grotesk", sans-serif; font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+
+
+      /* ── Indigo color (AI Scheduler) ── */
+      .tint-indigo .showcase-left::before { background: linear-gradient(135deg, #ede9fe 0%, transparent 100%); }
+      .tint-indigo .card-value-props li::before { color: #6366f1; }
+      .tint-indigo .showcase-stat { color: #6366f1; }
+      .service-card.tint-indigo::before { background: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%); }
+      .cat-indigo { color: #6366f1 !important; }
+      .cat-indigo .dot { background: #6366f1 !important; }
+      .icon-indigo { background: linear-gradient(135deg, #4f46e5, #6366f1) !important; }
+      .badge-indigo { background: rgba(99,102,241,0.08) !important; border-color: rgba(99,102,241,0.2) !important; color: #6366f1 !important; }
+
+      /* ── Strategy/Consultancy demo ── */
+      .demo-strategy {
+        background: #100d00; border: 1px solid rgba(199,106,26,0.2);
+        padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.45rem;
+      }
+      .demo-strat-header { display: flex; justify-content: space-between; align-items: center; }
+      .demo-strat-title { font-size: 0.7rem; font-weight: 700; color: #f59e0b; font-family: "Space Grotesk", sans-serif; }
+      .demo-strat-phase { font-size: 0.55rem; color: rgba(245,158,11,0.5); font-family: "Space Grotesk", sans-serif; }
+      .demo-strat-steps { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+      .demo-strat-step { font-size: 0.6rem; padding: 0.22rem 0.5rem; border-radius: 5px; font-family: "Space Grotesk", sans-serif; line-height: 1.35; }
+      .demo-strat-step.done { background: rgba(74,222,128,0.08); color: #4ade80; border: 1px solid rgba(74,222,128,0.18); }
+      .demo-strat-step.active { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+      .demo-strat-step.pending { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.07); }
+      .demo-strat-match {
+        background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+        border-radius: 6px; padding: 0.28rem 0.5rem; display: flex; gap: 0.4rem; align-items: center;
+      }
+      .demo-strat-match-label { font-size: 0.52rem; font-weight: 700; color: #f59e0b; font-family: "Space Grotesk", sans-serif; flex-shrink: 0; }
+      .demo-strat-match-text { font-size: 0.57rem; color: rgba(255,255,255,0.65); font-family: "Space Grotesk", sans-serif; }
+
+      /* ── AI Scheduler demo ── */
+      .demo-scheduler {
+        background: #08091a; border: 1px solid rgba(99,102,241,0.2);
+        padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.4rem;
+      }
+      .demo-sched-header { display: flex; justify-content: space-between; align-items: center; }
+      .demo-sched-title { font-size: 0.7rem; font-weight: 700; color: #a5b4fc; font-family: "Space Grotesk", sans-serif; }
+      .demo-sched-month { font-size: 0.55rem; color: rgba(165,180,252,0.45); font-family: "Space Grotesk", sans-serif; }
+      .demo-sched-ai-row { display: flex; align-items: center; gap: 0.4rem; }
+      .demo-sched-ai-icon {
+        width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        display: flex; align-items: center; justify-content: center; color: #fff;
+      }
+      .demo-sched-ai-msg { font-size: 0.6rem; color: rgba(165,180,252,0.8); font-family: "Space Grotesk", sans-serif; font-style: italic; }
+      .demo-sched-slots { display: flex; flex-direction: column; gap: 0.25rem; }
+      .demo-sched-slot {
+        display: flex; align-items: center; gap: 0.4rem;
+        background: rgba(99,102,241,0.06); border: 1px solid rgba(99,102,241,0.15);
+        border-radius: 7px; padding: 0.28rem 0.55rem; font-family: "Space Grotesk", sans-serif;
+      }
+      .demo-sched-slot.selected { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4); }
+      .demo-sched-slot-check { font-size: 0.62rem; color: #6366f1; flex-shrink: 0; }
+      .demo-sched-slot.selected .demo-sched-slot-check { color: #a5b4fc; }
+      .demo-sched-slot-time { font-size: 0.6rem; color: rgba(255,255,255,0.7); flex: 1; }
+      .demo-sched-slot.selected .demo-sched-slot-time { color: #a5b4fc; }
+      .demo-sched-slot-tag { font-size: 0.5rem; background: rgba(99,102,241,0.3); color: #a5b4fc; padding: 0.08rem 0.35rem; border-radius: 20px; font-weight: 600; }
+      .demo-sched-confirm { font-size: 0.56rem; color: rgba(99,102,241,0.6); font-family: "Space Grotesk", sans-serif; background: rgba(99,102,241,0.06); border-radius: 5px; padding: 0.25rem 0.5rem; margin-top: auto; }
+
+      /* ── Mobile improvements ── */
+      @media (max-width: 768px) {
+        .showcase-wrapper { padding: 0 0.5rem; }
+        .showcase-card { grid-template-columns: 1fr !important; min-height: unset; }
+        .showcase-left { padding: 1.6rem 1.4rem; order: 2; }
+        .showcase-right { padding: 1.2rem; order: 1; }
+        .showcase-left h3 { font-size: 1.3rem; }
+        .showcase-desc { font-size: 0.9rem; }
+        .card-value-props li { font-size: 0.82rem; }
+        .card-demo.large { height: 210px; }
+        .demo-echo-action { font-size: 0.56rem; padding: 0.28rem 0.5rem; }
+        .demo-trd-grid { grid-template-columns: 1fr; }
+        .demo-strat-step { font-size: 0.58rem; }
+        .showcase-progress-wrap { margin: 0.6rem 0.5rem 0; }
+      }
+      @media (max-width: 480px) {
+        .ai-in-action h2 { font-size: 1.6rem; }
+        .ai-in-action .section-subtitle { font-size: 0.95rem; }
+        .showcase-left { padding: 1.2rem; }
+        .showcase-left h3 { font-size: 1.15rem; }
+        .card-demo.large { height: 190px; }
+        .demo-trd-name-row { flex-wrap: wrap; gap: 0.2rem; }
+        .demo-trd-score { width: 24px; height: 24px; font-size: 0.62rem; }
+      }
+
+
+      /* ── Custom AI Agent builder demo ── */
+      .demo-agent-builder {
+        background: #041414; border: 1px solid rgba(14,138,126,0.22);
+        padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.4rem;
+      }
+      .demo-agent-header { display: flex; justify-content: space-between; align-items: center; }
+      .demo-agent-title { font-size: 0.7rem; font-weight: 700; color: #2dd4bf; font-family: "Space Grotesk", sans-serif; }
+      .demo-agent-status { font-size: 0.58rem; color: #4ade80; font-family: "Space Grotesk", sans-serif; font-weight: 600; }
+      .demo-agent-rows { display: flex; flex-direction: column; gap: 0.22rem; flex: 1; }
+      .demo-agent-row { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.22rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      .demo-agent-key { font-size: 0.57rem; color: rgba(255,255,255,0.35); font-family: "Space Grotesk", sans-serif; width: 72px; flex-shrink: 0; padding-top: 0.05rem; }
+      .demo-agent-val { font-size: 0.58rem; color: rgba(255,255,255,0.72); font-family: "Space Grotesk", sans-serif; display: flex; flex-wrap: wrap; gap: 0.2rem; }
+      .demo-agent-val.highlight { color: #2dd4bf; }
+      .demo-agent-cap { background: rgba(14,138,126,0.12); border: 1px solid rgba(14,138,126,0.2); color: #2dd4bf; font-size: 0.52rem; padding: 0.08rem 0.32rem; border-radius: 20px; }
+      .demo-agent-metric-row { display: flex; gap: 0.4rem; margin-top: auto; }
+      .demo-agent-metric { flex: 1; background: rgba(14,138,126,0.08); border: 1px solid rgba(14,138,126,0.15); border-radius: 6px; padding: 0.35rem 0.4rem; text-align: center; }
+      .demo-agent-metric-val { display: block; font-size: 0.82rem; font-weight: 700; color: #2dd4bf; font-family: "Space Grotesk", sans-serif; line-height: 1.1; }
+      .demo-agent-metric-label { display: block; font-size: 0.48rem; color: rgba(255,255,255,0.35); font-family: "Space Grotesk", sans-serif; margin-top: 0.1rem; }
+
+      /* ===== Unified Overview + Approach Section ===== */
+      .overview-combined {
+        position: relative;
+        background: linear-gradient(135deg, #0d1117 0%, #141820 50%, #0b1220 100%);
+        overflow: hidden;
+        padding: 0 0 5rem;
+      }
+
+      /* White zone — full-width, cloud fade top and bottom */
+      .oc-white-zone {
+        background: #ffffff;
+        position: relative;
+        padding: 10rem 2rem 9rem;
+        z-index: 1;
+      }
+      /* Cloud fade INTO white from hero dark above */
+      .oc-white-zone::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        background: linear-gradient(to bottom, #1a2028, transparent);
+        pointer-events: none;
+        z-index: 2;
+      }
+      /* Cloud fade OUT of white into dark below */
+      .oc-white-zone::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 140px;
+        background: linear-gradient(to bottom, transparent, #0d1117);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Animated dot grid */
+      .dot-grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(74, 138, 199, 0.18) 1px, transparent 1px);
+        background-size: 32px 32px;
+        animation: dotDrift 20s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+      @keyframes dotDrift {
+        0%   { background-position: 0 0; }
+        100% { background-position: 32px 32px; }
+      }
+
+      /* Subtle radial glows */
+      .overview-combined::before {
+        content: "";
+        position: absolute;
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, rgba(30, 58, 95, 0.22) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: 10%; left: -180px;
+        pointer-events: none;
+      }
+      .overview-combined::after {
+        content: "";
+        position: absolute;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(45, 90, 143, 0.14) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -120px; right: -120px;
+        pointer-events: none;
+      }
+
+      .oc-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem 0;
+      }
+
+      /* Who We Are text block */
+      .oc-who {
+        text-align: center;
+        max-width: 780px;
+        margin: 0 auto;
+      }
+      .oc-who h2 {
+        font-size: 3rem;
+        color: #142d5a;
+        margin-bottom: 1.5rem;
+      }
+      .oc-who p {
+        font-size: 1.15rem;
+        color: #4a5568;
+        max-width: 700px;
+        margin: 0 auto 1.2rem;
+        line-height: 1.75;
+      }
+      .oc-who .section-eyebrow {
+        margin-bottom: 1.2rem;
+        color: #3a7bc8;
+      }
+
+      /* Bridge divider */
+      .oc-bridge {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        max-width: 520px;
+        margin: 0 auto 2.5rem;
+      }
+      .oc-bridge-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(74, 138, 199, 0.45), transparent);
+      }
+      .oc-bridge-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #4a8ac7;
+        white-space: nowrap;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      /* Tagline under bridge */
+      .oc-tagline {
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-size: 1rem !important;
+        margin-bottom: 0 !important;
+        max-width: 100% !important;
+        text-align: center;
+      }
+      .oc-tagline strong {
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      /* ===== Scroll-reveal ===== */
+      .reveal-fade {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 0.65s ease, transform 0.65s ease;
+      }
+      .reveal-fade.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger for use-case cards, service cards, etc. */
+      .reveal-fade:nth-child(2) { transition-delay: 0.1s; }
+      .reveal-fade:nth-child(3) { transition-delay: 0.2s; }
+      .reveal-fade:nth-child(4) { transition-delay: 0.3s; }
+
+      /* ===== Services: compact layout ===== */
+      .services {
+        padding: 4rem 0;
+      }
+
+      .services-intro {
+        text-align: center;
+        max-width: 680px;
+        margin: 0 auto 2rem;
+      }
+      .services-intro h2 {
+        font-size: 3rem;
+        color: var(--dark);
+        margin-bottom: 0.75rem;
+      }
+      .services-intro p {
+        font-size: 1.1rem;
+        color: var(--gray);
+        line-height: 1.7;
+      }
+
+      /* Must come after .services-intro h2 to win the cascade */
+      @media (max-width: 768px) {
+        .services-intro h2 { font-size: 1.8rem; }
+        .services-intro p  { font-size: 1rem; }
+      }
+
+      @media (max-width: 640px) {
+        .overview-combined { padding: 5rem 0 3rem; }
+        .oc-who h2 { font-size: 2.2rem; }
+        .oc-bridge { margin: 2.5rem auto 2rem; }
+      }
+
     </style>
   </head>
   <body>
@@ -2696,7 +3378,7 @@
         <ul>
           <li><a href="#overview">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#approach">Approach</a></li>
+          <li><a href="#approach">How We Work</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="hamburger" id="hamburger">
@@ -2817,24 +3499,286 @@
     </section>
 
     <!-- Overview Section -->
-    <section id="overview" class="overview">
-      <div
-        class="container editable-section"
-        style="text-align: center; max-width: 900px; margin: 0 auto"
-      >
-        <h2>Who We Are</h2>
-        <p>
-          Our mission is to help businesses make smarter decisions, deliver
-          better customer experiences, and build a foundation for sustainable
-          growth by applying AI where it creates the most impact.
-        </p>
-        <p>
-          We work with companies at every stage of AI adoption. Whether you're
-          just getting started or looking to go deeper, we meet you where you
-          are and help you move forward with clarity and confidence.
-        </p>
-      </div>
+    <section id="overview" class="overview-combined">
+
+      <!-- WHITE ZONE: Who We Are -->
+      <div class="oc-white-zone">
+        <div class="oc-who reveal-fade">
+          <h2>Who We Are</h2>
+          <p>
+            Our mission is to help businesses make smarter decisions, deliver
+            better customer experiences, and build a foundation for sustainable
+            growth by applying AI where it creates the most impact.
+          </p>
+          <p>
+            We work with companies at every stage of AI adoption. Whether you're
+            just getting started or looking to go deeper, we meet you where you
+            are and help you move forward with clarity and confidence.
+          </p>
+        </div>
+      </div><!-- /oc-white-zone -->
+
+      <!-- DARK ZONE: dot grid + bridge + timeline -->
+      <div class="dot-grid" aria-hidden="true"></div>
+      <div class="oc-inner">
+
+        <!-- Bridge -->
+        <div class="oc-bridge reveal-fade" id="approach">
+          <div class="oc-bridge-line"></div>
+          <span class="oc-bridge-label">How We Work</span>
+          <div class="oc-bridge-line"></div>
+        </div>
+
+        <!-- Timeline -->
+        <div
+          class="container editable-section"
+          style="
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem 5rem;
+          "
+        >
+          <p class="oc-tagline reveal-fade">
+            <strong>We start with your business, not the technology.</strong>
+          </p>
+
+        <div class="timeline-container">
+          <div class="timeline-track">
+            <div class="timeline-line"></div>
+            <div class="timeline-items-wrapper">
+              <div
+                class="timeline-item"
+                data-step="assess"
+                onclick="toggleTimelineNode(this)"
+              >
+                <div class="orbit-node-wrap">
+                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
+                    <ellipse
+                      class="node-ring-outer"
+                      cx="70"
+                      cy="70"
+                      rx="65"
+                      ry="63"
+                      stroke="rgba(45,90,143,0.25)"
+                      stroke-width="1.5"
+                      fill="none"
+                    />
+                    <ellipse
+                      class="node-ring-inner"
+                      cx="70"
+                      cy="70"
+                      rx="44"
+                      ry="30"
+                      stroke="rgba(74,138,199,0.2)"
+                      stroke-width="1"
+                      fill="none"
+                      transform="rotate(-22 70 70)"
+                    />
+                    <circle
+                      class="node-core"
+                      cx="70"
+                      cy="70"
+                      r="26"
+                      fill="#2d5a8f"
+                    />
+                    <circle
+                      class="node-planet"
+                      cx="122"
+                      cy="48"
+                      r="5.5"
+                      fill="#4a8ac7"
+                    />
+                    <circle
+                      class="node-planet-sm"
+                      cx="28"
+                      cy="95"
+                      r="3.5"
+                      fill="#3a7bc8"
+                      opacity="0.35"
+                    />
+                  </svg>
+                  <span class="orbit-node-label">Assess</span>
+                </div>
+                <div class="mobile-detail" data-for="assess">
+                  <h4>Assess</h4>
+                  <p>
+                    We map your workflows, understand your challenges, and
+                    identify where AI can deliver the most meaningful impact.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="timeline-item"
+                data-step="build"
+                onclick="toggleTimelineNode(this)"
+              >
+                <div class="orbit-node-wrap">
+                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
+                    <ellipse
+                      class="node-ring-outer"
+                      cx="70"
+                      cy="70"
+                      rx="65"
+                      ry="63"
+                      stroke="rgba(45,90,143,0.25)"
+                      stroke-width="1.5"
+                      fill="none"
+                    />
+                    <ellipse
+                      class="node-ring-inner"
+                      cx="70"
+                      cy="70"
+                      rx="44"
+                      ry="30"
+                      stroke="rgba(74,138,199,0.2)"
+                      stroke-width="1"
+                      fill="none"
+                      transform="rotate(-22 70 70)"
+                    />
+                    <circle
+                      class="node-core"
+                      cx="70"
+                      cy="70"
+                      r="26"
+                      fill="#2d5a8f"
+                    />
+                    <circle
+                      class="node-planet"
+                      cx="118"
+                      cy="52"
+                      r="5.5"
+                      fill="#4a8ac7"
+                    />
+                    <circle
+                      class="node-planet-sm"
+                      cx="32"
+                      cy="98"
+                      r="4"
+                      fill="#3a7bc8"
+                      opacity="0.3"
+                    />
+                  </svg>
+                  <span class="orbit-node-label">Build</span>
+                </div>
+                <div class="mobile-detail" data-for="build">
+                  <h4>Build</h4>
+                  <p>
+                    We design and build AI solutions tailored to your situation:
+                    the right tools, the right roadmap, ready to go.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="timeline-item"
+                data-step="implement"
+                onclick="toggleTimelineNode(this)"
+              >
+                <div class="orbit-node-wrap">
+                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
+                    <ellipse
+                      class="node-ring-outer"
+                      cx="70"
+                      cy="70"
+                      rx="65"
+                      ry="63"
+                      stroke="rgba(45,90,143,0.25)"
+                      stroke-width="1.5"
+                      fill="none"
+                    />
+                    <ellipse
+                      class="node-ring-inner"
+                      cx="70"
+                      cy="70"
+                      rx="44"
+                      ry="30"
+                      stroke="rgba(74,138,199,0.2)"
+                      stroke-width="1"
+                      fill="none"
+                      transform="rotate(-22 70 70)"
+                    />
+                    <circle
+                      class="node-core"
+                      cx="70"
+                      cy="70"
+                      r="26"
+                      fill="#2d5a8f"
+                    />
+                    <circle
+                      class="node-planet"
+                      cx="125"
+                      cy="45"
+                      r="5.5"
+                      fill="#4a8ac7"
+                    />
+                    <circle
+                      class="node-planet-sm"
+                      cx="24"
+                      cy="88"
+                      r="3"
+                      fill="#3a7bc8"
+                      opacity="0.4"
+                    />
+                  </svg>
+                  <span class="orbit-node-label">Implement</span>
+                </div>
+                <div class="mobile-detail" data-for="implement">
+                  <h4>Implement</h4>
+                  <p>
+                    We support you through launch: deployment, integration, and
+                    hands-on enablement to drive real results.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-detail-panel" id="panel-assess">
+            <div class="timeline-detail-inner">
+              <h4>Assess</h4>
+              <p>
+                We begin by mapping your current workflows, understanding your
+                team’s challenges, and identifying the areas where AI can
+                deliver the most meaningful impact. This isn’t about forcing
+                technology into your business. It’s about finding the right
+                opportunities that align with your goals.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-detail-panel" id="panel-build">
+            <div class="timeline-detail-inner">
+              <h4>Build</h4>
+              <p>
+                Based on our assessment, we design and build AI solutions
+                tailored to your specific situation. We cut through the noise of
+                hundreds of AI tools, select the right ones for your team, and
+                put together a realistic roadmap to get you up and running.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-detail-panel" id="panel-implement">
+            <div class="timeline-detail-inner">
+              <h4>Implement</h4>
+              <p>
+                We support you through every step of launch, from deployment and
+                integration to hands-on enablement. Our goal is to ensure your
+                people have the skills and confidence to use AI effectively,
+                turning what we’ve built into real, measurable business results.
+              </p>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div><!-- /oc-inner -->
     </section>
+
 
     <!-- Stats Strip -->
     <div class="stats-strip">
@@ -2870,11 +3814,348 @@
       </div>
     </div>
 
+    <!-- AI in Action Section -->
+    <section class="ai-in-action">
+      <div class="container">
+        <div class="section-header reveal-fade">
+          <div class="section-eyebrow">Built by DGC</div>
+          <h2>AI in Action</h2>
+          <p class="section-subtitle">
+            Real tools and automations we've designed, built, and deployed — each fully tailored to your business's look, feel, and workflow.
+          </p>
+        </div>
+
+        <div class="showcase-wrapper">
+
+          <!-- ECHO -->
+          <div class="showcase-card tint-blue" id="showcase-0">
+            <div class="showcase-left">
+              <div class="service-card-category cat-blue"><span class="dot"></span> LIVE PRODUCT</div>
+              <h3>ECHO — AI Chat Assistant</h3>
+              <p class="showcase-desc">Most websites lose 90% of visitors silently. ECHO turns passive traffic into qualified conversations — instantly, around the clock, without you lifting a finger.</p>
+              <ul class="card-value-props">
+                <li>Qualifies every visitor automatically — no forms, no friction</li>
+                <li>Hot leads routed to your inbox within seconds of the conversation</li>
+                <li>Handles support, FAQs, and scheduling without you in the loop</li>
+              </ul>
+              <p class="showcase-stat">→ Qualifying leads on this site, right now</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Live 24/7</span>
+                <span class="badge-item badge-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Claude AI</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-echo-widget large">
+                <div class="demo-echo-header">
+                  <div class="demo-echo-avatar">
+                    <svg width="18" height="18" viewBox="0 0 50 50" fill="none">
+                      <circle cx="25" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5"/>
+                      <circle cx="25" cy="25" r="5" fill="#fff"/>
+                      <ellipse cx="25" cy="25" rx="10" ry="7" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.8" transform="rotate(-25 25 25)"/>
+                    </svg>
+                  </div>
+                  <div class="demo-echo-header-text">
+                    <div class="demo-echo-title">ECHO</div>
+                    <div class="demo-echo-subtitle">AI Chatbot</div>
+                  </div>
+                  <div class="demo-echo-close">✕</div>
+                </div>
+                <div class="demo-echo-body">
+                  <div class="demo-echo-bubble">
+                    <div class="demo-echo-bubble-icon">
+                      <svg width="12" height="12" viewBox="0 0 50 50" fill="none">
+                        <circle cx="25" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
+                        <circle cx="25" cy="25" r="5" fill="#fff"/>
+                      </svg>
+                    </div>
+                    <div class="demo-echo-bubble-text">Hey there! I'm the DGC assistant. What brings you here today?</div>
+                  </div>
+                  <div class="demo-echo-timestamp">just now</div>
+                  <div class="demo-echo-action">📅 Book a consultation</div>
+                  <div class="demo-echo-action">⚡ Automate my workflows</div>
+                  <div class="demo-echo-action">🤖 Tell me about your AI services</div>
+                  <div class="demo-echo-action">💰 What does it cost to get started?</div>
+                </div>
+                <div class="demo-echo-input-row">
+                  <div class="demo-echo-input-field">Ask about our services...</div>
+                  <div class="demo-echo-send">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  </div>
+                </div>
+                <div class="demo-echo-footer-text">DAHAN GROUP CONSULTING</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TRACE -->
+          <div class="showcase-card tint-purple" id="showcase-1">
+            <div class="showcase-left">
+              <div class="service-card-category cat-purple"><span class="dot"></span> LIVE PRODUCT</div>
+              <h3>TRACE — Prospect Intelligence</h3>
+              <p class="showcase-desc">Stop spending an hour researching each lead. TRACE delivers AI-generated insights, personalized openers, and readiness scores before your first call.</p>
+              <ul class="card-value-props">
+                <li>Know your prospect's exact pain point before you pick up the phone</li>
+                <li>AI-written conversation openers tailored to each individual lead</li>
+                <li>One-click sync to your CRM with fully enriched contact data</li>
+              </ul>
+              <p class="showcase-stat">→ 1 hour of research compressed to 2 minutes per lead</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>AI Enrichment</span>
+                <span class="badge-item badge-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>CRM Push</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-trace-detail large">
+                <div class="demo-trd-name-row">
+                  <span class="demo-trd-name">Diana Lowe</span>
+                  <span class="demo-trd-badge blue">Owner / Founder</span>
+                  <span class="demo-trd-badge orange">Low Readiness</span>
+                  <span class="demo-trd-badge gray">Apollo: no match</span>
+                  <div class="demo-trd-score">8</div>
+                </div>
+                <div class="demo-trd-company">Lowe Law Group · lowelawtx.com · diana@lowelawtx.com</div>
+                <div class="demo-trd-apollo-label">✦ APOLLO DATA</div>
+                <div class="demo-trd-apollo-tags">
+                  <span class="demo-trd-apollo-tag"><b>Industry:</b> Legal Services</span>
+                  <span class="demo-trd-apollo-tag"><b>Title:</b> Managing Partner</span>
+                  <span class="demo-trd-apollo-tag"><b>Employees:</b> 35</span>
+                  <span class="demo-trd-apollo-tag"><b>Tech:</b> Clio / Microsoft</span>
+                </div>
+                <div class="demo-trd-opener">
+                  <div class="demo-trd-section-label blue">PERSONALIZED OPENER</div>
+                  <div class="demo-trd-opener-text">"Saw you're expanding to Dallas - exciting growth for Lowe Law Group!"</div>
+                </div>
+                <div class="demo-trd-grid">
+                  <div class="demo-trd-card">
+                    <div class="demo-trd-section-label gray">PAIN POINT</div>
+                    <div class="demo-trd-card-text">Managing client intake and document automation across two locations is becoming complex.</div>
+                  </div>
+                  <div class="demo-trd-card">
+                    <div class="demo-trd-section-label gray">SUGGESTED HOOK</div>
+                    <div class="demo-trd-card-text">Automating intake workflows could help you scale without sacrificing personal touch.</div>
+                  </div>
+                </div>
+                <div class="demo-trd-cta">
+                  <div class="demo-trd-section-label green">SUGGESTED CTA</div>
+                  <div class="demo-trd-cta-text">Worth a 15-min call to show how we've helped other law firms automate across multiple locations?</div>
+                </div>
+                <div class="demo-trd-footer">
+                  <span class="demo-trd-footer-nav">Opener · Pain Point · Hook · CTA</span>
+                  <span class="demo-trd-copy-btn">Copy Email</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Workflow Automation -->
+          <div class="showcase-card tint-green" id="showcase-2">
+            <div class="showcase-left">
+              <div class="service-card-category cat-green"><span class="dot"></span> AUTOMATION</div>
+              <h3>AI Workflow Automation</h3>
+              <p class="showcase-desc">Every business has repetitive processes eating hours each week. We map them, automate them end-to-end, and connect your existing tools — no ripping anything out.</p>
+              <ul class="card-value-props">
+                <li>Design it once — runs automatically, forever, while your team focuses elsewhere</li>
+                <li>Connects your existing stack without replacing anything you already use</li>
+                <li>Replaces 10+ hours of manual admin work per week from day one</li>
+              </ul>
+              <p class="showcase-stat">→ From lead to personalized follow-up email in under 60 seconds</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>End-to-end</span>
+                <span class="badge-item badge-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>No manual steps</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-flow large">
+                <div class="demo-flow-node pulse">🔔 Lead submits contact form</div>
+                <div class="demo-flow-arrow">↓</div>
+                <div class="demo-flow-node">🤖 AI qualifies + scores (HOT / WARM / COLD)</div>
+                <div class="demo-flow-arrow">↓</div>
+                <div class="demo-flow-node pulse">✉️ Personalized email sent instantly via Gmail</div>
+                <div class="demo-flow-arrow">↓</div>
+                <div class="demo-flow-node">📋 CRM contact updated with enriched data</div>
+                <div class="demo-flow-arrow">↓</div>
+                <div class="demo-flow-node dim">🔔 Admin notified via Slack · Full loop closed</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Consulting & Implementation -->
+          <div class="showcase-card tint-orange" id="showcase-3">
+            <div class="showcase-left">
+              <div class="service-card-category cat-orange"><span class="dot"></span> CONSULTING</div>
+              <h3>Find. Procure. Deploy.</h3>
+              <p class="showcase-desc">We don't just understand your business — we find the right AI solutions to fix your problems, handle procurement, and implement them so your team actually uses them.</p>
+              <ul class="card-value-props">
+                <li>We match you to the right tools for your business — not the trendiest ones on the market</li>
+                <li>Vendor evaluation, shortlisting, and procurement support handled for you</li>
+                <li>Full implementation and team onboarding until everything runs without you</li>
+              </ul>
+              <p class="showcase-stat">→ From first conversation to live solution in weeks</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Vendor matching</span>
+                <span class="badge-item badge-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>End-to-end</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-strategy large">
+                <div class="demo-strat-header">
+                  <span class="demo-strat-title">Your AI Roadmap</span>
+                  <span class="demo-strat-phase">Week 2 of 4</span>
+                </div>
+                <div class="demo-strat-steps">
+                  <div class="demo-strat-step done">✓ Assessed processes &amp; mapped pain points</div>
+                  <div class="demo-strat-step done">✓ Ranked AI opportunities by ROI</div>
+                  <div class="demo-strat-step active">→ Evaluating vendors (3 of 6 reviewed)</div>
+                  <div class="demo-strat-step pending">○ Procurement &amp; contract negotiation</div>
+                  <div class="demo-strat-step pending">○ Implementation &amp; team onboarding</div>
+                </div>
+                <div class="demo-strat-match">
+                  <span class="demo-strat-match-label">✦ TOP MATCH</span>
+                  <span class="demo-strat-match-text">ECHO + TRACE + Zapier → saves ~14 hrs/wk</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom AI Agents -->
+          <div class="showcase-card tint-teal" id="showcase-4">
+            <div class="showcase-left">
+              <div class="service-card-category cat-teal"><span class="dot"></span> BUILD</div>
+              <h3>Custom AI Agents</h3>
+              <p class="showcase-desc">ECHO and TRACE are just two examples of what we build. We design fully custom AI agents trained on your business — your voice, your processes, your customers.</p>
+              <ul class="card-value-props">
+                <li>Built for your industry and workflows — not repurposed generic software</li>
+                <li>Trained on your data, documents, and brand so it sounds like your team</li>
+                <li>Deployable as a chatbot, voice agent, email responder, or backend automation</li>
+              </ul>
+              <p class="showcase-stat">→ From brief to deployed custom agent in 2–4 weeks</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>Your voice &amp; brand</span>
+                <span class="badge-item badge-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>Any workflow</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-agent-builder large">
+                <div class="demo-agent-header">
+                  <span class="demo-agent-title">Agent Configuration</span>
+                  <span class="demo-agent-status">● LIVE</span>
+                </div>
+                <div class="demo-agent-rows">
+                  <div class="demo-agent-row">
+                    <span class="demo-agent-key">Agent Name</span>
+                    <span class="demo-agent-val">IntakeBot · Legal Services</span>
+                  </div>
+                  <div class="demo-agent-row">
+                    <span class="demo-agent-key">Trained on</span>
+                    <span class="demo-agent-val highlight">312 documents · brand voice set</span>
+                  </div>
+                  <div class="demo-agent-row">
+                    <span class="demo-agent-key">Capabilities</span>
+                    <span class="demo-agent-val">
+                      <span class="demo-agent-cap">✓ Client intake</span>
+                      <span class="demo-agent-cap">✓ FAQ</span>
+                      <span class="demo-agent-cap">✓ Escalation</span>
+                    </span>
+                  </div>
+                  <div class="demo-agent-row">
+                    <span class="demo-agent-key">Deployed to</span>
+                    <span class="demo-agent-val">Website · Email · WhatsApp</span>
+                  </div>
+                </div>
+                <div class="demo-agent-metric-row">
+                  <div class="demo-agent-metric">
+                    <span class="demo-agent-metric-val">94%</span>
+                    <span class="demo-agent-metric-label">Queries resolved</span>
+                  </div>
+                  <div class="demo-agent-metric">
+                    <span class="demo-agent-metric-val">2.1k</span>
+                    <span class="demo-agent-metric-label">Interactions / mo</span>
+                  </div>
+                  <div class="demo-agent-metric">
+                    <span class="demo-agent-metric-val">12 hrs</span>
+                    <span class="demo-agent-metric-label">Saved / week</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Scheduler -->
+          <div class="showcase-card tint-indigo" id="showcase-5">
+            <div class="showcase-left">
+              <div class="service-card-category cat-indigo"><span class="dot"></span> COMING SOON</div>
+              <h3>AI Scheduler</h3>
+              <p class="showcase-desc">Scheduling back-and-forth is dead. Our upcoming AI Scheduler finds the right time, sends invites, handles reminders, and follows up — completely hands-free.</p>
+              <ul class="card-value-props">
+                <li>AI finds optimal meeting times based on both parties' availability</li>
+                <li>Sends confirmations, reminders, and follow-ups automatically</li>
+                <li>Connects with Google Calendar and your existing booking tools</li>
+              </ul>
+              <p class="showcase-stat">→ Zero back-and-forth. Zero missed meetings.</p>
+              <div class="service-card-badge">
+                <span class="badge-item badge-indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Google Calendar</span>
+                <span class="badge-item badge-indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Auto follow-up</span>
+              </div>
+            </div>
+            <div class="showcase-right">
+              <div class="card-demo demo-scheduler large">
+                <div class="demo-sched-header">
+                  <span class="demo-sched-title">AI Scheduler</span>
+                  <span class="demo-sched-month">March 2026</span>
+                </div>
+                <div class="demo-sched-ai-row">
+                  <div class="demo-sched-ai-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
+                  <div class="demo-sched-ai-msg">"I found 3 times that work for both of you this week →"</div>
+                </div>
+                <div class="demo-sched-slots">
+                  <div class="demo-sched-slot selected">
+                    <span class="demo-sched-slot-check">✓</span>
+                    <span class="demo-sched-slot-time">Tue Mar 3 · 10:00 AM EST</span>
+                    <span class="demo-sched-slot-tag">Best match</span>
+                  </div>
+                  <div class="demo-sched-slot">
+                    <span class="demo-sched-slot-check">○</span>
+                    <span class="demo-sched-slot-time">Thu Mar 5 · 2:00 PM EST</span>
+                  </div>
+                  <div class="demo-sched-slot">
+                    <span class="demo-sched-slot-check">○</span>
+                    <span class="demo-sched-slot-time">Fri Mar 6 · 11:00 AM EST</span>
+                  </div>
+                </div>
+                <div class="demo-sched-confirm">
+                  📅 Invite sent · Calendar blocked · Reminder set for 24h before
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation dots -->
+        <div class="showcase-nav">
+          <button class="showcase-dot" onclick="goToCard(0)"></button>
+          <button class="showcase-dot" onclick="goToCard(1)"></button>
+          <button class="showcase-dot" onclick="goToCard(2)"></button>
+          <button class="showcase-dot" onclick="goToCard(3)"></button>
+          <button class="showcase-dot" onclick="goToCard(4)"></button>
+          <button class="showcase-dot" onclick="goToCard(5)"></button>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="showcase-progress-wrap">
+          <div class="showcase-progress-fill" id="showcase-progress"></div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- Use Cases Section -->
     <section class="use-cases">
       <div class="container">
-        <h2>How Companies Use AI</h2>
-        <p class="subtitle">
+        <h2 class="reveal-fade">How Companies Use AI</h2>
+        <p class="subtitle reveal-fade">
           Our work spans the most common areas where AI delivers measurable ROI:
         </p>
         <div
@@ -3111,280 +4392,18 @@
     </section>
 
     <!-- Approach Section -->
-    <section id="approach" class="approach-dark">
-      <div
-        class="container editable-section"
-        style="
-          text-align: center;
-          max-width: 1200px;
-          margin: 0 auto;
-          position: relative;
-          z-index: 1;
-          padding: 5rem 2rem;
-        "
-      >
-        <h2 style="font-size: 3rem; margin-bottom: 1rem">Our Approach</h2>
-        <p
-          style="
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 1.15rem;
-          "
-        >
-          <strong>We start with your business, not the technology.</strong>
-        </p>
-
-        <div class="timeline-container">
-          <div class="timeline-track">
-            <div class="timeline-line"></div>
-            <div class="timeline-items-wrapper">
-              <div
-                class="timeline-item"
-                data-step="assess"
-                onclick="toggleTimelineNode(this)"
-              >
-                <div class="orbit-node-wrap">
-                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
-                    <ellipse
-                      class="node-ring-outer"
-                      cx="70"
-                      cy="70"
-                      rx="65"
-                      ry="63"
-                      stroke="rgba(45,90,143,0.25)"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <ellipse
-                      class="node-ring-inner"
-                      cx="70"
-                      cy="70"
-                      rx="44"
-                      ry="30"
-                      stroke="rgba(74,138,199,0.2)"
-                      stroke-width="1"
-                      fill="none"
-                      transform="rotate(-22 70 70)"
-                    />
-                    <circle
-                      class="node-core"
-                      cx="70"
-                      cy="70"
-                      r="26"
-                      fill="#2d5a8f"
-                    />
-                    <circle
-                      class="node-planet"
-                      cx="122"
-                      cy="48"
-                      r="5.5"
-                      fill="#4a8ac7"
-                    />
-                    <circle
-                      class="node-planet-sm"
-                      cx="28"
-                      cy="95"
-                      r="3.5"
-                      fill="#3a7bc8"
-                      opacity="0.35"
-                    />
-                  </svg>
-                  <span class="orbit-node-label">Assess</span>
-                </div>
-                <div class="mobile-detail" data-for="assess">
-                  <h4>Assess</h4>
-                  <p>
-                    We map your workflows, understand your challenges, and
-                    identify where AI can deliver the most meaningful impact.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="timeline-item"
-                data-step="build"
-                onclick="toggleTimelineNode(this)"
-              >
-                <div class="orbit-node-wrap">
-                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
-                    <ellipse
-                      class="node-ring-outer"
-                      cx="70"
-                      cy="70"
-                      rx="65"
-                      ry="63"
-                      stroke="rgba(45,90,143,0.25)"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <ellipse
-                      class="node-ring-inner"
-                      cx="70"
-                      cy="70"
-                      rx="44"
-                      ry="30"
-                      stroke="rgba(74,138,199,0.2)"
-                      stroke-width="1"
-                      fill="none"
-                      transform="rotate(-22 70 70)"
-                    />
-                    <circle
-                      class="node-core"
-                      cx="70"
-                      cy="70"
-                      r="26"
-                      fill="#2d5a8f"
-                    />
-                    <circle
-                      class="node-planet"
-                      cx="118"
-                      cy="52"
-                      r="5.5"
-                      fill="#4a8ac7"
-                    />
-                    <circle
-                      class="node-planet-sm"
-                      cx="32"
-                      cy="98"
-                      r="4"
-                      fill="#3a7bc8"
-                      opacity="0.3"
-                    />
-                  </svg>
-                  <span class="orbit-node-label">Build</span>
-                </div>
-                <div class="mobile-detail" data-for="build">
-                  <h4>Build</h4>
-                  <p>
-                    We design and build AI solutions tailored to your situation:
-                    the right tools, the right roadmap, ready to go.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="timeline-item"
-                data-step="implement"
-                onclick="toggleTimelineNode(this)"
-              >
-                <div class="orbit-node-wrap">
-                  <svg class="orbit-svg" viewBox="0 0 140 140" fill="none">
-                    <ellipse
-                      class="node-ring-outer"
-                      cx="70"
-                      cy="70"
-                      rx="65"
-                      ry="63"
-                      stroke="rgba(45,90,143,0.25)"
-                      stroke-width="1.5"
-                      fill="none"
-                    />
-                    <ellipse
-                      class="node-ring-inner"
-                      cx="70"
-                      cy="70"
-                      rx="44"
-                      ry="30"
-                      stroke="rgba(74,138,199,0.2)"
-                      stroke-width="1"
-                      fill="none"
-                      transform="rotate(-22 70 70)"
-                    />
-                    <circle
-                      class="node-core"
-                      cx="70"
-                      cy="70"
-                      r="26"
-                      fill="#2d5a8f"
-                    />
-                    <circle
-                      class="node-planet"
-                      cx="125"
-                      cy="45"
-                      r="5.5"
-                      fill="#4a8ac7"
-                    />
-                    <circle
-                      class="node-planet-sm"
-                      cx="24"
-                      cy="88"
-                      r="3"
-                      fill="#3a7bc8"
-                      opacity="0.4"
-                    />
-                  </svg>
-                  <span class="orbit-node-label">Implement</span>
-                </div>
-                <div class="mobile-detail" data-for="implement">
-                  <h4>Implement</h4>
-                  <p>
-                    We support you through launch: deployment, integration, and
-                    hands-on enablement to drive real results.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-detail-panel" id="panel-assess">
-            <div class="timeline-detail-inner">
-              <h4>Assess</h4>
-              <p>
-                We begin by mapping your current workflows, understanding your
-                team’s challenges, and identifying the areas where AI can
-                deliver the most meaningful impact. This isn’t about forcing
-                technology into your business. It’s about finding the right
-                opportunities that align with your goals.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-detail-panel" id="panel-build">
-            <div class="timeline-detail-inner">
-              <h4>Build</h4>
-              <p>
-                Based on our assessment, we design and build AI solutions
-                tailored to your specific situation. We cut through the noise of
-                hundreds of AI tools, select the right ones for your team, and
-                put together a realistic roadmap to get you up and running.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-detail-panel" id="panel-implement">
-            <div class="timeline-detail-inner">
-              <h4>Implement</h4>
-              <p>
-                We support you through every step of launch, from deployment and
-                integration to hands-on enablement. Our goal is to ensure your
-                people have the skills and confidence to use AI effectively,
-                turning what we’ve built into real, measurable business results.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Services Section -->
     <section id="services" class="services">
       <div class="container">
-        <h2 style="text-align: center; margin-bottom: 1rem">Our Services</h2>
-        <p
-          style="
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 3rem;
-          "
-        >
-          We meet you where you are and scale with you as your needs evolve.
-        </p>
+
+        <!-- Services Header -->
+        <div class="services-intro reveal-fade">
+          <h2>Your AI Maturity Journey</h2>
+          <p>Every business starts somewhere. Move through the phases at your own pace. We'll meet you where you are and help you grow from there.</p>
+        </div>
 
         <!-- Phase Tab Buttons -->
-        <div class="phase-tabs">
+        <div class="phase-tabs reveal-fade">
           <button
             class="phase-tab active"
             onclick="switchPhase(1)"
@@ -3405,12 +4424,6 @@
 
         <!-- Phase 1: Getting Started -->
         <div class="phase-panel active" id="phase-1">
-          <div class="phase-header">
-            <h3>Getting Started</h3>
-            <p>
-              The foundation: quick wins and immediate impact for your business.
-            </p>
-          </div>
           <div class="service-grid">
             <div class="service-card tint-blue">
               <div class="service-card-icon icon-blue">
@@ -3670,12 +4683,6 @@
 
         <!-- Phase 2: Going Deeper -->
         <div class="phase-panel" id="phase-2">
-          <div class="phase-header">
-            <h3>Going Deeper</h3>
-            <p>
-              Custom-built systems that transform how your business operates.
-            </p>
-          </div>
           <div class="service-grid">
             <div class="service-card tint-blue">
               <div class="service-card-icon icon-blue">
@@ -3882,12 +4889,6 @@
 
         <!-- Phase 3: Advanced Capabilities -->
         <div class="phase-panel" id="phase-3">
-          <div class="phase-header">
-            <h3>Advanced Capabilities</h3>
-            <p>
-              Enterprise-grade AI solutions for organizations ready to lead.
-            </p>
-          </div>
           <div class="service-grid">
             <div class="service-card tint-purple">
               <div class="service-card-icon icon-purple">
@@ -4081,7 +5082,8 @@
         </div>
       </div>
     </section>
-    <section id="contact" class="contact">
+
+            <section id="contact" class="contact">
       <div class="container">
         <div class="contact-intro">
           <svg
@@ -5389,7 +6391,7 @@
                 subtitle:
                   "You've been exploring our training services. Let's run a workshop and show your team exactly where AI fits into their workflow.",
                 cta: "Book a Workshop 📋",
-                stat: "Teams using AI save 2+ hours per person, per day (HubSpot)",
+                stat: "Teams using AI save 2+ hours per person, per day (CRM)",
               },
               automation: {
                 headline:
@@ -5684,6 +6686,136 @@
         document.head.appendChild(nudgeStyle);
       })();
       // ===== End DGC Personalization Engine =====
+
+      // ===== AI in Action — Showcase Carousel =====
+      (function () {
+        var currentIdx = 0;
+        var cards, dots, progressFill, timer;
+        var DURATION = 30000;
+
+        function init() {
+          cards = document.querySelectorAll(".showcase-card");
+          dots  = document.querySelectorAll(".showcase-dot");
+          progressFill = document.getElementById("showcase-progress");
+          if (!cards.length) return;
+          showCard(0, true);
+          startTimer();
+        }
+
+        function showCard(idx, instant) {
+          var prev = currentIdx;
+          var delay = instant ? 0 : 420;
+
+          if (!instant && cards[prev]) {
+            cards[prev].style.opacity = "0";
+            cards[prev].classList.remove("visible");
+          }
+
+          setTimeout(function () {
+            cards.forEach(function (c) { c.style.display = "none"; c.style.opacity = "0"; c.classList.remove("visible"); });
+            dots.forEach(function (d) { d.classList.remove("active"); });
+
+            currentIdx = idx;
+            cards[currentIdx].style.display = "grid";
+
+            // Trigger reflow then fade in
+            void cards[currentIdx].offsetWidth;
+            setTimeout(function () {
+              cards[currentIdx].style.opacity = "1";
+              cards[currentIdx].classList.add("visible");
+              dots[currentIdx].classList.add("active");
+              resetProgress();
+            }, 30);
+          }, delay);
+        }
+
+        function resetProgress() {
+          if (!progressFill) return;
+          progressFill.style.transition = "none";
+          progressFill.style.width = "0%";
+          void progressFill.offsetWidth;
+          setTimeout(function () {
+            progressFill.style.transition = "width " + DURATION + "ms linear";
+            progressFill.style.width = "100%";
+          }, 60);
+        }
+
+        function startTimer() {
+          clearInterval(timer);
+          timer = setInterval(function () {
+            showCard((currentIdx + 1) % cards.length, false);
+          }, DURATION);
+        }
+
+        window.goToCard = function (idx) {
+          if (idx === currentIdx) return;
+          clearInterval(timer);
+          showCard(idx, false);
+          startTimer();
+        };
+
+        document.addEventListener("DOMContentLoaded", init);
+      })();
+      // ===== End Showcase Carousel =====
+
+      // ===== Scroll-reveal =====
+      (function () {
+        var revealEls = document.querySelectorAll('.reveal-fade');
+        if (!revealEls.length) return;
+        var ro = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              ro.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealEls.forEach(function (el) { ro.observe(el); });
+      })();
+
+      // ===== Stats counter animation =====
+      (function () {
+        var animated = false;
+        var strip = document.querySelector('.stats-strip');
+        if (!strip) return;
+
+        var counters = strip.querySelectorAll('.stat-number');
+        // Parse each number: extract numeric value + suffix
+        var data = Array.from(counters).map(function (el) {
+          var raw = el.textContent.trim();
+          var match = raw.match(/^([\d,]+)/);
+          var num = match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
+          var suffix = el.querySelector('span') ? el.querySelector('span').textContent : '';
+          return { el: el, target: num, suffix: suffix };
+        });
+
+        function animateCounters() {
+          if (animated) return;
+          animated = true;
+          var duration = 1600;
+          var start = null;
+          function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            data.forEach(function (d) {
+              var val = Math.round(d.target * ease);
+              d.el.innerHTML = val.toLocaleString() + '<span>' + d.suffix + '</span>';
+            });
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        var so = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            animateCounters();
+            so.disconnect();
+          }
+        }, { threshold: 0.3 });
+        so.observe(strip);
+      })();
+
     </script>
   </body>
 </html>
